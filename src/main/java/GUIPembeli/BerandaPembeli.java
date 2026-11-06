@@ -4,13 +4,16 @@
  */
 package GUIPembeli;
 
+import controll.LokaControl;
+
 /**
  *
  * @author LENOVO
  */
 public class BerandaPembeli extends javax.swing.JFrame {
 
-    private int idPengguna;
+    private int idPembeli;
+    private LokaControl control = new LokaControl();
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BerandaPembeli.class.getName());
 
@@ -18,10 +21,22 @@ public class BerandaPembeli extends javax.swing.JFrame {
         initComponents();
     }
 
-    public BerandaPembeli(int idPengguna) {
-        this.idPengguna = idPengguna;
+    public BerandaPembeli(int idPembeli) { 
         initComponents();
+        this.idPembeli = idPembeli;
+        muatNamaDanSaldoUser();   
     }
+    
+    public void muatNamaDanSaldoUser() {
+        for (model.Pembeli p : control.ambilSemuaPembeli()) {
+            if (p.getIdPengguna() == this.idPembeli) {
+                jLblNamaUser.setText("Halo, " + p.getNamaLengkap() + "!");
+                jLblSaldoAktif.setText("Rp " + String.format("%,.0f", p.getSaldo()).replace(',', '.'));
+                break;
+            }
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,8 +63,8 @@ public class BerandaPembeli extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jBtnTopUpSaldoPembeli = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLblSaldoAktif = new javax.swing.JLabel();
+        jLblNamaUser = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -196,9 +211,9 @@ public class BerandaPembeli extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLabel2.setText("Saldo:");
 
-        jLabel3.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(228, 92, 16));
-        jLabel3.setText("Rp150.000");
+        jLblSaldoAktif.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblSaldoAktif.setForeground(new java.awt.Color(228, 92, 16));
+        jLblSaldoAktif.setText("Rp150.000");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -208,7 +223,7 @@ public class BerandaPembeli extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                .addComponent(jLblSaldoAktif, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnTopUpSaldoPembeli, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -220,14 +235,14 @@ public class BerandaPembeli extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnTopUpSaldoPembeli, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(jLblSaldoAktif))
                 .addContainerGap())
         );
 
-        jLabel4.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(228, 92, 16));
-        jLabel4.setText("Halo, User!");
-        jLabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
+        jLblNamaUser.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        jLblNamaUser.setForeground(new java.awt.Color(228, 92, 16));
+        jLblNamaUser.setText("Halo, User!");
+        jLblNamaUser.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -243,7 +258,7 @@ public class BerandaPembeli extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLblNamaUser, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(94, 94, 94)
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())))))
@@ -259,7 +274,7 @@ public class BerandaPembeli extends javax.swing.JFrame {
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(19, 19, 19)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLblNamaUser, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE))
@@ -286,27 +301,27 @@ public class BerandaPembeli extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnBerandaPembeliActionPerformed
 
     private void jBtnKeranjangPembeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeranjangPembeliActionPerformed
-        new GUIPembeli.KeranjangPembeli().setVisible(true);
+        new GUIPembeli.KeranjangPembeli(idPembeli).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnKeranjangPembeliActionPerformed
 
     private void jBtnPesananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesananActionPerformed
-        new GUIPembeli.Pesanan().setVisible(true);
+        new GUIPembeli.Pesanan(idPembeli).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnPesananActionPerformed
 
     private void jBtnChatPenjualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnChatPenjualActionPerformed
-        new GUIPembeli.ChatPenjual().setVisible(true);
+        new GUIPembeli.ChatPenjual(idPembeli).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnChatPenjualActionPerformed
 
     private void jBtnTopUpSaldoPembeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTopUpSaldoPembeliActionPerformed
-        new GUIPembeli.TopUpSaldoPembeli().setVisible(true);
+        new GUIPembeli.TopUpSaldoPembeli(idPembeli).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnTopUpSaldoPembeliActionPerformed
 
     private void jBtnProfilPembeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnProfilPembeliActionPerformed
-        new GUIPembeli.ProfilPembeli().setVisible(true);
+        new GUIPembeli.ProfilPembeli(idPembeli).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnProfilPembeliActionPerformed
 
@@ -345,8 +360,8 @@ public class BerandaPembeli extends javax.swing.JFrame {
     private javax.swing.JButton jBtnTopUpSaldoPembeli;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLblNamaUser;
+    private javax.swing.JLabel jLblSaldoAktif;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

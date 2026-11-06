@@ -92,4 +92,16 @@ public class PembeliDAO {
         }
         return list;
     }
+    
+    public void updateSaldo(int idPengguna, double saldoBaru) {
+    String sql = "UPDATE pembeli SET saldo = ? WHERE id_pengguna = ?";
+    try (Connection conn = Koneksi.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setDouble(1, saldoBaru);
+        ps.setInt(2, idPengguna);
+        ps.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 }

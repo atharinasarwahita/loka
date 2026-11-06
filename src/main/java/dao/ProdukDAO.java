@@ -116,4 +116,8 @@ public class ProdukDAO {
             System.out.println("Gagal menghapus produk: " + e.getMessage());
         }
     }
+    
+    public void updateStok(int idProduk, int stokBaru) {
+        String sql = "UPDATE produk SET stok = ? WHERE id_produk = ?";
+    }
 }

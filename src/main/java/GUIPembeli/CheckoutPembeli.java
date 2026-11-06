@@ -4,6 +4,10 @@
  */
 package GUIPembeli;
 
+import controll.LokaControl;
+import model.Pembeli;
+import model.Produk;
+
 /**
  *
  * @author LENOVO
@@ -12,11 +16,79 @@ public class CheckoutPembeli extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CheckoutPembeli.class.getName());
 
+    private final LokaControl control = new LokaControl();
+
+    private int idPembeli;
+    private int idProduk;
+    private int jumlah;
+    private boolean dariKeranjang;
+
+    private double hargaSatuan;
+    private double subtotal;
+    private double ongkir;
+    private double jarak;
+    private double saldo;
+    
+    public CheckoutPembeli(int idPembeli, int idProduk, int jumlah, double jarak, boolean dariKeranjang) {
+        initComponents();
+        this.idPembeli = idPembeli;
+        this.idProduk = idProduk;
+        this.jumlah = jumlah;
+        this.jarak = jarak;
+        this.dariKeranjang = dariKeranjang;
+
+        for (Produk p : control.ambilSemuaProduk()) {
+            if (p.getIdProduk() == idProduk) {
+                hargaSatuan = p.getHarga();
+                break;
+            }
+        }
+        for (Pembeli p : control.ambilSemuaPembeli()) {
+            if (p.getIdPengguna() == idPembeli) {
+                saldo = p.getSaldo();
+                jLblNamaUser.setText("Halo, " + p.getNamaLengkap() + "!");
+                jLblSaldoAktif.setText(rupiah(saldo));
+                jLblSaldoAktif.setText(rupiah(saldo));
+                break;
+            }
+        }
+
+        subtotal = hargaSatuan * jumlah;
+        hitungUlang();
+        setLocationRelativeTo(null);
+    }
     /**
      * Creates new form CheckoutPembeli
      */
     public CheckoutPembeli() {
         initComponents();
+        muatNamaDanSaldoUser();
+    }
+    
+    public void muatNamaDanSaldoUser() {
+        for (model.Pembeli p : control.ambilSemuaPembeli()) {
+            if (p.getIdPengguna() == this.idPembeli) {
+                jLblNamaUser.setText("Halo, " + p.getNamaLengkap() + "!");
+                jLblSaldoAktif.setText("Rp " + String.format("%,.0f", p.getSaldo()).replace(',', '.'));
+                break;
+            }
+        }
+    }
+    
+
+    private void hitungUlang() {
+        ongkir = control.hitungOngkir(jarak);
+        double total = subtotal + ongkir;
+
+        jLblJarak.setText("Jarak " + jarak + " km");
+        jLblOngkir.setText(rupiah(ongkir));
+        jLblSubtotal.setText(rupiah(subtotal));
+        jLblOngkirRingkasan.setText(rupiah(ongkir));
+        jLblTotal.setText(rupiah(total));
+    }
+    
+    private String rupiah(double v) {
+        return "Rp " + String.format("%,.0f", v).replace(',', '.');
     }
 
     /**
@@ -48,29 +120,29 @@ public class CheckoutPembeli extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        jLblJarak = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        jLblOngkir = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
+        jLblTotal = new javax.swing.JLabel();
+        jLblOngkirRingkasan = new javax.swing.JLabel();
+        jLblSubtotal = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        jBtnKonfirmasiBayar = new javax.swing.JButton();
+        jLblNamaUser = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
+        jBtnTopUp = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLblSaldoAktif = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -239,12 +311,12 @@ public class CheckoutPembeli extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         jLabel9.setText("Jl. Mulawarman Kota Samarinda");
 
-        jLabel10.setBackground(new java.awt.Color(209, 250, 229));
-        jLabel10.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(6, 95, 70));
-        jLabel10.setText("Jarak 4.5 km");
-        jLabel10.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 6, 1, 1));
-        jLabel10.setOpaque(true);
+        jLblJarak.setBackground(new java.awt.Color(209, 250, 229));
+        jLblJarak.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblJarak.setForeground(new java.awt.Color(6, 95, 70));
+        jLblJarak.setText("Jarak 4.5 km");
+        jLblJarak.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 6, 1, 1));
+        jLblJarak.setOpaque(true);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -258,7 +330,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLblJarak, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -271,7 +343,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLblJarak, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -289,9 +361,9 @@ public class CheckoutPembeli extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         jLabel13.setText("Ongkir:");
 
-        jLabel14.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel14.setText("20.000");
+        jLblOngkir.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        jLblOngkir.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLblOngkir.setText("20.000");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -308,7 +380,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLblOngkir, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17))))
         );
         jPanel10Layout.setVerticalGroup(
@@ -316,7 +388,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel14)
+                    .addComponent(jLblOngkir)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -345,20 +417,20 @@ public class CheckoutPembeli extends javax.swing.JFrame {
         jLabel22.setForeground(new java.awt.Color(2, 44, 34));
         jLabel22.setText("Total:");
 
-        jLabel23.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(228, 92, 16));
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel23.setText("Rp160.000");
+        jLblTotal.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        jLblTotal.setForeground(new java.awt.Color(228, 92, 16));
+        jLblTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLblTotal.setText("Rp160.000");
 
-        jLabel24.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(2, 44, 34));
-        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel24.setText("Rp20.000");
+        jLblOngkirRingkasan.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jLblOngkirRingkasan.setForeground(new java.awt.Color(2, 44, 34));
+        jLblOngkirRingkasan.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLblOngkirRingkasan.setText("Rp20.000");
 
-        jLabel25.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(2, 44, 34));
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel25.setText("Rp140.000");
+        jLblSubtotal.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jLblSubtotal.setForeground(new java.awt.Color(2, 44, 34));
+        jLblSubtotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLblSubtotal.setText("Rp140.000");
 
         jPanel12.setBackground(new java.awt.Color(255, 251, 235));
         jPanel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(253, 230, 138)));
@@ -392,12 +464,12 @@ public class CheckoutPembeli extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton6.setBackground(new java.awt.Color(228, 92, 16));
-        jButton6.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Konfirmasi & Bayar Pesanan");
-        jButton6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(228, 92, 16), 1, true));
-        jButton6.addActionListener(this::jButton6ActionPerformed);
+        jBtnKonfirmasiBayar.setBackground(new java.awt.Color(228, 92, 16));
+        jBtnKonfirmasiBayar.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jBtnKonfirmasiBayar.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnKonfirmasiBayar.setText("Konfirmasi & Bayar Pesanan");
+        jBtnKonfirmasiBayar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(228, 92, 16), 1, true));
+        jBtnKonfirmasiBayar.addActionListener(this::jBtnKonfirmasiBayarActionPerformed);
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -414,14 +486,14 @@ public class CheckoutPembeli extends javax.swing.JFrame {
                             .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+                            .addComponent(jLblOngkirRingkasan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLblSubtotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jBtnKonfirmasiBayar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
@@ -432,19 +504,19 @@ public class CheckoutPembeli extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(jLabel25))
+                    .addComponent(jLblSubtotal))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addComponent(jLabel24))
+                    .addComponent(jLblOngkirRingkasan))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
-                    .addComponent(jLabel23))
+                    .addComponent(jLblTotal))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnKonfirmasiBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -497,26 +569,26 @@ public class CheckoutPembeli extends javax.swing.JFrame {
                 .addContainerGap(56, Short.MAX_VALUE))
         );
 
-        jLabel4.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(228, 92, 16));
-        jLabel4.setText("Halo, User!");
-        jLabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
+        jLblNamaUser.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        jLblNamaUser.setForeground(new java.awt.Color(228, 92, 16));
+        jLblNamaUser.setText("Halo, User!");
+        jLblNamaUser.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton5.setBackground(new java.awt.Color(228, 92, 16));
-        jButton5.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Top Up");
-        jButton5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(228, 92, 16), 1, true));
-        jButton5.addActionListener(this::jButton5ActionPerformed);
+        jBtnTopUp.setBackground(new java.awt.Color(228, 92, 16));
+        jBtnTopUp.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jBtnTopUp.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnTopUp.setText("Top Up");
+        jBtnTopUp.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(228, 92, 16), 1, true));
+        jBtnTopUp.addActionListener(this::jBtnTopUpActionPerformed);
 
         jLabel2.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLabel2.setText("Saldo:");
 
-        jLabel3.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(228, 92, 16));
-        jLabel3.setText("Rp150.000");
+        jLblSaldoAktif.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblSaldoAktif.setForeground(new java.awt.Color(228, 92, 16));
+        jLblSaldoAktif.setText("Rp150.000");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -526,9 +598,9 @@ public class CheckoutPembeli extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                .addComponent(jLblSaldoAktif, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnTopUp, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -536,9 +608,9 @@ public class CheckoutPembeli extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(jBtnTopUp, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(jLblSaldoAktif))
                 .addContainerGap())
         );
 
@@ -551,7 +623,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLblNamaUser, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -564,7 +636,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(13, 13, 13)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLblNamaUser, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
@@ -585,32 +657,47 @@ public class CheckoutPembeli extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnBerandaPembeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBerandaPembeliActionPerformed
-        // TODO add your handling code here:
+        new GUIPembeli.BerandaPembeli(idPembeli).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnBerandaPembeliActionPerformed
 
     private void jBtnKeranjangPembeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeranjangPembeliActionPerformed
-        // TODO add your handling code here:
+        new GUIPembeli.KeranjangPembeli(idPembeli).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnKeranjangPembeliActionPerformed
 
     private void jBtnPesananPembeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesananPembeliActionPerformed
-        // TODO add your handling code here:
+        new GUIPembeli.Pesanan(idPembeli).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnPesananPembeliActionPerformed
 
     private void jBtnChatPenjualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnChatPenjualActionPerformed
-        // TODO add your handling code here:
+        new GUIPembeli.ChatPenjual(idPembeli).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnChatPenjualActionPerformed
 
     private void jBtnProfilPembeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnProfilPembeliActionPerformed
-        // TODO add your handling code here:
+        new GUIPembeli.ProfilPembeli(idPembeli).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnProfilPembeliActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jBtnTopUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTopUpActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_jBtnTopUpActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void jBtnKonfirmasiBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKonfirmasiBayarActionPerformed
+        String error = control.prosesCheckout(idPembeli, idProduk, jumlah, jarak, dariKeranjang);
+        if (error != null) {
+            javax.swing.JOptionPane.showMessageDialog(this, error, "Gagal",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        javax.swing.JOptionPane.showMessageDialog(this, "Pesanan berhasil dibuat!",
+                "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+        new KeranjangPembeli(idPembeli).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jBtnKonfirmasiBayarActionPerformed
 
     private void jBtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeluarActionPerformed
         new GUIUmum.Beranda().setVisible(true);
@@ -647,33 +734,33 @@ public class CheckoutPembeli extends javax.swing.JFrame {
     private javax.swing.JButton jBtnChatPenjual;
     private javax.swing.JButton jBtnKeluar;
     private javax.swing.JButton jBtnKeranjangPembeli;
+    private javax.swing.JButton jBtnKonfirmasiBayar;
     private javax.swing.JButton jBtnPesananPembeli;
     private javax.swing.JButton jBtnProfilPembeli;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jBtnTopUp;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLblJarak;
+    private javax.swing.JLabel jLblNamaUser;
+    private javax.swing.JLabel jLblOngkir;
+    private javax.swing.JLabel jLblOngkirRingkasan;
+    private javax.swing.JLabel jLblSaldoAktif;
+    private javax.swing.JLabel jLblSubtotal;
+    private javax.swing.JLabel jLblTotal;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel12;

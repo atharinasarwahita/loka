@@ -31,7 +31,6 @@ public class KeranjangPembeli extends javax.swing.JFrame {
         }
         muatNamaDanSaldoUser();
         muatDataKeranjang();
-        muatSaldoUser();
     }
 
     public KeranjangPembeli(int idPembeli) {
@@ -39,20 +38,39 @@ public class KeranjangPembeli extends javax.swing.JFrame {
         this.idPembeli = idPembeli;
         muatNamaDanSaldoUser();
         muatDataKeranjang();
-        muatSaldoUser();
-    }
-    
-    public void muatSaldoUser() {
-        for (model.Pembeli p : control.ambilSemuaPembeli()) {
-            if (p.getIdPengguna() == this.idPembeli) {
-                jLblSaldoAktif.setText("Rp " + String.format("%,.0f", p.getSaldo()).replace(',', '.'));
-                break;
-            }
-        }
     }
     
     public int getIdPembeli() {
         return this.idPembeli;
+    }
+    
+    private Double mintaJarak() {
+        while (true) {
+            String input = JOptionPane.showInputDialog(this,
+                    "Masukkan jarak pengiriman (km):",
+                    "Jarak Pengiriman",
+                    JOptionPane.QUESTION_MESSAGE);
+
+            if (input == null) return null;   // user pencet Cancel / close
+
+            try {
+                double jarak = Double.parseDouble(input.trim().replace(',', '.'));
+                if (jarak <= 0) {
+                    JOptionPane.showMessageDialog(this, "Jarak harus lebih dari 0!",
+                            "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    continue;
+                }
+                if (jarak > 25) {
+                    JOptionPane.showMessageDialog(this, "Maksimal jarak layanan 25 km!",
+                            "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    continue;
+                }
+                return jarak;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Masukkan angka yang valid (contoh: 4.5)",
+                        "Peringatan", JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }
 
     public void muatDataKeranjang() {
@@ -492,54 +510,67 @@ public class KeranjangPembeli extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnBerandaPembeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBerandaPembeliActionPerformed
-        // TODO add your handling code here:
+        new GUIPembeli.BerandaPembeli(idPembeli).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnBerandaPembeliActionPerformed
 
     private void jBtnPesananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesananActionPerformed
-        // TODO add your handling code here:
+        new GUIPembeli.Pesanan(idPembeli).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnPesananActionPerformed
 
     private void jBtnChatPenjualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnChatPenjualActionPerformed
-        // TODO add your handling code here:
+        new GUIPembeli.ChatPenjual(idPembeli).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnChatPenjualActionPerformed
 
     private void jBtnKeranjangPembeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeranjangPembeliActionPerformed
-        // TODO add your handling code here:
+        new GUIPembeli.KeranjangPembeli(idPembeli).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnKeranjangPembeliActionPerformed
 
     private void jBtnLanjutCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLanjutCheckoutActionPerformed
-        int jumlahTerpilih = 0;
+        int itemDipilih = 0;
         int idProdukTerpilih = -1;
+        int jumlahTerpilih = 0;
 
         for (java.awt.Component comp : panelPenampung.getComponents()) {
             if (comp instanceof ItemKeranjang) {
                 ItemKeranjang item = (ItemKeranjang) comp;
                 if (item.isSelected()) {
-                    jumlahTerpilih++;
+                    itemDipilih++;
                     idProdukTerpilih = item.getIdProduk();
+                    jumlahTerpilih = item.getJumlah();
                 }
             }
         }
 
-        if (jumlahTerpilih == 0) {
-            JOptionPane.showMessageDialog(this, "Pilih 1 produk yang ingin di-checkout terlebih dahulu!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        if (itemDipilih == 0) {
+            JOptionPane.showMessageDialog(this, "Pilih 1 produk yang ingin di-checkout terlebih dahulu!",
+                    "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (itemDipilih > 1) {
+            JOptionPane.showMessageDialog(this, "Sistem hanya mengizinkan 1 produk untuk di-checkout dalam sekali transaksi!",
+                    "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        if (jumlahTerpilih > 1) {
-            JOptionPane.showMessageDialog(this, "Sistem hanya mengizinkan 1 produk untuk di-checkout dalam sekali transaksi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+        Double jarak = mintaJarak();
+        if (jarak == null) return;
 
-        JOptionPane.showMessageDialog(this, "Berhasil! Melanjutkan checkout untuk ID Produk: " + idProdukTerpilih, "Sukses", JOptionPane.INFORMATION_MESSAGE);
+        new CheckoutPembeli(idPembeli, idProdukTerpilih, jumlahTerpilih, jarak, true).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnLanjutCheckoutActionPerformed
 
     private void jBtnTopUpSaldoPembeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTopUpSaldoPembeliActionPerformed
-        // TODO add your handling code here:
+        new GUIPembeli.TopUpSaldoPembeli(idPembeli).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnTopUpSaldoPembeliActionPerformed
 
     private void jBtnProfilPembeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnProfilPembeliActionPerformed
-        // TODO add your handling code here:
+        new GUIPembeli.ProfilPembeli(idPembeli).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnProfilPembeliActionPerformed
 
     private void jBtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeluarActionPerformed

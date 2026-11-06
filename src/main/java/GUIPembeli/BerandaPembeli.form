@@ -53,7 +53,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jPanel3" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jLabel4" min="-2" pref="319" max="-2" attributes="0"/>
+                                  <Component id="jLblNamaUser" min="-2" pref="319" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
                                   <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -76,7 +76,7 @@
                               </Group>
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                                  <Component id="jLabel4" min="-2" pref="19" max="-2" attributes="0"/>
+                                  <Component id="jLblNamaUser" min="-2" pref="19" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -360,7 +360,7 @@
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" pref="46" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel3" pref="204" max="32767" attributes="0"/>
+                      <Component id="jLblSaldoAktif" pref="204" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jBtnTopUpSaldoPembeli" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -374,7 +374,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jBtnTopUpSaldoPembeli" alignment="3" pref="32" max="32767" attributes="0"/>
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLblSaldoAktif" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -414,7 +414,7 @@
                 <Property name="text" type="java.lang.String" value="Saldo:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel3">
+            <Component class="javax.swing.JLabel" name="jLblSaldoAktif">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Inter" size="12" style="1"/>
@@ -427,7 +427,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="jLabel4">
+        <Component class="javax.swing.JLabel" name="jLblNamaUser">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Inter" size="18" style="1"/>

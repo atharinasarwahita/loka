@@ -16,6 +16,11 @@ public class ItemKeranjang extends javax.swing.JPanel {
     /**
      * Creates new form ItemKeranjang
      */
+    
+    public int getJumlah() {
+        return this.jumlah;
+    }
+    
     public ItemKeranjang(int idProduk, String namaProduk, double harga, int jumlah, String gambar) {
         initComponents();
         this.idProduk = idProduk;

@@ -43,7 +43,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jLabel4" min="-2" pref="260" max="-2" attributes="0"/>
+                          <Component id="jLblNamaUser" min="-2" pref="260" max="-2" attributes="0"/>
                           <EmptySpace pref="159" max="32767" attributes="0"/>
                           <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -60,7 +60,7 @@
                       <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                          <Component id="jLabel4" min="-2" pref="19" max="-2" attributes="0"/>
+                          <Component id="jLblNamaUser" min="-2" pref="19" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -472,7 +472,7 @@
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="jLabel8" min="-2" pref="117" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="jLabel10" alignment="0" min="-2" pref="426" max="-2" attributes="0"/>
+                                      <Component id="jLblJarak" alignment="0" min="-2" pref="426" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace pref="18" max="32767" attributes="0"/>
                               </Group>
@@ -489,7 +489,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel10" min="-2" pref="28" max="-2" attributes="0"/>
+                                  <Component id="jLblJarak" min="-2" pref="28" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -526,7 +526,7 @@
                             <Property name="text" type="java.lang.String" value="Jl. Mulawarman Kota Samarinda"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JLabel" name="jLabel10">
+                        <Component class="javax.swing.JLabel" name="jLblJarak">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="e5" green="fa" red="d1" type="rgb"/>
@@ -577,7 +577,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel13" min="-2" pref="102" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="jLabel14" min="-2" pref="180" max="-2" attributes="0"/>
+                                          <Component id="jLblOngkir" min="-2" pref="180" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -589,7 +589,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLblOngkir" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -635,7 +635,7 @@
                             <Property name="text" type="java.lang.String" value="Ongkir:"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JLabel" name="jLabel14">
+                        <Component class="javax.swing.JLabel" name="jLblOngkir">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Inter" size="14" style="1"/>
@@ -675,16 +675,16 @@
                                           </Group>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="jLabel23" pref="301" max="32767" attributes="0"/>
-                                              <Component id="jLabel24" max="32767" attributes="0"/>
-                                              <Component id="jLabel25" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="jLblTotal" pref="301" max="32767" attributes="0"/>
+                                              <Component id="jLblOngkirRingkasan" max="32767" attributes="0"/>
+                                              <Component id="jLblSubtotal" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="jPanel12" max="32767" attributes="0"/>
-                                              <Component id="jButton6" max="32767" attributes="0"/>
+                                              <Component id="jBtnKonfirmasiBayar" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -700,22 +700,22 @@
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel25" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLblSubtotal" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLblOngkirRingkasan" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLblTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jButton6" min="-2" pref="34" max="-2" attributes="0"/>
+                                  <Component id="jBtnKonfirmasiBayar" min="-2" pref="34" max="-2" attributes="0"/>
                                   <EmptySpace pref="15" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -766,7 +766,7 @@
                             <Property name="text" type="java.lang.String" value="Total:"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JLabel" name="jLabel23">
+                        <Component class="javax.swing.JLabel" name="jLblTotal">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Inter" size="14" style="1"/>
@@ -778,7 +778,7 @@
                             <Property name="text" type="java.lang.String" value="Rp160.000"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JLabel" name="jLabel24">
+                        <Component class="javax.swing.JLabel" name="jLblOngkirRingkasan">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Inter" size="12" style="0"/>
@@ -790,7 +790,7 @@
                             <Property name="text" type="java.lang.String" value="Rp20.000"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JLabel" name="jLabel25">
+                        <Component class="javax.swing.JLabel" name="jLblSubtotal">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Inter" size="12" style="0"/>
@@ -866,7 +866,7 @@
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Component class="javax.swing.JButton" name="jButton6">
+                        <Component class="javax.swing.JButton" name="jBtnKonfirmasiBayar">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="10" green="5c" red="e4" type="rgb"/>
@@ -887,7 +887,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnKonfirmasiBayarActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -898,7 +898,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="jLabel4">
+        <Component class="javax.swing.JLabel" name="jLblNamaUser">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Inter" size="18" style="1"/>
@@ -928,9 +928,9 @@
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" pref="46" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel3" pref="204" max="32767" attributes="0"/>
+                      <Component id="jLblSaldoAktif" pref="204" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButton5" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jBtnTopUp" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -940,9 +940,9 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButton5" alignment="3" pref="32" max="32767" attributes="0"/>
+                          <Component id="jBtnTopUp" alignment="3" pref="32" max="32767" attributes="0"/>
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLblSaldoAktif" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -950,7 +950,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton5">
+            <Component class="javax.swing.JButton" name="jBtnTopUp">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="10" green="5c" red="e4" type="rgb"/>
@@ -971,7 +971,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnTopUpActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
@@ -982,7 +982,7 @@
                 <Property name="text" type="java.lang.String" value="Saldo:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel3">
+            <Component class="javax.swing.JLabel" name="jLblSaldoAktif">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Inter" size="12" style="1"/>

@@ -234,4 +234,60 @@ public class LokaControl {
     public void hapusKeranjang(int idProduk, int idPembeli) {
         keranjangDAO.deleteKeranjang(idProduk, idPembeli);
     }
+    
+    // ==========================================
+// 7. CHECKOUT
+// ==========================================
+    public static final double TARIF_PER_KM = 4000;
+    public static final double ONGKIR_MINIMAL = 8000;
+
+    public double hitungOngkir(double jarakKm) {
+        if (jarakKm <= 0) return 0;
+        return Math.max(Math.ceil(jarakKm) * TARIF_PER_KM, ONGKIR_MINIMAL);
+    }
+
+    public String prosesCheckout(int idPembeli, int idProduk, int jumlah,
+                                 double jarak, boolean dariKeranjang) {
+        if (jarak <= 0) return "Jarak pengiriman harus diisi!";
+        if (jumlah <= 0) return "Jumlah tidak valid!";
+
+        // cari produk
+        Produk produk = null;
+        for (Produk p : produkDAO.getAllProduk()) {
+            if (p.getIdProduk() == idProduk) { produk = p; break; }
+        }
+        if (produk == null) return "Produk tidak ditemukan!";
+        if (produk.getStok() < jumlah) return "Stok tidak cukup! Sisa stok: " + produk.getStok();
+
+        Pembeli pembeli = null;
+        for (Pembeli pb : pembeliDAO.getAllPembeli()) {
+            if (pb.getIdPengguna() == idPembeli) { pembeli = pb; break; }
+        }
+        if (pembeli == null) return "Pembeli tidak ditemukan!";
+
+        double subtotal = produk.getHarga() * jumlah;
+        double ongkir = hitungOngkir(jarak);
+        double total = subtotal + ongkir;
+
+        if (pembeli.getSaldo() < total) return "Saldo LOKA-Pay tidak cukup!";
+
+        // nomor pesanan baru = max + 1 (karena noPesanan diisi manual)
+        int noPesanan = 1;
+        for (Pesanan ps : pesananDAO.getAllPesanan()) {
+            if (ps.getNoPesanan() >= noPesanan) noPesanan = ps.getNoPesanan() + 1;
+        }
+        int idPenjual = produk.getPenjualIdPengguna();
+
+        buatPesanan(noPesanan, idPenjual, idPembeli, new Date(), jarak, ongkir, total,
+                    StatusPesanan.Diproses, null, null);
+        buatDetailPesanan(0, noPesanan, idPenjual, idPembeli, idProduk, idPenjual,
+                          null, jumlah, produk.getHarga(), subtotal);
+        pembeliDAO.updateSaldo(idPembeli, pembeli.getSaldo() - total);
+        produkDAO.updateStok(idProduk, produk.getStok() - jumlah);
+
+        if (dariKeranjang) {
+            keranjangDAO.deleteKeranjang(idProduk, idPembeli);
+        }
+        return null; // sukses
+    }
 }
