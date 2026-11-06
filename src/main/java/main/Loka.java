@@ -4,17 +4,12 @@
 
 package main;
 
-import view.TampilanLoka;
+import GUIUmum.Beranda; 
 
-/**
- *
- * @author user
- */
 public class Loka {
-
     public static void main(String[] args) {
-        // Menjalankan aplikasi Marketplace LOKA
-        TampilanLoka aplikasi = new TampilanLoka();
-        aplikasi.tampilkanMenuUtama();
+        java.awt.EventQueue.invokeLater(() -> {
+            new Beranda().setVisible(true); 
+        });
     }
 }

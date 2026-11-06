@@ -77,50 +77,38 @@ public class PenjualDAO {
     }
 
     public List<Penjual> getAllPenjual() {
-        List<Penjual> list = new ArrayList<>();
-        String query = "SELECT * FROM penjual p JOIN pengguna u ON p.id_pengguna = u.id_pengguna";
-
-        try (Connection conn = Koneksi.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next()) {
-                Penjual p = new Penjual();
-                p.setIdPengguna(rs.getInt("id_pengguna"));
-                p.setNamaLengkap(rs.getString("nama_lengkap"));
-                p.setEmail(rs.getString("email"));
-                p.setPassword(rs.getString("password"));
-                p.setNoTelpon(rs.getString("no_telpon"));
-                p.setRole(RolePengguna.valueOf(rs.getString("role")));
-                p.setNamaToko(rs.getString("nama_toko"));
-                p.setDeskripsiToko(rs.getString("deskripsi_toko"));
-                p.setAlamatToko(rs.getString("alamat_toko"));
-                p.setKota(rs.getString("kota"));
-                p.setKecamatan(rs.getString("kecamatan"));
-                p.setKodePos(rs.getString("kode_pos"));
-                p.setSaldo(rs.getDouble("saldo"));
-                p.setNoIzinUsaha(rs.getString("no_izin_usaha"));
-                
-                // Mencegah error saat membaca data ENUM dari database ke Java Enum
-                String statusVerifDb = rs.getString("status_verifikasi");
-                if ("Terverifikasi".equalsIgnoreCase(statusVerifDb)) {
-                    p.setStatusVerifikasi(StatusVerifikasi.Terverifikasi);
-                } else {
-                    // Menyesuaikan jika di enum Java dinamai BelumTerverifikasi atau BelumDiverifikasi
-                    try {
-                        p.setStatusVerifikasi(StatusVerifikasi.valueOf("BelumDiverifikasi"));
-                    } catch (Exception ex) {
-                        p.setStatusVerifikasi(StatusVerifikasi.valueOf("BelumTerverifikasi"));
-                    }
-                }
-
-                p.setTanggalVerifikasi(rs.getTimestamp("tanggal_verifikasi"));
-                p.setStatusAkun(StatusAkun.valueOf(rs.getString("status_akun")));
-                p.setTanggalDaftar(rs.getTimestamp("tanggal_daftar"));
-                list.add(p);
+    List<Penjual> list = new ArrayList<>();
+    String sql = "SELECT p.*, pen.* FROM pengguna p JOIN penjual pen ON p.id_pengguna = pen.id_pengguna WHERE p.role = 'Penjual'";
+    
+    try (Connection conn = Koneksi.getKoneksi();
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(sql)) {
+        
+        while (rs.next()) {
+            Penjual pen = new Penjual(
+                rs.getInt("id_pengguna"),
+                rs.getString("nama_lengkap"),
+                rs.getString("email"),
+                rs.getString("password"),
+                rs.getString("no_telpon"),
+                RolePengguna.Penjual,
+                rs.getString("nama_toko"),
+                rs.getString("deskripsi_toko"),
+                rs.getString("alamat_toko"),
+                rs.getString("kota"),
+                rs.getString("kecamatan"),
+                rs.getString("kode_pos"),
+                rs.getDouble("saldo"),
+                rs.getString("no_izin_usaha"),
+                StatusVerifikasi.valueOf(rs.getString("status_verifikasi")),
+                rs.getDate("tanggal_verifikasi"),
+                StatusAkun.valueOf(rs.getString("status_akun")),
+                rs.getDate("tanggal_daftar")
+            );
+            list.add(pen);
             }
-        } catch (SQLException e) {
-            System.out.println("Gagal mengambil data penjual: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return list;
     }

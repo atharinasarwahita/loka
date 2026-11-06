@@ -43,6 +43,34 @@ public class LokaControl {
     // 1. MANAJEMEN PENGGUNA (PEMBELI, PENJUAL, PENGELOLA)
     // ==========================================
     
+    public Pengguna login(String email, String password) {
+    if (pembeliDAO.getAllPembeli() != null) {
+        for (Pembeli p : pembeliDAO.getAllPembeli()) {
+            if (p.getEmail().equalsIgnoreCase(email) && p.getPassword().equals(password)) {
+                return p;
+            }
+        }
+    }
+
+    if (penjualDAO.getAllPenjual() != null) {
+        for (Penjual p : penjualDAO.getAllPenjual()) {
+            if (p.getEmail().equalsIgnoreCase(email) && p.getPassword().equals(password)) {
+                return p;
+            }
+        }
+    }
+
+    if (pengelolaDAO.getAllPengelola() != null) {
+        for (Pengelola p : pengelolaDAO.getAllPengelola()) {
+            if (p.getEmail().equalsIgnoreCase(email) && p.getPassword().equals(password)) {
+                return p;
+            }
+        }
+    }
+
+    return null;
+}
+    
     public void registerPembeli(int idPengguna, String nama, String email, String pass, String telp, 
                                 Date tglLahir, JenisKelamin jk, String kota, String kec, String pos, 
                                 String alamat, double saldo, String pin, StatusAkun status, Date tglDaftar) {
@@ -201,5 +229,9 @@ public class LokaControl {
 
     public void updateStatusPengembalian(int idPengembalian, StatusPengembalian statusBaru) {
         pengembalianDAO.updateStatusPengembalian(idPengembalian, statusBaru);
+    }
+    
+    public void hapusKeranjang(int idProduk, int idPembeli) {
+        keranjangDAO.deleteKeranjang(idProduk, idPembeli);
     }
 }

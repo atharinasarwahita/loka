@@ -51,4 +51,20 @@ public class KeranjangDAO {
         }
         return list;
     }
+    
+    public void deleteKeranjang(int idProduk, int idPembeli) {
+        String query = "DELETE FROM keranjang WHERE Produk_id_produk = ? AND Pembeli_id_pengguna = ?";
+
+        try (Connection conn = Koneksi.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, idProduk);
+            ps.setInt(2, idPembeli);
+
+            ps.executeUpdate();
+            System.out.println("Berhasil menghapus item dari keranjang!");
+        } catch (SQLException e) {
+            System.out.println("Gagal menghapus keranjang: " + e.getMessage());
+        }
+    }
 }

@@ -73,10 +73,12 @@ public class ProdukDAO {
 
     // --- TAMBAHAN PELENGKAP USE CASE: UPDATE & DELETE PRODUK ---
     public void updateProduk(Produk produk) {
-        String query = "UPDATE produk SET nama_produk = ?, deskripsi = ?, kategori = ?, gambar_produk = ?, harga = ?, berat_gram = ?, stok = ?, status = ?, izin_jual = ?, jumlah_share = ? WHERE id_produk = ? AND Penjual_id_pengguna = ?";
+        String sql = "UPDATE produk SET nama_produk=?, deskripsi=?, kategori=?, gambar_produk=?, "
+               + "harga=?, berat_gram=?, stok=?, status=?, izin_jual=?, jumlah_share=? "
+               + "WHERE id_produk=?";
 
-        try (Connection conn = Koneksi.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+        try (Connection conn = config.Koneksi.getKoneksi();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, produk.getNamaProduk());
             ps.setString(2, produk.getDeskripsi());
@@ -84,17 +86,20 @@ public class ProdukDAO {
             ps.setString(4, produk.getGambarProduk());
             ps.setDouble(5, produk.getHarga());
             ps.setInt(6, produk.getBeratGram());
-            ps.setInt(7, produk.getStok());
-            ps.setString(8, produk.getStatus().name());
+            ps.setInt(7, produk.getStok());           
+            ps.setString(8, produk.getStatus().name());          
             ps.setString(9, produk.getIzinJual().name());
             ps.setInt(10, produk.getJumlahShare());
-            ps.setInt(11, produk.getIdProduk());
-            ps.setInt(12, produk.getPenjualIdPengguna());
+            ps.setInt(11, produk.getIdProduk());    
 
-            ps.executeUpdate();
-            System.out.println("Berhasil memperbarui produk!");
+            int rowsUpdated = ps.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Berhasil update stok produk ID: " + produk.getIdProduk());
+            }
+
         } catch (SQLException e) {
-            System.out.println("Gagal memperbarui produk: " + e.getMessage());
+            System.err.println("Gagal update produk: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
