@@ -4,10 +4,13 @@
  */
 package model;
 
+import java.util.Date;
+
 public class TopUp {
     private int idTopUp;
     private int pembeliIdPengguna;
     private double nominal;
+    private Date tanggalTopUp;
 
     public TopUp() {}
 
@@ -15,6 +18,14 @@ public class TopUp {
         this.idTopUp = idTopUp;
         this.pembeliIdPengguna = pembeliIdPengguna;
         this.nominal = nominal;
+        this.tanggalTopUp = new Date();
+    }
+
+    public TopUp(int idTopUp, int pembeliIdPengguna, double nominal, Date tanggalTopUp) {
+        this.idTopUp = idTopUp;
+        this.pembeliIdPengguna = pembeliIdPengguna;
+        this.nominal = nominal;
+        this.tanggalTopUp = tanggalTopUp;
     }
 
     public int getIdTopUp() { 
@@ -38,31 +49,29 @@ public class TopUp {
     public void setNominal(double nominal) { 
         this.nominal = nominal; 
     }
+
+    public Date getTanggalTopUp() { 
+        return tanggalTopUp; 
+    }
+    public void setTanggalTopUp(Date tanggalTopUp) { 
+        this.tanggalTopUp = tanggalTopUp; 
+    }
  
     public boolean validasiIdTopUp(int idTopUp) {
-        if (idTopUp > 0) {
-            return true;
-        } else {
-            System.out.println("Peringatan: ID top-up harus lebih dari 0!");
-            return false;
-        }
+        if (idTopUp > 0) return true;
+        System.out.println("Peringatan: ID top-up harus lebih dari 0!");
+        return false;
     }
 
     public boolean validasiPembeliIdPengguna(int pembeliIdPengguna) {
-        if (pembeliIdPengguna > 0) {
-            return true;
-        } else {
-            System.out.println("Peringatan: ID pembeli harus lebih dari 0!");
-            return false;
-        }
+        if (pembeliIdPengguna > 0) return true;
+        System.out.println("Peringatan: ID pembeli harus lebih dari 0!");
+        return false;
     }
 
     public boolean validasiNominalTopUp(double nominal) {
-        if (nominal > 0) {
-            return true;
-        } else {
-            System.out.println("Peringatan: Nominal top-up saldo harus lebih besar dari 0!");
-            return false;
-        }
+        if (nominal > 0) return true;
+        System.out.println("Peringatan: Nominal top-up saldo harus lebih besar dari 0!");
+        return false;
     }
 }

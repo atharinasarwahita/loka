@@ -13,7 +13,7 @@ import java.util.List;
 public class TopUpDAO {
 
     public void insertTopUp(TopUp topup) {
-        String query = "INSERT INTO top_up (id_top_up, Pembeli_id_pengguna, nominal) VALUES (?, ?, ?)";
+        String query = "INSERT INTO top_up (id_top_up, Pembeli_id_pengguna, nominal, tanggal) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = Koneksi.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -21,6 +21,10 @@ public class TopUpDAO {
             ps.setInt(1, topup.getIdTopUp());
             ps.setInt(2, topup.getPembeliIdPengguna());
             ps.setDouble(3, topup.getNominal());
+            
+            // Menyimpan tanggal saat ini ke database
+            java.util.Date tgl = topup.getTanggalTopUp() != null ? topup.getTanggalTopUp() : new java.util.Date();
+            ps.setTimestamp(4, new Timestamp(tgl.getTime()));
 
             ps.executeUpdate();
             System.out.println("Berhasil mencatat top up!");
@@ -42,6 +46,17 @@ public class TopUpDAO {
                 t.setIdTopUp(rs.getInt("id_top_up"));
                 t.setPembeliIdPengguna(rs.getInt("Pembeli_id_pengguna"));
                 t.setNominal(rs.getDouble("nominal"));
+                
+                // Mengambil kolom tanggal dari database jika ada
+                try {
+                    Timestamp ts = rs.getTimestamp("tanggal");
+                    if (ts != null) {
+                        t.setTanggalTopUp(new java.util.Date(ts.getTime()));
+                    }
+                } catch (SQLException e) {
+                    // Jika kolom tanggal belum ada di database, lewati tanpa error fatal
+                }
+
                 list.add(t);
             }
         } catch (SQLException e) {

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
 import config.Koneksi;
@@ -77,7 +73,7 @@ public class ProdukDAO {
                + "harga=?, berat_gram=?, stok=?, status=?, izin_jual=?, jumlah_share=? "
                + "WHERE id_produk=?";
 
-        try (Connection conn = config.Koneksi.getKoneksi();
+        try (Connection conn = Koneksi.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, produk.getNamaProduk());
@@ -86,7 +82,7 @@ public class ProdukDAO {
             ps.setString(4, produk.getGambarProduk());
             ps.setDouble(5, produk.getHarga());
             ps.setInt(6, produk.getBeratGram());
-            ps.setInt(7, produk.getStok());           
+            ps.setInt(7, produk.getStok());            
             ps.setString(8, produk.getStatus().name());          
             ps.setString(9, produk.getIzinJual().name());
             ps.setInt(10, produk.getJumlahShare());
@@ -94,7 +90,7 @@ public class ProdukDAO {
 
             int rowsUpdated = ps.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Berhasil update stok produk ID: " + produk.getIdProduk());
+                System.out.println("Berhasil update produk ID: " + produk.getIdProduk());
             }
 
         } catch (SQLException e) {
@@ -119,5 +115,16 @@ public class ProdukDAO {
     
     public void updateStok(int idProduk, int stokBaru) {
         String sql = "UPDATE produk SET stok = ? WHERE id_produk = ?";
+
+        try (Connection conn = Koneksi.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, stokBaru);
+            ps.setInt(2, idProduk);
+            ps.executeUpdate();
+            System.out.println("Berhasil memperbarui stok produk!");
+        } catch (SQLException e) {
+            System.out.println("Gagal memperbarui stok produk: " + e.getMessage());
+        }
     }
 }

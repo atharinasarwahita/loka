@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controll;
 
 import dao.*;
@@ -44,32 +40,43 @@ public class LokaControl {
     // ==========================================
     
     public Pengguna login(String email, String password) {
-    if (pembeliDAO.getAllPembeli() != null) {
-        for (Pembeli p : pembeliDAO.getAllPembeli()) {
-            if (p.getEmail().equalsIgnoreCase(email) && p.getPassword().equals(password)) {
-                return p;
+        // Cek Login Pembeli
+        if (pembeliDAO.getAllPembeli() != null) {
+            for (Pembeli p : pembeliDAO.getAllPembeli()) {
+                if (p.getEmail().equalsIgnoreCase(email) && p.getPassword().equals(password)) {
+                    if (p.getStatusAkun() != null && p.getStatusAkun() != StatusAkun.Aktif) {
+                        System.out.println("Login Gagal: Akun Pembeli tidak aktif.");
+                        return null;
+                    }
+                    return p;
+                }
             }
         }
-    }
 
-    if (penjualDAO.getAllPenjual() != null) {
-        for (Penjual p : penjualDAO.getAllPenjual()) {
-            if (p.getEmail().equalsIgnoreCase(email) && p.getPassword().equals(password)) {
-                return p;
+        // Cek Login Penjual
+        if (penjualDAO.getAllPenjual() != null) {
+            for (Penjual p : penjualDAO.getAllPenjual()) {
+                if (p.getEmail().equalsIgnoreCase(email) && p.getPassword().equals(password)) {
+                    if (p.getStatusAkun() != null && p.getStatusAkun() != StatusAkun.Aktif) {
+                        System.out.println("Login Gagal: Akun Toko belum aktif atau diblokir.");
+                        return null;
+                    }
+                    return p;
+                }
             }
         }
-    }
 
-    if (pengelolaDAO.getAllPengelola() != null) {
-        for (Pengelola p : pengelolaDAO.getAllPengelola()) {
-            if (p.getEmail().equalsIgnoreCase(email) && p.getPassword().equals(password)) {
-                return p;
+        // Cek Login Pengelola (Admin / Verifikator)
+        if (pengelolaDAO.getAllPengelola() != null) {
+            for (Pengelola p : pengelolaDAO.getAllPengelola()) {
+                if (p.getEmail().equalsIgnoreCase(email) && p.getPassword().equals(password)) {
+                    return p;
+                }
             }
         }
-    }
 
-    return null;
-}
+        return null;
+    }
     
     public void registerPembeli(int idPengguna, String nama, String email, String pass, String telp, 
                                 Date tglLahir, JenisKelamin jk, String kota, String kec, String pos, 
@@ -120,6 +127,28 @@ public class LokaControl {
 
     public List<Produk> ambilSemuaProduk() {
         return produkDAO.getAllProduk();
+    }
+
+    // ==========================================
+    // OVERLOADING METHOD PENCARIAN PRODUK
+    // ==========================================
+    
+    public Produk cariProduk(int idProduk) {
+        for (Produk p : produkDAO.getAllProduk()) {
+            if (p.getIdProduk() == idProduk) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public Produk cariProduk(String namaProduk) {
+        for (Produk p : produkDAO.getAllProduk()) {
+            if (p.getNamaProduk().equalsIgnoreCase(namaProduk)) {
+                return p;
+            }
+        }
+        return null;
     }
 
     // ==========================================
@@ -185,9 +214,76 @@ public class LokaControl {
         return pesanDAO.getAllPesan();
     }
 
-    public void prosesTopUp(int idTopUp, int idPembeli, double nominal) {
-        TopUp topUp = new TopUp(idTopUp, idPembeli, nominal);
-        topUpDAO.insertTopUp(topUp);
+    // --- FITUR 7: SORTIR CHAT BELUM DIBALAS (UNREAD) ---
+    public List<Pesan> getPesanBelumDibalas(int idPenjual) {
+        List<Pesan> listUnread = new java.util.ArrayList<>();
+        List<Pesan> allPesan = pesanDAO.getAllPesan();
+        if (allPesan != null) {
+            for (Pesan p : allPesan) {
+                if (p.getPenjualIdPengguna() == idPenjual && p.getDibaca() == StatusDibacaPesan.BelumDibaca) {
+                    listUnread.add(p);
+                }
+            }
+        }
+        return listUnread;
+    }
+
+    // ==========================================
+    // KONSTANTA & VALIDASI BATASAN TOP UP (Maks 1 Juta)
+    // ==========================================
+    public static final double MIN_TOPUP = 10000;          // Minimal Rp 10.000
+    public static final double MAX_TOPUP_SINGLE = 1000000; // Maksimal sekali top-up Rp 1.000.000
+    public static final double MAX_TOPUP_HARIAN = 1000000; // Maksimal total harian per orang Rp 1.000.000
+
+    public String prosesTopUp(int idTopUp, int idPembeli, double nominal) {
+        if (nominal < MIN_TOPUP) {
+            return "Gagal: Minimal top-up adalah Rp " + String.format("%,.0f", MIN_TOPUP);
+        }
+        if (nominal > MAX_TOPUP_SINGLE) {
+            return "Gagal: Maksimal sekali top-up adalah Rp " + String.format("%,.0f", MAX_TOPUP_SINGLE);
+        }
+
+        double totalTopUpHariIni = 0;
+        java.util.Calendar cal1 = java.util.Calendar.getInstance();
+
+        List<TopUp> daftarTopUp = topUpDAO.getAllTopUp();
+        if (daftarTopUp != null) {
+            for (TopUp tu : daftarTopUp) {
+                if (tu.getPembeliIdPengguna() == idPembeli && tu.getTanggalTopUp() != null) {
+                    java.util.Calendar cal2 = java.util.Calendar.getInstance();
+                    cal2.setTime(tu.getTanggalTopUp());
+
+                    boolean sameDay = cal1.get(java.util.Calendar.YEAR) == cal2.get(java.util.Calendar.YEAR) &&
+                                      cal1.get(java.util.Calendar.DAY_OF_YEAR) == cal2.get(java.util.Calendar.DAY_OF_YEAR);
+
+                    if (sameDay) {
+                        totalTopUpHariIni += tu.getNominal();
+                    }
+                }
+            }
+        }
+
+        if ((totalTopUpHariIni + nominal) > MAX_TOPUP_HARIAN) {
+            double sisaKuota = MAX_TOPUP_HARIAN - totalTopUpHariIni;
+            if (sisaKuota <= 0) {
+                return "Gagal: Anda telah mencapai batas maksimal top-up harian sebesar Rp " + String.format("%,.0f", MAX_TOPUP_HARIAN) + "!";
+            } else {
+                return "Gagal: Nominal melebihi sisa kuota top-up harian Anda hari ini (Sisa kuota: Rp " + String.format("%,.0f", sisaKuota) + ").";
+            }
+        }
+
+        TopUp topUpBaru = new TopUp(idTopUp, idPembeli, nominal, new Date());
+        topUpDAO.insertTopUp(topUpBaru);
+
+        for (Pembeli pb : pembeliDAO.getAllPembeli()) {
+            if (pb.getIdPengguna() == idPembeli) {
+                double saldoBaru = pb.getSaldo() + nominal;
+                pembeliDAO.updateSaldo(idPembeli, saldoBaru);
+                break;
+            }
+        }
+
+        return null;
     }
 
     public List<TopUp> ambilSemuaTopUp() {
@@ -229,6 +325,34 @@ public class LokaControl {
 
     public void updateStatusPengembalian(int idPengembalian, StatusPengembalian statusBaru) {
         pengembalianDAO.updateStatusPengembalian(idPengembalian, statusBaru);
+
+        if (statusBaru == StatusPengembalian.PengembalianDisetujui) {
+            Pengembalian targetRetur = null;
+            for (Pengembalian p : pengembalianDAO.getAllPengembalian()) {
+                if (p.getIdPengembalian() == idPengembalian) {
+                    targetRetur = p;
+                    break;
+                }
+            }
+
+            if (targetRetur != null) {
+                for (DetailPesanan dp : detailPesananDAO.getAllDetailPesanan()) {
+                    if (dp.getPengembalianIdPengembalian() != null && dp.getPengembalianIdPengembalian() == idPengembalian) {
+                        int idPembeli = dp.getPesananPembeliIdPengguna();
+                        double nominalRefund = targetRetur.getNominalPengembalian();
+
+                        for (Pembeli pb : pembeliDAO.getAllPembeli()) {
+                            if (pb.getIdPengguna() == idPembeli) {
+                                double saldoBaru = pb.getSaldo() + nominalRefund;
+                                pembeliDAO.updateSaldo(idPembeli, saldoBaru);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
     }
     
     public void hapusKeranjang(int idProduk, int idPembeli) {
@@ -236,8 +360,8 @@ public class LokaControl {
     }
     
     // ==========================================
-// 7. CHECKOUT
-// ==========================================
+    // 7. CHECKOUT
+    // ==========================================
     public static final double TARIF_PER_KM = 4000;
     public static final double ONGKIR_MINIMAL = 8000;
 
@@ -251,7 +375,6 @@ public class LokaControl {
         if (jarak <= 0) return "Jarak pengiriman harus diisi!";
         if (jumlah <= 0) return "Jumlah tidak valid!";
 
-        // cari produk
         Produk produk = null;
         for (Produk p : produkDAO.getAllProduk()) {
             if (p.getIdProduk() == idProduk) { produk = p; break; }
@@ -271,7 +394,6 @@ public class LokaControl {
 
         if (pembeli.getSaldo() < total) return "Saldo LOKA-Pay tidak cukup!";
 
-        // nomor pesanan baru = max + 1 (karena noPesanan diisi manual)
         int noPesanan = 1;
         for (Pesanan ps : pesananDAO.getAllPesanan()) {
             if (ps.getNoPesanan() >= noPesanan) noPesanan = ps.getNoPesanan() + 1;
@@ -288,6 +410,168 @@ public class LokaControl {
         if (dariKeranjang) {
             keranjangDAO.deleteKeranjang(idProduk, idPembeli);
         }
-        return null; // sukses
+        return null;
+    }
+    
+    // ==========================================
+    // 8. FITUR PENDAPATAN & TRACKING PELANGGAN (NOMOR 3)
+    // ==========================================
+
+    // A. Filter Pendapatan Penjual Berdasarkan Tanggal Tertentu
+    public double hitungPendapatanPenjualByTanggal(int idPenjual, Date targetTanggal) {
+        double totalPendapatan = 0;
+        List<Pesanan> listPesanan = pesananDAO.getAllPesanan();
+        
+        if (listPesanan != null && targetTanggal != null) {
+            java.util.Calendar calTarget = java.util.Calendar.getInstance();
+            calTarget.setTime(targetTanggal);
+
+            for (Pesanan p : listPesanan) {
+                if (p.getPenjualIdPengguna() == idPenjual && p.getTanggalPesanan() != null) {
+                    java.util.Calendar calPesanan = java.util.Calendar.getInstance();
+                    calPesanan.setTime(p.getTanggalPesanan());
+
+                    boolean isSameDay = calTarget.get(java.util.Calendar.YEAR) == calPesanan.get(java.util.Calendar.YEAR) &&
+                                        calTarget.get(java.util.Calendar.DAY_OF_YEAR) == calPesanan.get(java.util.Calendar.DAY_OF_YEAR);
+
+                    if (isSameDay) {
+                        totalPendapatan += p.getTotalBayar();
+                    }
+                }
+            }
+        }
+        return totalPendapatan;
+    }
+
+    // B. Tracking Pelanggan yang Sering Beli (Mengembalikan ID Pembeli dengan frekuensi terbanyak)
+    public int getPelangganTerloyal(int idPenjual) {
+        java.util.Map<Integer, Integer> mapFrekuensi = new java.util.HashMap<>();
+
+        List<Pesanan> listPesanan = pesananDAO.getAllPesanan();
+        if (listPesanan != null) {
+            for (Pesanan p : listPesanan) {
+                if (p.getPenjualIdPengguna() == idPenjual) {
+                    int idPembeli = p.getPembeliIdPengguna();
+                    mapFrekuensi.put(idPembeli, mapFrekuensi.getOrDefault(idPembeli, 0) + 1);
+                }
+            }
+        }
+
+        int idPelangganTersetia = -1;
+        int maxBeli = 0;
+        for (java.util.Map.Entry<Integer, Integer> entry : mapFrekuensi.entrySet()) {
+            if (entry.getValue() > maxBeli) {
+                maxBeli = entry.getValue();
+                idPelangganTersetia = entry.getKey();
+            }
+        }
+
+        return idPelangganTersetia;
+    }
+
+    // C. Mendapatkan Info Pembeli Terloyal
+    public String getInfoPelangganTerloyal(int idPenjual) {
+        int idPembeli = getPelangganTerloyal(idPenjual);
+        if (idPembeli == -1) return "Belum ada pelanggan.";
+
+        List<Pembeli> listPembeli = pembeliDAO.getAllPembeli();
+        if (listPembeli != null) {
+            for (Pembeli pb : listPembeli) {
+                if (pb.getIdPengguna() == idPembeli) {
+                    return pb.getNamaLengkap() + " (Email: " + pb.getEmail() + ")";
+                }
+            }
+        }
+        return "Pelanggan ID: " + idPembeli;
+    }
+
+    // ==========================================
+    // 9. INSIGHT DATA DASHBOARD PENGELOLA (NOMOR 8)
+    // ==========================================
+
+    // A. Total UMKM Terdaftar (Penjual Aktif)
+    public int hitungTotalUMKM() {
+        List<Penjual> listPenjual = penjualDAO.getAllPenjual();
+        int total = 0;
+        if (listPenjual != null) {
+            for (Penjual p : listPenjual) {
+                if (p.getStatusAkun() == StatusAkun.Aktif) {
+                    total++;
+                }
+            }
+        }
+        return total;
+    }
+
+    // B. Total Keuntungan Keseluruhan Marketplace (Pesanan Selesai)
+    public double hitungTotalKeuntunganMarketplace() {
+        double totalKeuntungan = 0;
+        List<Pesanan> listPesanan = pesananDAO.getAllPesanan();
+        if (listPesanan != null) {
+            for (Pesanan p : listPesanan) {
+                if (p.getStatusPesanan() == StatusPesanan.Selesai) {
+                    totalKeuntungan += p.getTotalBayar();
+                }
+            }
+        }
+        return totalKeuntungan;
+    }
+
+    // C. Kategori Produk Terlaris
+    public String getKategoriProdukTerlaris() {
+        java.util.Map<String, Integer> mapKategori = new java.util.HashMap<>();
+        List<DetailPesanan> listDetail = detailPesananDAO.getAllDetailPesanan();
+        List<Produk> listProduk = produkDAO.getAllProduk();
+
+        if (listDetail != null && listProduk != null) {
+            for (DetailPesanan dp : listDetail) {
+                for (Produk pr : listProduk) {
+                    if (pr.getIdProduk() == dp.getProdukIdProduk()) {
+                        String kat = pr.getKategori();
+                        mapKategori.put(kat, mapKategori.getOrDefault(kat, 0) + dp.getJumlahProduk());
+                    }
+                }
+            }
+        }
+
+        String kategoriTerlaris = "-";
+        int maxTerjual = 0;
+        for (java.util.Map.Entry<String, Integer> entry : mapKategori.entrySet()) {
+            if (entry.getValue() > maxTerjual) {
+                maxTerjual = entry.getValue();
+                kategoriTerlaris = entry.getKey();
+            }
+        }
+        return kategoriTerlaris + " (" + maxTerjual + " terjual)";
+    }
+
+    // D. Kecamatan Pembeli dengan Transaksi Terbanyak
+    public String getKecamatanTransaksiTerbanyak() {
+        java.util.Map<String, Integer> mapKecamatan = new java.util.HashMap<>();
+        List<Pesanan> listPesanan = pesananDAO.getAllPesanan();
+        List<Pembeli> listPembeli = pembeliDAO.getAllPembeli();
+
+        if (listPesanan != null && listPembeli != null) {
+            for (Pesanan p : listPesanan) {
+                for (Pembeli pb : listPembeli) {
+                    if (pb.getIdPengguna() == p.getPembeliIdPengguna()) {
+                        String kec = pb.getKecamatan();
+                        if (kec != null && !kec.isEmpty()) {
+                            mapKecamatan.put(kec, mapKecamatan.getOrDefault(kec, 0) + 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        String kecamatanTop = "-";
+        int maxTransaksi = 0;
+        for (java.util.Map.Entry<String, Integer> entry : mapKecamatan.entrySet()) {
+            if (entry.getValue() > maxTransaksi) {
+                maxTransaksi = entry.getValue();
+                kecamatanTop = entry.getKey();
+            }
+        }
+        return kecamatanTop + " (" + maxTransaksi + " transaksi)";
     }
 }

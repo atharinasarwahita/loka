@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
 import config.Koneksi;
@@ -75,7 +71,6 @@ public class PesananDAO {
         return list;
     }
 
-    // --- TAMBAHAN PELENGKAP USE CASE: UPDATE STATUS PESANAN ---
     public void updateStatusPesanan(int noPesanan, StatusPesanan statusPesanan, java.util.Date tglDikirim, java.util.Date tglDiterima) {
         String query = "UPDATE pesanan SET status_pesanan = ?, tanggal_dikirim = ?, tanggal_diterima = ? WHERE no_pesanan = ?";
 

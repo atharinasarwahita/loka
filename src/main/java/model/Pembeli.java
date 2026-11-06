@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package model;
 
 import enums.JenisKelamin;
@@ -36,6 +31,12 @@ public class Pembeli extends Pengguna {
         setPin(pin);
         this.statusAkun = statusAkun;
         this.tanggalDaftar = tanggalDaftar;
+    }
+
+    // POLYMORPHISM: Implementasi method abstrak dari Pengguna
+    @Override
+    public void tampilkanInfoRole() {
+        System.out.println("Role: Pembeli | Nama: " + getNamaLengkap() + " | Saldo: Rp " + saldo);
     }
 
     public Date getTanggalLahir() { 

@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package model;
 
 import enums.RolePengguna;
 
-public class Pengguna {
+public abstract class Pengguna {
     private int idPengguna;
     private String namaLengkap;
     private String email;
@@ -25,6 +20,8 @@ public class Pengguna {
         setNoTelpon(noTelpon);
         this.role = role;
     }
+
+    public abstract void tampilkanInfoRole();
 
     public int getIdPengguna() { 
         return idPengguna; 

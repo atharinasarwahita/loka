@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 import enums.PosisiPengelola;
@@ -15,6 +11,11 @@ public class Pengelola extends Pengguna {
     public Pengelola(int idPengguna, String namaLengkap, String email, String password, String noTelpon, RolePengguna role, PosisiPengelola posisi) {
         super(idPengguna, namaLengkap, email, password, noTelpon, role);
         setPosisi(posisi);
+    }
+
+    @Override
+    public void tampilkanInfoRole() {
+        System.out.println("Role: Pengelola | Posisi: " + posisi);
     }
 
     public PosisiPengelola getPosisi() { 

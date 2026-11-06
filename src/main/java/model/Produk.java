@@ -14,7 +14,7 @@ public class Produk {
     private String namaProduk;
     private String deskripsi;
     private String kategori;
-    private String gambarProduk;
+    private String gambarProduk; // Path/Link string penyimpanan gambar
     private double harga;
     private int beratGram;
     private int stok;
@@ -95,7 +95,9 @@ public class Produk {
     }
     
     public void setHarga(double harga) { 
-        this.harga = harga; 
+        if (validasiHarga(harga)) {
+            this.harga = harga; 
+        }
     }
 
     public int getBeratGram() { 
@@ -103,7 +105,9 @@ public class Produk {
     }
     
     public void setBeratGram(int beratGram) { 
-        this.beratGram = beratGram; 
+        if (validasiBerat(beratGram)) {
+            this.beratGram = beratGram; 
+        }
     }
 
     public int getStok() { 
@@ -111,7 +115,9 @@ public class Produk {
     }
     
     public void setStok(int stok) { 
-        this.stok = stok; 
+        if (validasiStok(stok)) {
+            this.stok = stok; 
+        }
     }
 
     public StatusProduk getStatus() { 
@@ -145,6 +151,7 @@ public class Produk {
     public void setTanggalDibuat(Date tanggalDibuat) { 
         this.tanggalDibuat = tanggalDibuat; 
     }
+
     public boolean validasiHarga(double harga) {
         if (harga > 0) {
             return true;

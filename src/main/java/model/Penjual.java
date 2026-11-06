@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 import enums.RolePengguna;
@@ -42,6 +38,12 @@ public class Penjual extends Pengguna {
         this.tanggalVerifikasi = tanggalVerifikasi;
         this.statusAkun = statusAkun;
         this.tanggalDaftar = tanggalDaftar;
+    }
+
+    // POLYMORPHISM: Implementasi method abstrak dari Pengguna
+    @Override
+    public void tampilkanInfoRole() {
+        System.out.println("Role: Penjual | Nama Toko: " + namaToko + " | Status Verifikasi: " + statusVerifikasi);
     }
 
     public String getNamaToko() { 
