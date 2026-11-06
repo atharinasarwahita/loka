@@ -47,7 +47,7 @@ public class LoginUser extends javax.swing.JFrame {
         jTextUsername = new javax.swing.JTextField();
         jLblPassword = new javax.swing.JLabel();
         jTextPassword = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jBtnRegis = new javax.swing.JButton();
         jLabelPunyaAkun = new javax.swing.JLabel();
         jBtnMasuk = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
@@ -79,20 +79,20 @@ public class LoginUser extends javax.swing.JFrame {
         jLblUsername.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLblUsername.setText("Email");
 
-        jTextUsername.setForeground(new java.awt.Color(204, 204, 204));
+        jTextUsername.setForeground(new java.awt.Color(51, 51, 51));
         jTextUsername.setText("Masukkan Username/Email");
         jTextUsername.addActionListener(this::jTextUsernameActionPerformed);
 
         jLblPassword.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLblPassword.setText("Password");
 
-        jTextPassword.setForeground(new java.awt.Color(204, 204, 204));
+        jTextPassword.setForeground(new java.awt.Color(51, 51, 51));
         jTextPassword.setText("Masukkan Password");
         jTextPassword.addActionListener(this::jTextPasswordActionPerformed);
 
-        jButton2.setFont(new java.awt.Font("Inter", 1, 10)); // NOI18N
-        jButton2.setText("Registrasi di Sini");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        jBtnRegis.setFont(new java.awt.Font("Inter", 1, 10)); // NOI18N
+        jBtnRegis.setText("Registrasi di Sini");
+        jBtnRegis.addActionListener(this::jBtnRegisActionPerformed);
 
         jLabelPunyaAkun.setFont(new java.awt.Font("Inter", 0, 10)); // NOI18N
         jLabelPunyaAkun.setText("Belum punya akun?");
@@ -130,7 +130,7 @@ public class LoginUser extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabelPunyaAkun)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(jBtnRegis)
                         .addGap(114, 114, 114))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jBtnMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -156,7 +156,7 @@ public class LoginUser extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelPunyaAkun)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, Short.MAX_VALUE))
+                    .addComponent(jBtnRegis, javax.swing.GroupLayout.PREFERRED_SIZE, 16, Short.MAX_VALUE))
                 .addGap(239, 239, 239))
         );
 
@@ -226,9 +226,10 @@ public class LoginUser extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextPasswordActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jBtnRegisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRegisActionPerformed
+        new GUIUmum.RegistrasiAkun().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jBtnRegisActionPerformed
 
     private void jBtnMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMasukActionPerformed
                                         
@@ -310,8 +311,8 @@ String email = jTextUsername.getText().trim();
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.JButton jBtnBeranda1;
     private javax.swing.JButton jBtnMasuk;
+    private javax.swing.JButton jBtnRegis;
     private javax.swing.JButton jBtnTentangKami1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jJudulLogin;
     private javax.swing.JLabel jJudulRegis1;
     private javax.swing.JLabel jLabel3;

@@ -4,12 +4,45 @@
  */
 package GUIPembeli;
 
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.net.URL;
 /**
  *
  * @author LENOVO
  */
 public class CardProdukItem extends javax.swing.JPanel {
 
+    private int idProduk;
+
+    public CardProdukItem(int idProduk, String namaProduk, String kategori, double harga, String namaFileGambar) {
+        initComponents();
+        this.idProduk = idProduk;
+
+        jLblNamaProduk.setText(namaProduk);
+        jLblKategori.setText(kategori);
+        jLblHargaProduk.setText("Rp " + String.format("%,.0f", harga).replace(',', '.'));
+
+        try {
+            URL imageUrl = getClass().getResource("/gambar/" + namaFileGambar);
+            if (imageUrl != null) {
+                ImageIcon iconOriginal = new ImageIcon(imageUrl);
+                Image imgSkala = iconOriginal.getImage().getScaledInstance(441, 185, Image.SCALE_SMOOTH);
+                jLblGambarProduk.setIcon(new ImageIcon(imgSkala));
+                jLblGambarProduk.setText("");
+            } else {
+                jLblGambarProduk.setIcon(null);
+                jLblGambarProduk.setText("No Image");
+            }
+        } catch (Exception e) {
+            jLblGambarProduk.setIcon(null);
+            jLblGambarProduk.setText("Error");
+        }
+    }
+
+    public int getIdProduk() {
+        return idProduk;
+    }
     /**
      * Creates new form CardProdukItem
      */
@@ -27,43 +60,45 @@ public class CardProdukItem extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLblGambarProduk5 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
+        jLblGambarProduk = new javax.swing.JLabel();
+        jLblKategori = new javax.swing.JLabel();
+        jLblNamaProduk = new javax.swing.JLabel();
+        jLblNamaToko = new javax.swing.JLabel();
+        jLblHargaProduk = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(236, 226, 206)));
 
-        jLabel1.setBackground(new java.awt.Color(219, 223, 208));
-        jLabel1.setFont(new java.awt.Font("Inter", 1, 10)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(75, 93, 22));
-        jLabel1.setText("Fashion");
-        jLabel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        jLabel1.setOpaque(true);
+        jLblGambarProduk.setText("foto");
 
-        jLabel32.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel32.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jLabel32.setText("Baju Batik Samarinda Motif Belanga");
-        jLabel32.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        jLabel32.setOpaque(true);
+        jLblKategori.setBackground(new java.awt.Color(219, 223, 208));
+        jLblKategori.setFont(new java.awt.Font("Inter", 1, 10)); // NOI18N
+        jLblKategori.setForeground(new java.awt.Color(75, 93, 22));
+        jLblKategori.setText("Fashion");
+        jLblKategori.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        jLblKategori.setOpaque(true);
 
-        jLabel33.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel33.setFont(new java.awt.Font("Inter", 0, 10)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(148, 163, 184));
-        jLabel33.setText("Batik Samarinda");
-        jLabel33.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        jLabel33.setOpaque(true);
+        jLblNamaProduk.setBackground(new java.awt.Color(255, 255, 255));
+        jLblNamaProduk.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblNamaProduk.setText("Baju Batik Samarinda Motif Belanga");
+        jLblNamaProduk.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        jLblNamaProduk.setOpaque(true);
 
-        jLabel34.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel34.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jLabel34.setForeground(new java.awt.Color(228, 92, 16));
-        jLabel34.setText("Rp175.000");
-        jLabel34.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        jLabel34.setOpaque(true);
+        jLblNamaToko.setBackground(new java.awt.Color(255, 255, 255));
+        jLblNamaToko.setFont(new java.awt.Font("Inter", 0, 10)); // NOI18N
+        jLblNamaToko.setForeground(new java.awt.Color(148, 163, 184));
+        jLblNamaToko.setText("Batik Samarinda");
+        jLblNamaToko.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        jLblNamaToko.setOpaque(true);
+
+        jLblHargaProduk.setBackground(new java.awt.Color(255, 255, 255));
+        jLblHargaProduk.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblHargaProduk.setForeground(new java.awt.Color(228, 92, 16));
+        jLblHargaProduk.setText("Rp175.000");
+        jLblHargaProduk.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
+        jLblHargaProduk.setOpaque(true);
 
         jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/Star.png"))); // NOI18N
         jLabel35.setPreferredSize(new java.awt.Dimension(10, 10));
@@ -78,48 +113,50 @@ public class CardProdukItem extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 10, Short.MAX_VALUE)
+                        .addComponent(jLblGambarProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLblHargaProduk, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLblKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLblNamaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLblNamaToko, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(72, 72, 72)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel36))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(72, 72, 72))
-                            .addComponent(jLblGambarProduk5, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel36)))
                 .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLblGambarProduk5, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jLblGambarProduk, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLblKategori)
+                        .addGap(7, 7, 7)
+                        .addComponent(jLblNamaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLblNamaToko, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(jLblHargaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jLabel36, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel35, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,53 +166,13 @@ public class CardProdukItem extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLblGambarProduk;
-    private javax.swing.JLabel jLblGambarProduk1;
-    private javax.swing.JLabel jLblGambarProduk2;
-    private javax.swing.JLabel jLblGambarProduk3;
-    private javax.swing.JLabel jLblGambarProduk4;
-    private javax.swing.JLabel jLblGambarProduk5;
+    private javax.swing.JLabel jLblHargaProduk;
+    private javax.swing.JLabel jLblKategori;
+    private javax.swing.JLabel jLblNamaProduk;
+    private javax.swing.JLabel jLblNamaToko;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     // End of variables declaration//GEN-END:variables
 }

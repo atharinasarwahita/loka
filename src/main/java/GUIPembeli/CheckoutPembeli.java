@@ -70,6 +70,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
             if (p.getIdPengguna() == this.idPembeli) {
                 jLblNamaUser.setText("Halo, " + p.getNamaLengkap() + "!");
                 jLblSaldoAktif.setText("Rp " + String.format("%,.0f", p.getSaldo()).replace(',', '.'));
+                jLblSaldoLoka.setText("Rp " + String.format("%,.0f", p.getSaldo()).replace(',', '.'));
                 break;
             }
         }
@@ -135,7 +136,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
         jLblOngkirRingkasan = new javax.swing.JLabel();
         jLblSubtotal = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
-        jLabel26 = new javax.swing.JLabel();
+        jLblSaldoLoka = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jBtnKonfirmasiBayar = new javax.swing.JButton();
         jLblNamaUser = new javax.swing.JLabel();
@@ -195,7 +196,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
         jBtnProfilPembeli.addActionListener(this::jBtnProfilPembeliActionPerformed);
 
         jBtnKeluar.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        jBtnKeluar.setForeground(new java.awt.Color(71, 85, 105));
+        jBtnKeluar.setForeground(new java.awt.Color(239, 68, 68));
         jBtnKeluar.setText("Keluar");
         jBtnKeluar.setAlignmentX(0.5F);
         jBtnKeluar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
@@ -435,9 +436,9 @@ public class CheckoutPembeli extends javax.swing.JFrame {
         jPanel12.setBackground(new java.awt.Color(255, 251, 235));
         jPanel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(253, 230, 138)));
 
-        jLabel26.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(228, 92, 16));
-        jLabel26.setText("Rp500.000");
+        jLblSaldoLoka.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblSaldoLoka.setForeground(new java.awt.Color(228, 92, 16));
+        jLblSaldoLoka.setText("Rp500.000");
 
         jLabel27.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(2, 44, 34));
@@ -451,7 +452,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLblSaldoLoka, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
@@ -459,7 +460,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLblSaldoLoka, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -747,7 +748,6 @@ public class CheckoutPembeli extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -759,6 +759,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
     private javax.swing.JLabel jLblOngkir;
     private javax.swing.JLabel jLblOngkirRingkasan;
     private javax.swing.JLabel jLblSaldoAktif;
+    private javax.swing.JLabel jLblSaldoLoka;
     private javax.swing.JLabel jLblSubtotal;
     private javax.swing.JLabel jLblTotal;
     private javax.swing.JPanel jPanel1;

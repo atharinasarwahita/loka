@@ -189,7 +189,7 @@
                   <Font name="Inter" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="69" green="55" red="47" type="rgb"/>
+                  <Color blue="44" green="44" red="ef" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Keluar"/>
                 <Property name="alignmentX" type="float" value="0.5"/>
