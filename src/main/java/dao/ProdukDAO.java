@@ -56,7 +56,7 @@ public class ProdukDAO {
                 p.setBeratGram(rs.getInt("berat_gram"));
                 p.setStok(rs.getInt("stok"));
                 p.setStatus(StatusProduk.valueOf(rs.getString("status")));
-                p.setIzinJual(IzinJual.valueOf(rs.getString("izin_jual")));
+                p.setIzinJual(IzinJual.fromString(rs.getString("izin_jual")));
                 p.setJumlahShare(rs.getInt("jumlah_share"));
                 p.setTanggalDibuat(rs.getTimestamp("tanggal_dibuat"));
                 list.add(p);
