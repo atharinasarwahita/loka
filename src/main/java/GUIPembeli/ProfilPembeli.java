@@ -39,15 +39,15 @@ public class ProfilPembeli extends javax.swing.JFrame {
     }
     
     private void muatDataProfil() {
-        // Ambil data pembeli berdasarkan ID menggunakan controller
+
         List<model.Pembeli> listPembeli = control.ambilSemuaPembeli();
         if (listPembeli != null) {
             for (model.Pembeli pb : listPembeli) {
                 if (pb.getIdPengguna() == idPembeli) {
-                    // Masukkan data asli ke text field
+
                     jTxtNama.setText(pb.getNamaLengkap());
                     jTxtAlamat.setText(pb.getAlamatPengiriman());
-                    // Ubah juga label sapaan "Halo, User!" jadi nama asli kalau mau:
+
                     jLabel16.setText("Halo, " + pb.getNamaLengkap() + "!");
                     break;
                 }

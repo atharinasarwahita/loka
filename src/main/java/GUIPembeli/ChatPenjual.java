@@ -42,12 +42,12 @@ public class ChatPenjual extends javax.swing.JFrame {
     public ChatPenjual(int idPembeli, int idPenjualTujuan) {
         this.idPembeli = idPembeli;
         this.selectedPenjualId = idPenjualTujuan;
-        this.idPenjualDipilih = idPenjualTujuan; // <--- INI KUNCINYA AGAR LANGSUNG KELOCK
+        this.idPenjualDipilih = idPenjualTujuan; 
         initComponents();
         muatNamaDanSaldoUser();
         muatListPesanMasuk();
         
-        // Jika dibuka dari detail produk membawa ID Penjual, langsung buka room chat-nya otomatis!
+
         if (idPenjualTujuan != -1) {
             model.Penjual p = control.getDetailPenjualById(idPenjualTujuan);
             String namaToko = (p != null && p.getNamaToko() != null) ? p.getNamaToko() : "Toko #" + idPenjualTujuan;
@@ -71,12 +71,11 @@ public class ChatPenjual extends javax.swing.JFrame {
 
         List<Pesan> allPesan = control.ambilSemuaPesan();
         if (allPesan != null) {
-            // Gunakan LinkedHashMap untuk menyimpan pesan terakhir dari tiap penjual unik
+
             java.util.Map<Integer, Pesan> mapLatest = new java.util.LinkedHashMap<>();
             for (Pesan item : allPesan) {
                 if (item.getPembeliIdPengguna() == idPembeli) {
-                    // Karena list terurut dari lama ke baru, map ini akan otomatis 
-                    // menimpa dengan pesan yang paling baru di akhir iterasi
+
                     mapLatest.put(item.getPenjualIdPengguna(), item); 
                 }
             }

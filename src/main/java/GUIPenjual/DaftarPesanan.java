@@ -25,14 +25,13 @@ public class DaftarPesanan extends javax.swing.JFrame {
     private int idPenjual;
     private LokaControl control = new LokaControl();
 
-    // Constructor default
     public DaftarPesanan() {
         initComponents();
         loadTabelPesanan();
         jTblDaftarPesanan.setSelectionBackground(new java.awt.Color(228, 92, 16)); // Warna oren khas Loka
         jTblDaftarPesanan.setSelectionForeground(java.awt.Color.WHITE); // Teks berubah jadi putih terang pas diklik
 
-        // 2. Tambahkan aksi double-click untuk melihat detail lengkap (termasuk alasan pengembalian penuh)
+        
         jTblDaftarPesanan.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -71,10 +70,10 @@ public class DaftarPesanan extends javax.swing.JFrame {
         initComponents();
         loadTabelPesanan();
         
-        jTblDaftarPesanan.setSelectionBackground(new java.awt.Color(228, 92, 16)); // Warna oren khas Loka
-        jTblDaftarPesanan.setSelectionForeground(java.awt.Color.WHITE); // Teks berubah jadi putih terang pas diklik
+        jTblDaftarPesanan.setSelectionBackground(new java.awt.Color(228, 92, 16)); 
+        jTblDaftarPesanan.setSelectionForeground(java.awt.Color.WHITE); 
 
-        // 2. Tambahkan aksi double-click untuk melihat detail lengkap (termasuk alasan pengembalian penuh)
+        
         jTblDaftarPesanan.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {

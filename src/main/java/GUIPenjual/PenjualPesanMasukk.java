@@ -35,7 +35,6 @@ public class PenjualPesanMasukk extends javax.swing.JPanel {
             jLblStatus.setForeground(new java.awt.Color(75, 93, 22));
         }
 
-        // Event klik untuk membuka room chat
         java.awt.event.MouseAdapter klik = new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {

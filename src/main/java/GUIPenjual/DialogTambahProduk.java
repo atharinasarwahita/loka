@@ -27,7 +27,6 @@ public class DialogTambahProduk extends javax.swing.JDialog {
         initComponents();
     }
 
-    // Tambahkan constructor ini agar cocok dengan parameter (this, true, this.idPenjual)
     public DialogTambahProduk(java.awt.Frame parent, boolean modal, int idPenjual) {
         super(parent, modal);
         this.idPenjual = idPenjual;

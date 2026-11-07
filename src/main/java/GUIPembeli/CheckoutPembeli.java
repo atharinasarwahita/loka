@@ -37,9 +37,30 @@ public class CheckoutPembeli extends javax.swing.JFrame {
         this.jarak = jarak;
         this.dariKeranjang = dariKeranjang;
 
+        // Set teks jumlah pesanan di form
+        jLblHargaPesanan1.setText("Jumlah: " + jumlah + " Pcs");
+
         for (Produk p : control.ambilSemuaProduk()) {
             if (p.getIdProduk() == idProduk) {
                 hargaSatuan = p.getHarga();
+                
+                // Set data produk ke komponen UI
+                jLblNamaProduk.setText(p.getNamaProduk());
+                jLblHargaPesanan.setText(rupiah(p.getHarga()));
+                
+                
+                try {
+                    if (p.getGambarProduk() != null && !p.getGambarProduk().isEmpty()) {
+                        java.net.URL imgUrl = getClass().getResource("/gambarproduk/" + p.getGambarProduk());
+                        if (imgUrl != null) {
+                            javax.swing.ImageIcon icon = new javax.swing.ImageIcon(imgUrl);
+                            java.awt.Image img = icon.getImage().getScaledInstance(jLblGambarProdukDetail.getWidth(), jLblGambarProdukDetail.getHeight(), java.awt.Image.SCALE_SMOOTH);
+                            jLblGambarProdukDetail.setIcon(new javax.swing.ImageIcon(img));
+                        }
+                    }
+                } catch (Exception e) {
+
+                }
                 break;
             }
         }
@@ -59,7 +80,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    // Konstruktor Kosong (Safety Net)
+
     public CheckoutPembeli() {
         initComponents();
         setLocationRelativeTo(null);

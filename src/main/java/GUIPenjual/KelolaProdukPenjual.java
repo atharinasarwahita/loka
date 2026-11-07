@@ -36,13 +36,12 @@ public class KelolaProdukPenjual extends javax.swing.JFrame {
     
     public void loadDataTabel() {
         DefaultTableModel model = (DefaultTableModel) jTblDaftarProduk.getModel();
-        model.setRowCount(0); // Clear isi tabel dulu
+        model.setRowCount(0); 
 
         List<Produk> listProduk = control.ambilSemuaProduk();
         if (listProduk != null) {
             for (Produk p : listProduk) {
-                // Jika this.idPenjual bernilai 0 (dipanggil via main/constructor default), 
-                // tampilkan semua produk dulu biar data kelihatan!
+
                 if (this.idPenjual == 0 || p.getPenjualIdPengguna() == this.idPenjual) {
                     model.addRow(new Object[]{
                         p.getIdProduk(),
