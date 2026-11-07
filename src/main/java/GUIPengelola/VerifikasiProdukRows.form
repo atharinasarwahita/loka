@@ -44,7 +44,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLblNamaProduk" min="-2" pref="158" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jLblAlamat" min="-2" pref="125" max="-2" attributes="0"/>
+                  <Component id="jLblKategori" min="-2" pref="125" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLblStatus" min="-2" pref="98" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -63,7 +63,7 @@
                       <Component id="jLblIdProduk" alignment="3" pref="29" max="32767" attributes="0"/>
                       <Component id="jLblNamaToko" alignment="3" max="32767" attributes="0"/>
                       <Component id="jLblNamaProduk" alignment="3" max="32767" attributes="0"/>
-                      <Component id="jLblAlamat" alignment="3" max="32767" attributes="0"/>
+                      <Component id="jLblKategori" alignment="3" max="32767" attributes="0"/>
                       <Component id="jLblStatus" alignment="3" max="32767" attributes="0"/>
                       <Component id="jBtnSetuju" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jBtnTolak" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -116,7 +116,7 @@
             <Property name="text" type="java.lang.String" value="Nama Produk"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLblAlamat">
+        <Component class="javax.swing.JLabel" name="jLblKategori">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -157,6 +157,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Setujui"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnSetujuActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jBtnTolak">
           <Properties>
@@ -171,6 +174,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Tolak"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnTolakActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

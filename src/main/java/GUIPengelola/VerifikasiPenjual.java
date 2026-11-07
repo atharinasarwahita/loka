@@ -39,12 +39,11 @@ public class VerifikasiPenjual extends javax.swing.JFrame {
     
     public void kosongkanDetailBawah() {
         jLblNamaPemilik.setText("-"); 
-        jLabel14.setText("-");
         jLblNamaToko.setText("-"); 
-        jLabel18.setText("-"); 
         jLblAlamatToko.setText("-");
         jLblTglDaftar.setText("-"); 
-        jLabel20.setText("-"); 
+        jLblNoIzinUsaha.setText("-"); 
+        jLblDeskToko.setText("-"); 
         jLabel23.setText("Pilih Data"); 
     }
     
@@ -52,15 +51,14 @@ public class VerifikasiPenjual extends javax.swing.JFrame {
         jPanel8.removeAll();
         jPanel8.setLayout(new javax.swing.BoxLayout(jPanel8, javax.swing.BoxLayout.Y_AXIS));
 
-        // Ambil data dari controller/database (sesuaikan method di control kamu)
         List<Penjual> list = control.getListPenjualBelumVerifikasi(); 
         if (list != null) {
             for (Penjual p : list) {
                 VerifikasiPenjualRows row = new VerifikasiPenjualRows();
-                row.setData(p, this); // Kirim data penjual dan referensi form utama ini
+                row.setData(p, this);
                 row.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, row.getPreferredSize().height));
                 jPanel8.add(row);
-                jPanel8.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 5))); // Jarak antar baris
+                jPanel8.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 5))); 
             }
         }
         jPanel8.revalidate();
@@ -68,32 +66,26 @@ public class VerifikasiPenjual extends javax.swing.JFrame {
     }
     
     public void tampilkanDetail(int idPengguna) {
-    Penjual p = control.getDetailPenjualById(idPengguna);
+        Penjual p = control.getDetailPenjualById(idPengguna);
         if (p != null) {
-            jLblNamaPemilik.setText(p.getNamaPemilik());
-            jLabel14.setText(p.getNamaToko());
-            jLblNamaToko.setText(p.getNamaToko());
-            jLabel18.setText(p.getDeskripsiToko());
-            jLblAlamatToko.setText(p.getAlamatToko());
-            
-            // Ubah Date ke String pakai String.valueOf() atau toString()
+            jLblNamaPemilik.setText(p.getNamaPemilik() != null ? p.getNamaPemilik() : "-");
+            jLblNamaToko.setText(p.getNamaToko() != null ? p.getNamaToko() : "-");
+            jLblDeskToko.setText(p.getDeskripsiToko() != null ? p.getDeskripsiToko() : "-");
+            jLblAlamatToko.setText(p.getAlamatToko() != null ? p.getAlamatToko() : "-");
             jLblTglDaftar.setText(p.getTanggalDaftar() != null ? p.getTanggalDaftar().toString() : "-");
-            
-            jLabel20.setText(p.getNoIzinUsaha());
-            
-            // Ubah StatusVerifikasi ke String pakai .toString()
+            jLblNoIzinUsaha.setText(p.getNoIzinUsaha() != null ? p.getNoIzinUsaha() : "-");
+
             jLabel23.setText(p.getStatusVerifikasi() != null ? p.getStatusVerifikasi().toString() : "-");
         }
     }
     
     public void prosesVerifikasi(int idPenjual, String aksi) {
-    // Panggil control untuk update status verifikasi penjual
+
         if ("Setuju".equalsIgnoreCase(aksi)) {
             control.verifikasiPenjual(idPenjual, StatusVerifikasi.Terverifikasi, new java.util.Date());
-        } else {
-            control.verifikasiPenjual(idPenjual, StatusVerifikasi.BelumDiverifikasi, new java.util.Date());
+        } else if ("Tolak".equalsIgnoreCase(aksi)) {
+            control.verifikasiPenjual(idPenjual, StatusVerifikasi.Ditolak, new java.util.Date());
         }
-        // Refresh ulang data tabel/list di halaman verifikasi (dipanggil yang benar)
         muatDataKeTabelRows(); 
     }
 

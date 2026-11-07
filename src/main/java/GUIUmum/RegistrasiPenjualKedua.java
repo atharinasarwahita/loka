@@ -102,14 +102,14 @@ public class RegistrasiPenjualKedua extends javax.swing.JFrame {
         jLblNamaLengkap.setText("Alamat Toko");
 
         jTextFNamaLengkap.setForeground(new java.awt.Color(51, 51, 51));
-        jTextFNamaLengkap.setText("Masukkan Nama Lengkap");
+        jTextFNamaLengkap.setText("Masukkan Alamat Toko");
         jTextFNamaLengkap.addActionListener(this::jTextFNamaLengkapActionPerformed);
 
         jLblNamaToko.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLblNamaToko.setText("Kota");
 
         jTextFNamaToko.setForeground(new java.awt.Color(51, 51, 51));
-        jTextFNamaToko.setText("Masukkan Nama Toko");
+        jTextFNamaToko.setText("Masukkan Kota");
         jTextFNamaToko.addActionListener(this::jTextFNamaTokoActionPerformed);
 
         jTextKategori.setForeground(new java.awt.Color(51, 51, 51));
@@ -123,14 +123,14 @@ public class RegistrasiPenjualKedua extends javax.swing.JFrame {
         jLblNoHP.setText("Kode Pos");
 
         jTextNoHP.setForeground(new java.awt.Color(51, 51, 51));
-        jTextNoHP.setText("ex. 080000000000");
+        jTextNoHP.setText("contoh: 75115");
         jTextNoHP.addActionListener(this::jTextNoHPActionPerformed);
 
         jLblDeskripsi.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLblDeskripsi.setText("Nomor Izin Usaha");
 
         jTextDeskripsi.setForeground(new java.awt.Color(51, 51, 51));
-        jTextDeskripsi.setText("Masukkan Deskripsi Toko");
+        jTextDeskripsi.setText("Masukkan No Izin Usaha");
         jTextDeskripsi.addActionListener(this::jTextDeskripsiActionPerformed);
 
         jBtnDaftarSekarang.setBackground(new java.awt.Color(228, 92, 16));
@@ -358,11 +358,14 @@ public class RegistrasiPenjualKedua extends javax.swing.JFrame {
         }
 
         try {
-            // Panggil Controller LOKA
             controll.LokaControl control = new controll.LokaControl();
+            
+            // Generate ID unik otomatis berdasarkan waktu
+            int idPengguna = (int) (System.currentTimeMillis() % 100000);
 
+            // Simpan ke database dengan status Belum Diverifikasi dan Akun Tidak Aktif/Pending
             control.registerPenjual(
-                0,
+                idPengguna,
                 this.namaPemilik,
                 this.email,
                 password,
@@ -377,13 +380,13 @@ public class RegistrasiPenjualKedua extends javax.swing.JFrame {
                 noIzin,
                 StatusVerifikasi.BelumDiverifikasi,
                 new java.util.Date(),
-                StatusAkun.Aktif,     
+                StatusAkun.Nonaktif,
                 new java.util.Date()
             );
 
-            JOptionPane.showMessageDialog(this, "Pendaftaran Merchant Berhasil! Silakan Login.", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Pendaftaran berhasil! Akun Anda menunggu verifikasi pengelola.", "Informasi", JOptionPane.INFORMATION_MESSAGE);
 
-            new GUIUmum.LoginUser().setVisible(true);
+            new GUIUmum.Beranda().setVisible(true);
             this.dispose();
 
         } catch (Exception e) {

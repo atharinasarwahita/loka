@@ -35,7 +35,6 @@ public class DashboardPenjual extends javax.swing.JFrame {
     }
     
     private void loadDashboardData() {
-        // 1. Set Nama Toko di Header Banner (jLabel3)
         List<Penjual> listPenjual = control.ambilSemuaPenjual();
         if (listPenjual != null) {
             for (Penjual p : listPenjual) {
@@ -64,7 +63,7 @@ public class DashboardPenjual extends javax.swing.JFrame {
         if (listPesanan != null) {
             for (Pesanan pes : listPesanan) {
                 if (this.idPengguna == 0 || pes.getPenjualIdPengguna() == this.idPengguna) {
-                    // Hitung pesanan aktif/masuk
+
                     if (pes.getStatusPesanan() == StatusPesanan.Diproses) {
                         pesananMasuk++;
                     }
@@ -79,6 +78,9 @@ public class DashboardPenjual extends javax.swing.JFrame {
         
         NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
         jLabel8.setText(formatRupiah.format(totalPendapatan));
+
+        String infoPelangganRoyal = control.getInfoPelangganTerloyal(this.idPengguna);
+        jLblNamaPelangganRoyal.setText(infoPelangganRoyal);
     }
 
     /**
@@ -349,10 +351,10 @@ public class DashboardPenjual extends javax.swing.JFrame {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Pelanggan Ter-Royal");
 
-        jLblNamaPelangganRoyal.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
+        jLblNamaPelangganRoyal.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         jLblNamaPelangganRoyal.setForeground(new java.awt.Color(75, 93, 22));
         jLblNamaPelangganRoyal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLblNamaPelangganRoyal.setText("5 Pesanan");
+        jLblNamaPelangganRoyal.setText("Nama");
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);

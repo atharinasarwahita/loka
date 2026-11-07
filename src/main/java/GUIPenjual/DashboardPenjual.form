@@ -608,13 +608,13 @@
                     <Component class="javax.swing.JLabel" name="jLblNamaPelangganRoyal">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Inter" size="24" style="1"/>
+                          <Font name="Inter" size="18" style="1"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="16" green="5d" red="4b" type="rgb"/>
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="5 Pesanan"/>
+                        <Property name="text" type="java.lang.String" value="Nama"/>
                       </Properties>
                     </Component>
                   </SubComponents>

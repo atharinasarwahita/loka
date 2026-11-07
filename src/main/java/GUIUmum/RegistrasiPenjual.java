@@ -320,7 +320,21 @@ public class RegistrasiPenjual extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnTentangKami1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new GUIUmum.RegistrasiPenjualKedua().setVisible(true);
+        String namaPemilik = jTxtNamaPemilik.getText().trim();
+        String namaToko = jTxtNamaToko.getText().trim();
+        String kategori = jTxtKategori.getText().trim();
+        String noHp = jTxtNoHP.getText().trim();
+        String deskripsi = jTxtDeskripsi.getText().trim();
+        String email = jTxtEmail.getText().trim();
+
+        // Validasi input kosong
+        if (namaPemilik.isEmpty() || namaToko.isEmpty() || kategori.isEmpty() || noHp.isEmpty() || deskripsi.isEmpty() || email.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Mohon lengkapi semua data terlebih dahulu!", "Peringatan", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Lempar data ke Form Registrasi Kedua
+        new RegistrasiPenjualKedua(namaPemilik, namaToko, kategori, noHp, deskripsi, email).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

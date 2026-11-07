@@ -14,7 +14,7 @@ import java.util.List;
 public class PengembalianDAO {
 
     public void insertPengembalian(Pengembalian pengembalian) {
-        // id_pengembalian dihapus karena sudah AUTO_INCREMENT
+
         String query = "INSERT INTO pengembalian (alasan_pengembalian, nominal_pengembalian, status_pengembalian, tanggal_pengembalian) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = Koneksi.getConnection();
@@ -23,12 +23,12 @@ public class PengembalianDAO {
             ps.setString(1, pengembalian.getAlasanPengembalian());
             ps.setDouble(2, pengembalian.getNominalPengembalian());
             
-            // Konversi status enum ke string database (menangani spasi jika ada)
+
             String statusStr = "Diproses";
             if (pengembalian.getStatusPengembalian() != null) {
                 switch (pengembalian.getStatusPengembalian()) {
                     case PengembalianDisetujui:
-                        statusStr = "Pengembalian Disetujui"; // Sesuaikan dengan database (bisa pakai spasi/tidak)
+                        statusStr = "Pengembalian Disetujui"; 
                         break;
                     case PengembalianDitolak:
                         statusStr = "Pengembalian Ditolak";
@@ -62,17 +62,17 @@ public class PengembalianDAO {
                 p.setAlasanPengembalian(rs.getString("alasan_pengembalian"));
                 p.setNominalPengembalian(rs.getDouble("nominal_pengembalian"));
                 
-                // --- MENGATASI ERROR ENUM SPASI DARI DATABASE ---
+
                 String dbStatus = rs.getString("status_pengembalian");
                 StatusPengembalian statusEnum = StatusPengembalian.Diproses; // Default
                 
                 if (dbStatus != null) {
-                    // Hilangkan spasi atau sesuaikan dengan konstanta enum Java
+
                     String cleanedStatus = dbStatus.replace(" ", ""); 
                     try {
                         statusEnum = StatusPengembalian.valueOf(cleanedStatus);
                     } catch (IllegalArgumentException e) {
-                        // Fallback jika tidak ditemukan
+
                         if (dbStatus.equalsIgnoreCase("Pengembalian Disetujui")) {
                             statusEnum = StatusPengembalian.PengembalianDisetujui;
                         } else if (dbStatus.equalsIgnoreCase("Pengembalian Ditolak")) {
@@ -81,7 +81,6 @@ public class PengembalianDAO {
                     }
                 }
                 p.setStatusPengembalian(statusEnum);
-                // ----------------------------------------------
 
                 p.setTanggalPengembalian(rs.getTimestamp("tanggal_pengembalian"));
                 list.add(p);
@@ -92,14 +91,12 @@ public class PengembalianDAO {
         return list;
     }
 
-    // --- PELENGKAP USE CASE: UPDATE STATUS PENGEMBALIAN (RETUR) ---
     public void updateStatusPengembalian(int idPengembalian, StatusPengembalian statusPengembalian) {
         String query = "UPDATE pengembalian SET status_pengembalian = ? WHERE id_pengembalian = ?";
 
         try (Connection conn = Koneksi.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
 
-            // Konversi ke format string yang diterima database
             String statusStr = "Diproses";
             if (statusPengembalian == StatusPengembalian.PengembalianDisetujui) {
                 statusStr = "Pengembalian Disetujui";

@@ -6,6 +6,7 @@ package GUIPengelola;
 
 import controll.LokaControl;
 import java.util.List;
+import enums.StatusVerifikasi;
 
 /**
  *
@@ -42,8 +43,8 @@ public class VerifikasiProduk extends javax.swing.JFrame {
                 if (penjual != null) namaToko = penjual.getNamaToko();
 
                 VerifikasiProdukRows row = new VerifikasiProdukRows();
-                row.setData(String.valueOf(p.getIdProduk()), namaToko, p.getNamaProduk(), p.getKategori(), String.valueOf(p.getIzinJual()));
-
+                row.setData(p.getIdProduk(), namaToko, p.getNamaProduk(), p.getKategori(), String.valueOf(p.getIzinJual()), this);
+                
                 final int idProdAktif = p.getIdProduk();
                 final String namaTokoAktif = namaToko;
                 final model.Produk prodAktif = p;
@@ -73,6 +74,15 @@ public class VerifikasiProduk extends javax.swing.JFrame {
         jLblDetailHargaProduk.setText("Rp " + String.format("%,.0f", p.getHarga()).replace(',', '.'));
         jLblDetailBeratProduk.setText(p.getBeratGram() + " gram");
         jLblStatusBadge.setText(String.valueOf(p.getIzinJual()));
+    }
+    
+    public void prosesVerifikasi(int idPenjual, String aksi) {
+        if ("Setuju".equalsIgnoreCase(aksi)) {
+            control.verifikasiPenjual(idPenjual, StatusVerifikasi.Terverifikasi, new java.util.Date());
+        } else {
+            control.verifikasiPenjual(idPenjual, StatusVerifikasi.Ditolak, new java.util.Date());
+        }
+        muatDataProdukMenunggu(); 
     }
 
     /**

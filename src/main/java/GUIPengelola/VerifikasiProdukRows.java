@@ -4,6 +4,9 @@
  */
 package GUIPengelola;
 
+import controll.LokaControl;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author LENOVO
@@ -13,16 +16,24 @@ public class VerifikasiProdukRows extends javax.swing.JPanel {
     /**
      * Creates new form VerifikasiProdukRows
      */
+    private LokaControl control = new LokaControl();
+    private int idProduk;
+    private VerifikasiProduk parentFrame;
+
     public VerifikasiProdukRows() {
         initComponents();
     }
     
-    public void setData(String idProduk, String namaToko, String namaProduk, String kategori, String status) {
-        jLblIdProduk.setText(idProduk);       // Sesuaikan nama JLabel di design row kamu
+    public void setData(int idProd, String namaToko, String namaProduk, String kategori, String status, VerifikasiProduk parent) {
+        this.idProduk = idProd;
+        this.parentFrame = parent;
+        
+        jLblIdProduk.setText(String.valueOf(idProd));
         jLblNamaToko.setText(namaToko);
         jLblNamaProduk.setText(namaProduk);
-        jLblNamaProduk.setText(kategori);
+        jLblKategori.setText(kategori); // FIXED: Sebelumnya ketimpa ke nama produk
         jLblStatus.setText(status);
+
     }
 
     /**
@@ -38,7 +49,7 @@ public class VerifikasiProdukRows extends javax.swing.JPanel {
         jLblIdProduk = new javax.swing.JLabel();
         jLblNamaToko = new javax.swing.JLabel();
         jLblNamaProduk = new javax.swing.JLabel();
-        jLblAlamat = new javax.swing.JLabel();
+        jLblKategori = new javax.swing.JLabel();
         jLblStatus = new javax.swing.JLabel();
         jBtnSetuju = new javax.swing.JButton();
         jBtnTolak = new javax.swing.JButton();
@@ -60,10 +71,10 @@ public class VerifikasiProdukRows extends javax.swing.JPanel {
         jLblNamaProduk.setForeground(new java.awt.Color(228, 92, 16));
         jLblNamaProduk.setText("Nama Produk");
 
-        jLblAlamat.setBackground(new java.awt.Color(255, 255, 255));
-        jLblAlamat.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jLblAlamat.setForeground(new java.awt.Color(228, 92, 16));
-        jLblAlamat.setText("Kategori");
+        jLblKategori.setBackground(new java.awt.Color(255, 255, 255));
+        jLblKategori.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblKategori.setForeground(new java.awt.Color(228, 92, 16));
+        jLblKategori.setText("Kategori");
 
         jLblStatus.setBackground(new java.awt.Color(255, 255, 255));
         jLblStatus.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
@@ -74,11 +85,13 @@ public class VerifikasiProdukRows extends javax.swing.JPanel {
         jBtnSetuju.setFont(new java.awt.Font("Inter", 1, 10)); // NOI18N
         jBtnSetuju.setForeground(new java.awt.Color(255, 255, 255));
         jBtnSetuju.setText("Setujui");
+        jBtnSetuju.addActionListener(this::jBtnSetujuActionPerformed);
 
         jBtnTolak.setBackground(new java.awt.Color(254, 226, 226));
         jBtnTolak.setFont(new java.awt.Font("Inter", 1, 10)); // NOI18N
         jBtnTolak.setForeground(new java.awt.Color(239, 68, 68));
         jBtnTolak.setText("Tolak");
+        jBtnTolak.addActionListener(this::jBtnTolakActionPerformed);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -92,7 +105,7 @@ public class VerifikasiProdukRows extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLblNamaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLblAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLblKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -109,7 +122,7 @@ public class VerifikasiProdukRows extends javax.swing.JPanel {
                     .addComponent(jLblIdProduk, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                     .addComponent(jLblNamaToko, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLblNamaProduk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLblAlamat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLblKategori, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jBtnSetuju)
                     .addComponent(jBtnTolak))
@@ -128,12 +141,34 @@ public class VerifikasiProdukRows extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jBtnTolakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTolakActionPerformed
+        try {
+        control.updateIzinJualProduk(idProduk, enums.IzinJual.TidakDiizinkan);
+        javax.swing.JOptionPane.showMessageDialog(this, "Produk ditolak.", "Informasi", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        if (parentFrame != null) parentFrame.muatDataProdukMenunggu();
+    } catch (Exception ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Gagal menolak produk: " + ex.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_jBtnTolakActionPerformed
+
+    private void jBtnSetujuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSetujuActionPerformed
+        jBtnSetuju.addActionListener(e -> {
+            try {
+                control.updateIzinJualProduk(idProduk, enums.IzinJual.Diizinkan);
+                JOptionPane.showMessageDialog(this, "Produk berhasil disetujui!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                if (parentFrame != null) parentFrame.muatDataProdukMenunggu();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Gagal menyetujui produk: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }//GEN-LAST:event_jBtnSetujuActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnSetuju;
     private javax.swing.JButton jBtnTolak;
-    private javax.swing.JLabel jLblAlamat;
     private javax.swing.JLabel jLblIdProduk;
+    private javax.swing.JLabel jLblKategori;
     private javax.swing.JLabel jLblNamaProduk;
     private javax.swing.JLabel jLblNamaToko;
     private javax.swing.JLabel jLblStatus;

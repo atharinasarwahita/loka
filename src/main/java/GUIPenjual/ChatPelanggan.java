@@ -21,7 +21,7 @@ public class ChatPelanggan extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ChatPelanggan.class.getName());
 
     private LokaControl control = new LokaControl();
-    private int idPenjual; // ID penjual dari sesi login
+    private int idPenjual; 
     private int idPembeliDipilih = -1;
 
     public ChatPelanggan(int idPenjual) {

@@ -6,7 +6,10 @@
 
 package GUIUmum;
 
+import controll.LokaControl;
 import javax.swing.JOptionPane;
+import enums.*;
+import model.Penjual;
 
 /**
  *
@@ -16,6 +19,7 @@ public class LoginUser extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginUser.class.getName());
 
+    private LokaControl control = new LokaControl();
     /**
      * Creates new form RegistrasiAkun
      */
@@ -44,9 +48,9 @@ public class LoginUser extends javax.swing.JFrame {
         jJudulLogin = new javax.swing.JLabel();
         jJudulRegis1 = new javax.swing.JLabel();
         jLblUsername = new javax.swing.JLabel();
-        jTextEmail = new javax.swing.JTextField();
+        jTxtEmail = new javax.swing.JTextField();
         jLblPassword = new javax.swing.JLabel();
-        jTextPassword = new javax.swing.JTextField();
+        jTxtPassword = new javax.swing.JTextField();
         jBtnRegis = new javax.swing.JButton();
         jLabelPunyaAkun = new javax.swing.JLabel();
         jBtnMasuk = new javax.swing.JButton();
@@ -79,16 +83,16 @@ public class LoginUser extends javax.swing.JFrame {
         jLblUsername.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLblUsername.setText("Email");
 
-        jTextEmail.setForeground(new java.awt.Color(51, 51, 51));
-        jTextEmail.setText("Masukkan Email");
-        jTextEmail.addActionListener(this::jTextEmailActionPerformed);
+        jTxtEmail.setForeground(new java.awt.Color(51, 51, 51));
+        jTxtEmail.setText("Masukkan Email");
+        jTxtEmail.addActionListener(this::jTxtEmailActionPerformed);
 
         jLblPassword.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLblPassword.setText("Password");
 
-        jTextPassword.setForeground(new java.awt.Color(51, 51, 51));
-        jTextPassword.setText("Masukkan Password");
-        jTextPassword.addActionListener(this::jTextPasswordActionPerformed);
+        jTxtPassword.setForeground(new java.awt.Color(51, 51, 51));
+        jTxtPassword.setText("Masukkan Password");
+        jTxtPassword.addActionListener(this::jTxtPasswordActionPerformed);
 
         jBtnRegis.setFont(new java.awt.Font("Inter", 1, 10)); // NOI18N
         jBtnRegis.setText("Registrasi di Sini");
@@ -119,9 +123,9 @@ public class LoginUser extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLblUsername)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextEmail)
+                                .addComponent(jTxtEmail)
                                 .addComponent(jLblPassword, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jTxtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -146,11 +150,11 @@ public class LoginUser extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addComponent(jLblUsername)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLblPassword)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTxtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
                 .addComponent(jBtnMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -218,13 +222,13 @@ public class LoginUser extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextEmailActionPerformed
+    private void jTxtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextEmailActionPerformed
+    }//GEN-LAST:event_jTxtEmailActionPerformed
 
-    private void jTextPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextPasswordActionPerformed
+    private void jTxtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextPasswordActionPerformed
+    }//GEN-LAST:event_jTxtPasswordActionPerformed
 
     private void jBtnRegisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnRegisActionPerformed
         new GUIUmum.RegistrasiAkun().setVisible(true);
@@ -232,38 +236,72 @@ public class LoginUser extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnRegisActionPerformed
 
     private void jBtnMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMasukActionPerformed
-        String email = jTextEmail.getText().trim();
-        String password = jTextPassword.getText().trim();
+        String email = jTxtEmail.getText().trim();
+        String password = new String(jTxtPassword.getText()).trim();
 
-        if (email.isEmpty() || email.equals("Masukkan Email") || password.isEmpty() || password.equals("Masukkan Password")) {
-            JOptionPane.showMessageDialog(this, "Email dan Password harus diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+        if (email.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Email dan Password tidak boleh kosong!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        controll.LokaControl control = new controll.LokaControl();
-        model.Pengguna user = control.login(email, password);
+        LokaControl control = new LokaControl();
+        String pesanError = "Email atau Password salah!";
 
-        if (user != null) {
-            JOptionPane.showMessageDialog(this, "Login Berhasil! Selamat datang, " + user.getNamaLengkap());
+        // 1. Cek Login Penjual Khusus dengan Validasi Status Verifikasi
+        if (control.ambilSemuaPenjual() != null) {
+            for (Penjual p : control.ambilSemuaPenjual()) {
+                if (p.getEmail().equalsIgnoreCase(email)) {
+                    if (!p.getPassword().equals(password)) {
+                        pesanError = "Password salah!";
+                    } else if (p.getStatusVerifikasi() != StatusVerifikasi.Terverifikasi) {
+                        pesanError = "Akun Anda belum diverifikasi oleh pengelola!";
+                    } else if (p.getStatusAkun() != StatusAkun.Aktif) {
+                        pesanError = "Akun Anda non-aktif!";
+                    } else {
+                        pesanError = "SUKSES_PENJUAL";
+                    }
+                    break;
+                }
+            }
+        }
 
-            if (user instanceof model.Pembeli) {
-                new GUIPembeli.BerandaPembeli(user.getIdPengguna()).setVisible(true);
-            } else if (user instanceof model.Penjual) {
-                new GUIPenjual.DashboardPenjual(user.getIdPengguna()).setVisible(true);
-            } else if (user instanceof model.Pengelola) {
-                model.Pengelola pengelola = (model.Pengelola) user;
 
-                // Cek posisi pengelola dari model
-                if (pengelola.getPosisi() == enums.PosisiPengelola.Verifikator) {
+        if (!pesanError.equals("SUKSES_PENJUAL") && pesanError.equals("Email atau Password salah!")) {
+            model.Pengguna user = control.login(email, password);
+            if (user != null) {
+                if (user instanceof model.Pembeli) {
+                    model.Pembeli pembeliLogin = (model.Pembeli) user;
+                    JOptionPane.showMessageDialog(this, "Login Pembeli Berhasil!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                    
+                    new GUIPembeli.BerandaPembeli(pembeliLogin.getIdPengguna()).setVisible(true);
+                    
+                    this.dispose();
+                    return;
+                } else if (user instanceof model.Pengelola) {
+                    JOptionPane.showMessageDialog(this, "Login Pengelola Berhasil!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
                     new GUIPengelola.DashboardVerifikator().setVisible(true);
-                } else {
-                    new GUIPengelola.DashboardAdmin().setVisible(true);
+                    this.dispose();
+                    return;
+                }
+            }
+        }
+
+        if (pesanError.equals("SUKSES_PENJUAL")) {
+            JOptionPane.showMessageDialog(this, "Login Penjual Berhasil!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+            
+            int idPenjualLogin = 0;
+            for (Penjual p : control.ambilSemuaPenjual()) {
+                if (p.getEmail().equalsIgnoreCase(email)) {
+                    idPenjualLogin = p.getIdPengguna();
+                    break;
                 }
             }
 
+            new GUIPenjual.DashboardPenjual(idPenjualLogin).setVisible(true);
             this.dispose();
+            
         } else {
-            JOptionPane.showMessageDialog(this, "Email atau Password salah!", "Login Gagal", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, pesanError, "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jBtnMasukActionPerformed
 
@@ -322,7 +360,7 @@ public class LoginUser extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JTextField jTextEmail;
-    private javax.swing.JTextField jTextPassword;
+    private javax.swing.JTextField jTxtEmail;
+    private javax.swing.JTextField jTxtPassword;
     // End of variables declaration//GEN-END:variables
 }

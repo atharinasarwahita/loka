@@ -172,6 +172,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Setujui"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnSetujuActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBtnTolak">
               <Properties>
@@ -186,6 +189,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Tolak"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnTolakActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -47,17 +47,12 @@ public class PenjualDAO {
                 psPenjual.setDouble(8, penjual.getSaldo());
                 psPenjual.setString(9, penjual.getNoIzinUsaha());
                 
-                // === PERBAIKAN DI SINI (Menyesuaikan dengan ENUM database MySQL) ===
-                String statusVerifStr = "Belum Diverifikasi"; // Default sesuai database
-                if (penjual.getStatusVerifikasi() != null) {
-                    if (penjual.getStatusVerifikasi().name().equalsIgnoreCase("Terverifikasi")) {
-                        statusVerifStr = "Terverifikasi";
-                    } else {
-                        statusVerifStr = "Belum Diverifikasi";
+
+                String statusVerifStr = "Belum Diverifikasi";
+                    if (penjual.getStatusVerifikasi() != null) {
+                        statusVerifStr = penjual.getStatusVerifikasi().getNilai();
                     }
-                }
-                psPenjual.setString(10, statusVerifStr);
-                // ================================================================
+                    psPenjual.setString(10, statusVerifStr);
 
                 if (penjual.getTanggalVerifikasi() != null) {
                     psPenjual.setTimestamp(11, new java.sql.Timestamp(penjual.getTanggalVerifikasi().getTime()));
@@ -77,35 +72,35 @@ public class PenjualDAO {
     }
 
     public List<Penjual> getAllPenjual() {
-    List<Penjual> list = new ArrayList<>();
-    String sql = "SELECT p.*, pen.* FROM pengguna p JOIN penjual pen ON p.id_pengguna = pen.id_pengguna WHERE p.role = 'Penjual'";
-    
-    try (Connection conn = Koneksi.getKoneksi();
-         Statement stmt = conn.createStatement();
-         ResultSet rs = stmt.executeQuery(sql)) {
+        List<Penjual> list = new ArrayList<>();
+        String sql = "SELECT p.*, pen.* FROM pengguna p JOIN penjual pen ON p.id_pengguna = pen.id_pengguna WHERE p.role = 'Penjual'";
         
-        while (rs.next()) {
-            Penjual pen = new Penjual(
-                rs.getInt("id_pengguna"),
-                rs.getString("nama_lengkap"),
-                rs.getString("email"),
-                rs.getString("password"),
-                rs.getString("no_telpon"),
-                RolePengguna.Penjual,
-                rs.getString("nama_toko"),
-                rs.getString("deskripsi_toko"),
-                rs.getString("alamat_toko"),
-                rs.getString("kota"),
-                rs.getString("kecamatan"),
-                rs.getString("kode_pos"),
-                rs.getDouble("saldo"),
-                rs.getString("no_izin_usaha"),
-                StatusVerifikasi.valueOf(rs.getString("status_verifikasi")),
-                rs.getDate("tanggal_verifikasi"),
-                StatusAkun.valueOf(rs.getString("status_akun")),
-                rs.getDate("tanggal_daftar")
-            );
-            list.add(pen);
+        try (Connection conn = Koneksi.getKoneksi();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                Penjual pen = new Penjual(
+                    rs.getInt("id_pengguna"),
+                    rs.getString("nama_lengkap"),
+                    rs.getString("email"),
+                    rs.getString("password"),
+                    rs.getString("no_telpon"),
+                    RolePengguna.Penjual,
+                    rs.getString("nama_toko"),
+                    rs.getString("deskripsi_toko"),
+                    rs.getString("alamat_toko"),
+                    rs.getString("kota"),
+                    rs.getString("kecamatan"),
+                    rs.getString("kode_pos"),
+                    rs.getDouble("saldo"),
+                    rs.getString("no_izin_usaha"),
+                    StatusVerifikasi.fromValue(rs.getString("status_verifikasi")),
+                    rs.getDate("tanggal_verifikasi"),
+                    StatusAkun.valueOf(rs.getString("status_akun")),
+                    rs.getDate("tanggal_daftar")
+                );
+                list.add(pen);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,17 +108,19 @@ public class PenjualDAO {
         return list;
     }
 
-    // --- TAMBAHAN PELENGKAP USE CASE: UPDATE STATUS VERIFIKASI PENJUAL ---
     public void updateStatusVerifikasi(int idPengguna, StatusVerifikasi statusVerifikasi, java.util.Date tglVerifikasi) {
         String query = "UPDATE penjual SET status_verifikasi = ?, tanggal_verifikasi = ? WHERE id_pengguna = ?";
 
         try (Connection conn = Koneksi.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
+            
+            conn.setAutoCommit(true); 
 
-            // Konversi manual agar teks yang dikirim cocok dengan ENUM 'Belum Diverifikasi'
             String statusVerifStr = "Belum Diverifikasi";
-            if (statusVerifikasi != null && statusVerifikasi.name().equalsIgnoreCase("Terverifikasi")) {
+            if (statusVerifikasi == StatusVerifikasi.Terverifikasi) {
                 statusVerifStr = "Terverifikasi";
+            } else if (statusVerifikasi == StatusVerifikasi.Ditolak) {
+                statusVerifStr = "Ditolak";
             }
 
             ps.setString(1, statusVerifStr);
@@ -134,10 +131,12 @@ public class PenjualDAO {
             }
             ps.setInt(3, idPengguna);
 
-            ps.executeUpdate();
-            System.out.println("Berhasil memperbarui status verifikasi penjual!");
+            int affectedRows = ps.executeUpdate();
+            System.out.println("Jumlah baris yang ter-update di DB: " + affectedRows);
+            
         } catch (SQLException e) {
-            System.out.println("Gagal memperbarui status verifikasi: " + e.getMessage());
+            System.err.println("Gagal total update verifikasi penjual: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

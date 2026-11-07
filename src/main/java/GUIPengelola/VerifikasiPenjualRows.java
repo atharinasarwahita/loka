@@ -13,6 +13,7 @@ import model.Penjual;
 public class VerifikasiPenjualRows extends javax.swing.JPanel {
 
     private int idPenjual;
+    private VerifikasiPenjual parentFrame; 
 
     public VerifikasiPenjualRows() {
         initComponents();
@@ -21,31 +22,19 @@ public class VerifikasiPenjualRows extends javax.swing.JPanel {
     public void setData(Penjual p, VerifikasiPenjual parent) {
         if (p != null) {
             this.idPenjual = p.getIdPengguna();
+            this.parentFrame = parent; 
             
             jLblNamaPemilik.setText(p.getNamaLengkap() != null ? p.getNamaLengkap() : "-");
             jLblNamaToko.setText(p.getNamaToko() != null ? p.getNamaToko() : "-");
             jLblAlamat.setText(p.getAlamatToko() != null ? p.getAlamatToko() : "-");
             jLblStatus.setText(p.getStatusVerifikasi() != null ? p.getStatusVerifikasi().toString() : "-");
 
-            for (java.awt.event.ActionListener al : jBtnSetuju.getActionListeners()) {
-                jBtnSetuju.removeActionListener(al);
-            }
-            for (java.awt.event.ActionListener al : jBtnTolak.getActionListeners()) {
-                jBtnTolak.removeActionListener(al);
-            }
-
-            jBtnSetuju.addActionListener(e -> {
-                parent.prosesVerifikasi(p.getIdPengguna(), "Setuju");
-            });
-
-            jBtnTolak.addActionListener(e -> {
-                parent.prosesVerifikasi(p.getIdPengguna(), "Tolak");
-            });
-
             this.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    parent.tampilkanDetail(p.getIdPengguna());
+                    if (parentFrame != null) {
+                        parentFrame.tampilkanDetail(p.getIdPengguna());
+                    }
                 }
             });
         }
@@ -107,11 +96,13 @@ public class VerifikasiPenjualRows extends javax.swing.JPanel {
         jBtnSetuju.setFont(new java.awt.Font("Inter", 1, 10)); // NOI18N
         jBtnSetuju.setForeground(new java.awt.Color(255, 255, 255));
         jBtnSetuju.setText("Setujui");
+        jBtnSetuju.addActionListener(this::jBtnSetujuActionPerformed);
 
         jBtnTolak.setBackground(new java.awt.Color(254, 226, 226));
         jBtnTolak.setFont(new java.awt.Font("Inter", 1, 10)); // NOI18N
         jBtnTolak.setForeground(new java.awt.Color(239, 68, 68));
         jBtnTolak.setText("Tolak");
+        jBtnTolak.addActionListener(this::jBtnTolakActionPerformed);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -168,6 +159,18 @@ public class VerifikasiPenjualRows extends javax.swing.JPanel {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jBtnTolakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnTolakActionPerformed
+        if (parentFrame != null) {
+            parentFrame.prosesVerifikasi(this.idPenjual, "Tolak");
+        }
+    }//GEN-LAST:event_jBtnTolakActionPerformed
+
+    private void jBtnSetujuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSetujuActionPerformed
+        if (parentFrame != null) {
+            parentFrame.prosesVerifikasi(this.idPenjual, "Setuju");
+        }
+    }//GEN-LAST:event_jBtnSetujuActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

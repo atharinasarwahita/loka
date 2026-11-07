@@ -9,7 +9,7 @@ import java.util.List;
 public class KeranjangDAO {
 
     public void insertKeranjang(Keranjang keranjang) {
-        // Kolom id_keranjang dihapus dari query karena sudah AUTO_INCREMENT
+
         String query = "INSERT INTO keranjang (Pembeli_id_pengguna, jumlah, tanggal_ditambahkan, Produk_id_produk, Produk_Penjual_id_pengguna) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = Koneksi.getConnection();

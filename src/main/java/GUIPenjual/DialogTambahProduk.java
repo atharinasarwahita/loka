@@ -127,7 +127,7 @@ public class DialogTambahProduk extends javax.swing.JDialog {
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setText("Kategori");
 
-        jCmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Makanan & Minuman", "Kerajinan Tangan", "Fashion Lokal", "Pertanian & Perkebunan" }));
+        jCmbKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Makanan", "Pakaian", "Minuman", "Kerajinan", "Perlengkapan" }));
         jCmbKategori.addActionListener(this::jCmbKategoriActionPerformed);
 
         jBtnSimpanProduk.setBackground(new java.awt.Color(49, 160, 96));
@@ -299,7 +299,7 @@ public class DialogTambahProduk extends javax.swing.JDialog {
         }
 
         control.tambahProduk(
-            0, 
+            0,  
             this.idPenjual,
             nama, 
             deskripsi,
@@ -309,8 +309,8 @@ public class DialogTambahProduk extends javax.swing.JDialog {
             berat,     
             stok,
             status,
-            enums.IzinJual.Diizinkan, 
-            0,                
+            enums.IzinJual.Menunggu, 
+            0,            
             new java.util.Date()      
         );
 

@@ -22,7 +22,6 @@ public class TopUpDAO {
             ps.setInt(2, topup.getPembeliIdPengguna());
             ps.setDouble(3, topup.getNominal());
             
-            // Menyimpan tanggal saat ini ke database
             java.util.Date tgl = topup.getTanggalTopUp() != null ? topup.getTanggalTopUp() : new java.util.Date();
             ps.setTimestamp(4, new Timestamp(tgl.getTime()));
 
@@ -47,14 +46,12 @@ public class TopUpDAO {
                 t.setPembeliIdPengguna(rs.getInt("Pembeli_id_pengguna"));
                 t.setNominal(rs.getDouble("nominal"));
                 
-                // Mengambil kolom tanggal dari database jika ada
                 try {
                     Timestamp ts = rs.getTimestamp("tanggal");
                     if (ts != null) {
                         t.setTanggalTopUp(new java.util.Date(ts.getTime()));
                     }
                 } catch (SQLException e) {
-                    // Jika kolom tanggal belum ada di database, lewati tanpa error fatal
                 }
 
                 list.add(t);

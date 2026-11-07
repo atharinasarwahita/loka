@@ -128,6 +128,11 @@ public class DaftarPesanan extends javax.swing.JFrame {
 
         if (listPesanan != null) {
             for (Pesanan p : listPesanan) {
+
+                if (this.idPenjual != 0 && p.getPenjualIdPengguna() != this.idPenjual) {
+                    continue; 
+                }
+
                 String alasan = "-";
                 
                 if (p.getStatusPesanan() != null && String.valueOf(p.getStatusPesanan()).equalsIgnoreCase("Dikembalikan")) {

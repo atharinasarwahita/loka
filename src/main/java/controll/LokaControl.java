@@ -791,4 +791,22 @@ public class LokaControl {
         }
         return mapKecamatan;
     }
+    
+    public String validasiLoginPenjual(String email, String password) {
+        if (penjualDAO.getAllPenjual() != null) {
+            for (Penjual p : penjualDAO.getAllPenjual()) {
+                if (p.getEmail().equalsIgnoreCase(email) && p.getPassword().equals(password)) {
+                    // Cek status verifikasi atau status akun
+                    if (p.getStatusVerifikasi() != null && p.getStatusVerifikasi() != StatusVerifikasi.Terverifikasi) {
+                        return "Akun Anda belum diverifikasi oleh pengelola!";
+                    }
+                    if (p.getStatusAkun() != null && p.getStatusAkun() != StatusAkun.Aktif) {
+                        return "Akun Anda tidak aktif!";
+                    }
+                    return "SUKSES";
+                }
+            }
+        }
+        return "Email atau Password salah!";
+    }
 }

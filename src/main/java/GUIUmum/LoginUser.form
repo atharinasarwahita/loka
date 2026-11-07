@@ -99,9 +99,9 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLblUsername" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jTextEmail" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="jTxtEmail" alignment="1" max="32767" attributes="0"/>
                                       <Component id="jLblPassword" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jTextPassword" alignment="1" min="-2" pref="395" max="-2" attributes="0"/>
+                                      <Component id="jTxtPassword" alignment="1" min="-2" pref="395" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -136,11 +136,11 @@
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="jLblUsername" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextEmail" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="jTxtEmail" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLblPassword" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextPassword" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="jTxtPassword" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                       <Component id="jBtnMasuk" min="-2" pref="32" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -186,7 +186,7 @@
                 <Property name="text" type="java.lang.String" value="Email"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextEmail">
+            <Component class="javax.swing.JTextField" name="jTxtEmail">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
@@ -194,7 +194,7 @@
                 <Property name="text" type="java.lang.String" value="Masukkan Email"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextEmailActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTxtEmailActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLblPassword">
@@ -205,7 +205,7 @@
                 <Property name="text" type="java.lang.String" value="Password"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextPassword">
+            <Component class="javax.swing.JTextField" name="jTxtPassword">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
@@ -213,7 +213,7 @@
                 <Property name="text" type="java.lang.String" value="Masukkan Password"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextPasswordActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTxtPasswordActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBtnRegis">

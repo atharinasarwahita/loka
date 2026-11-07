@@ -266,11 +266,12 @@
             <Component class="javax.swing.JComboBox" name="jCmbKategori">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Makanan &amp; Minuman"/>
-                    <StringItem index="1" value="Kerajinan Tangan"/>
-                    <StringItem index="2" value="Fashion Lokal"/>
-                    <StringItem index="3" value="Pertanian &amp; Perkebunan"/>
+                  <StringArray count="5">
+                    <StringItem index="0" value="Makanan"/>
+                    <StringItem index="1" value="Pakaian"/>
+                    <StringItem index="2" value="Minuman"/>
+                    <StringItem index="3" value="Kerajinan"/>
+                    <StringItem index="4" value="Perlengkapan"/>
                   </StringArray>
                 </Property>
               </Properties>
