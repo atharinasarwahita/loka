@@ -80,8 +80,6 @@ public class DaftarPesanan extends javax.swing.JFrame {
         jBtnUpdateStatus = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTblDaftarPesanan = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
-        jTxtIdPesanan = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -169,7 +167,7 @@ public class DaftarPesanan extends javax.swing.JFrame {
                 .addComponent(jBtnChatPelanggan, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(387, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -221,44 +219,33 @@ public class DaftarPesanan extends javax.swing.JFrame {
         jTblDaftarPesanan.setSelectionBackground(new java.awt.Color(255, 224, 178));
         jScrollPane2.setViewportView(jTblDaftarPesanan);
 
-        jLabel3.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jLabel3.setText("ID Pesanan");
-
-        jTxtIdPesanan.setText("Masukkan ID Pesanan");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(6, 6, 6)
+                        .addComponent(jBtnUpdateStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
-                            .addComponent(jBtnUpdateStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                            .addComponent(jTxtIdPesanan, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2))
+                        .addContainerGap())))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTxtIdPesanan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBtnUpdateStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -276,14 +263,14 @@ public class DaftarPesanan extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 786, Short.MAX_VALUE)
+            .addGap(0, 726, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGap(0, 18, Short.MAX_VALUE)))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 726, Short.MAX_VALUE))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -329,11 +316,12 @@ public class DaftarPesanan extends javax.swing.JFrame {
 
         int noPesanan = Integer.parseInt(jTblDaftarPesanan.getValueAt(selectedRow, 0).toString());
 
-        // Pilihan status baru menggunakan ComboBox atau InputDialog
+        String statusLama = jTblDaftarPesanan.getValueAt(selectedRow, 4).toString();
+
         String[] options = {"Diproses", "Dikirim", "Selesai", "Pengembalian", "Dikembalikan"};
         String statusPilihan = (String) JOptionPane.showInputDialog(
             this, 
-            "Pilih Status Pesanan Baru:", 
+            "Pilih Status Pesanan Baru:\n(Status Lama: " + statusLama + ")", 
             "Update Status Pesanan", 
             JOptionPane.QUESTION_MESSAGE, 
             null, 
@@ -342,14 +330,30 @@ public class DaftarPesanan extends javax.swing.JFrame {
         );
 
         if (statusPilihan != null) {
+           
+            if (statusLama.equalsIgnoreCase("Selesai")) {
+                JOptionPane.showMessageDialog(this, "Pesanan yang sudah selesai tidak dapat diubah statusnya lagi!", "Validasi Gagal", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if ((statusLama.equalsIgnoreCase("Pengembalian") || statusLama.equalsIgnoreCase("Dikembalikan")) 
+                && (statusPilihan.equalsIgnoreCase("Diproses") || statusPilihan.equalsIgnoreCase("Dikirim"))) {
+                JOptionPane.showMessageDialog(this, "Status pesanan tidak dapat dikembalikan ke tahap sebelumnya!", "Validasi Gagal", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (statusLama.equalsIgnoreCase("Dikirim") && statusPilihan.equalsIgnoreCase("Diproses")) {
+                JOptionPane.showMessageDialog(this, "Pesanan yang sudah dikirim tidak dapat diubah kembali menjadi diproses!", "Validasi Gagal", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             try {
                 enums.StatusPesanan statusBaru = enums.StatusPesanan.valueOf(statusPilihan);
 
-                // Panggil method update di controller
                 control.updateStatusPesanan(noPesanan, statusBaru, new java.util.Date(), null);
 
                 JOptionPane.showMessageDialog(this, "Status pesanan berhasil diperbarui!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-                loadDataTabel(); // Refresh tabel
+                loadDataTabel(); 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Gagal mengupdate status: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -395,13 +399,11 @@ public class DaftarPesanan extends javax.swing.JFrame {
     private javax.swing.JButton jBtnUpdateStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTblDaftarPesanan;
-    private javax.swing.JTextField jTxtIdPesanan;
     // End of variables declaration//GEN-END:variables
 }

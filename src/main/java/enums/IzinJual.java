@@ -9,6 +9,7 @@ package enums;
  * @author user
  */
 public enum IzinJual {
+    Menunggu,
     Diizinkan,
     TidakDiizinkan
 }

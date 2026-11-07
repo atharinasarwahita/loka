@@ -5,6 +5,9 @@
 package GUIPembeli;
 
 import controll.LokaControl;
+import java.util.List;
+import javax.swing.JOptionPane;
+import model.Produk;
 
 /**
  *
@@ -15,12 +18,160 @@ public class DetailProduk extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DetailProduk.class.getName());
 
     private int idPembeli;
+    private int idProduk;
     private LokaControl control = new LokaControl();
-    /**
-     * Creates new form DetailProduk
-     */
+    private Produk produkAktif;
+
     public DetailProduk() {
         initComponents();
+    }
+
+    // Konstruktor utama ketika dipanggil dari Beranda
+    public DetailProduk(int idPembeli, int idProduk) {
+        this.idPembeli = idPembeli;
+        this.idProduk = idProduk;
+        initComponents();
+        tampilkanDetailProduk();
+        muatNamaDanSaldoUser();
+    }
+
+    private void tampilkanDetailProduk() {
+        produkAktif = control.cariProduk(idProduk);
+        if (produkAktif != null) {
+            jLabel8.setText(produkAktif.getNamaProduk());
+            jLabel9.setText("Rp " + String.format("%,.0f", produkAktif.getHarga()));
+            jLabel10.setText(produkAktif.getDeskripsi());
+
+            try {
+                String namaFileGambar = produkAktif.getGambarProduk();
+                if (namaFileGambar != null && !namaFileGambar.isEmpty()) {
+                    java.net.URL imageUrl = getClass().getResource("/gambarproduk/" + namaFileGambar);
+                    if (imageUrl != null) {
+                        javax.swing.ImageIcon iconOriginal = new javax.swing.ImageIcon(imageUrl);
+                        java.awt.Image imgSkala = iconOriginal.getImage().getScaledInstance(jLabel7.getWidth() > 0 ? jLabel7.getWidth() : 500, 247, java.awt.Image.SCALE_SMOOTH);
+                        jLabel7.setIcon(new javax.swing.ImageIcon(imgSkala));
+                        jLabel7.setText("");
+                    } else {
+                        jLabel7.setIcon(null);
+                        jLabel7.setText("Gambar tidak ditemukan");
+                    }
+                } else {
+                    jLabel7.setIcon(null);
+                    jLabel7.setText("Tidak ada foto");
+                }
+            } catch (Exception e) {
+                jLabel7.setIcon(null);
+                jLabel7.setText("Error Load Gambar");
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "Data produk tidak ditemukan!");
+        }
+    }
+    
+    public void muatNamaDanSaldoUser() {
+        for (model.Pembeli p : control.ambilSemuaPembeli()) {
+            if (p.getIdPengguna() == this.idPembeli) {
+                jLblNamaUser.setText("Halo, " + p.getNamaLengkap() + "!");
+                jLblSaldoAktif.setText("Rp " + String.format("%,.0f", p.getSaldo()).replace(',', '.'));
+                break;
+            }
+        }
+    }
+    
+    private void actionShareProduk() {
+        if (produkAktif != null) {
+            control.tambahJumlahShare(produkAktif.getIdProduk());
+            
+            String linkProduk = "https://loka-marketplace.com/produk/" + produkAktif.getIdProduk() + "-" + produkAktif.getNamaProduk().replaceAll(" ", "-");
+            
+            java.awt.datatransfer.StringSelection stringSelection = new java.awt.datatransfer.StringSelection(linkProduk);
+            java.awt.Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+            
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Link produk berhasil disalin ke clipboard!\n" + linkProduk + "", 
+                "Bagikan Produk", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void actionChatPenjual() {
+        if (produkAktif != null) {
+            int idPenjualTujuan = produkAktif.getPenjualIdPengguna();
+            new GUIPembeli.ChatPenjual(this.idPembeli, idPenjualTujuan).setVisible(true);
+            this.dispose();
+        }
+    }
+
+    private void actionTambahKeranjang() {
+        if (produkAktif == null) return;
+
+        String inputJumlah = JOptionPane.showInputDialog(this, 
+                "Masukkan jumlah produk yang ingin dimasukkan ke keranjang:", 
+                "Jumlah Pembelian", JOptionPane.QUESTION_MESSAGE);
+
+        if (inputJumlah != null && !inputJumlah.trim().isEmpty()) {
+            try {
+                int jumlah = Integer.parseInt(inputJumlah.trim());
+                if (jumlah <= 0) {
+                    JOptionPane.showMessageDialog(this, "Jumlah harus lebih dari 0!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                if (produkAktif.getStok() < jumlah) {
+                    JOptionPane.showMessageDialog(this, "Stok tidak mencukupi! Sisa stok: " + produkAktif.getStok(), "Stok Habis", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                // Generate ID Keranjang otomatis
+                int idKeranjang = 1;
+                List<model.Keranjang> allK = control.ambilSemuaKeranjang();
+                if (allK != null) {
+                    for (model.Keranjang k : allK) {
+                        if (k.getIdKeranjang() >= idKeranjang) {
+                            idKeranjang = k.getIdKeranjang() + 1;
+                        }
+                    }
+                }
+
+                // Panggil method controller untuk simpan ke keranjang
+                control.tambahKeranjang(idKeranjang, this.idPembeli, jumlah, new java.util.Date(), produkAktif.getIdProduk(), produkAktif.getPenjualIdPengguna());
+
+                JOptionPane.showMessageDialog(this, "Berhasil memasukkan " + jumlah + " produk ke keranjang!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Masukkan angka yang valid!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void actionBeliSekarang() {
+        if (produkAktif == null) return;
+
+        if (produkAktif.getStok() < 1) {
+            JOptionPane.showMessageDialog(this, "Stok produk habis!", "Stok Habis", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Pop-up input jarak untuk Beli Sekarang (default jumlah 1)
+        String inputJarak = JOptionPane.showInputDialog(this, 
+                "Masukkan jarak pengiriman (dalam km):", 
+                "Jarak Pengiriman", JOptionPane.QUESTION_MESSAGE);
+
+        if (inputJarak != null && !inputJarak.trim().isEmpty()) {
+            try {
+                double jarakKm = Double.parseDouble(inputJarak.trim());
+                if (jarakKm < 0) {
+                    JOptionPane.showMessageDialog(this, "Jarak tidak boleh minus!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                // Lempar ke halaman CheckoutPembeli (membawa id pembeli, id produk, jumlah=1, dan jarak)
+                new GUIPembeli.CheckoutPembeli(this.idPembeli, produkAktif.getIdProduk(), 1, jarakKm, false).setVisible(true);
+                this.dispose();
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Masukkan angka jarak yang valid!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     /**
@@ -51,20 +202,23 @@ public class DetailProduk extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jBtnKeranjang = new javax.swing.JButton();
+        jBtnBeliSkrg = new javax.swing.JButton();
+        jBtnShare = new javax.swing.JButton();
+        jBtnChat = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jBtnTopUpSaldoPembeli = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLblSaldoAktif = new javax.swing.JLabel();
+        jLblNamaUser = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
+        jPanel1.setBackground(new java.awt.Color(246, 244, 241));
         jPanel1.setMaximumSize(new java.awt.Dimension(1024, 796));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -197,7 +351,9 @@ public class DetailProduk extends javax.swing.JFrame {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,18 +399,30 @@ public class DetailProduk extends javax.swing.JFrame {
                 .addGap(0, 15, Short.MAX_VALUE))
         );
 
-        jButton3.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(228, 92, 16));
-        jButton3.setText("+ Keranjang");
-        jButton3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(228, 92, 16), 1, true));
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        jBtnKeranjang.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jBtnKeranjang.setForeground(new java.awt.Color(228, 92, 16));
+        jBtnKeranjang.setText("+ Keranjang");
+        jBtnKeranjang.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(228, 92, 16), 1, true));
+        jBtnKeranjang.addActionListener(this::jBtnKeranjangActionPerformed);
 
-        jButton4.setBackground(new java.awt.Color(228, 92, 16));
-        jButton4.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Beli Sekarang");
-        jButton4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(228, 92, 16), 1, true));
-        jButton4.addActionListener(this::jButton4ActionPerformed);
+        jBtnBeliSkrg.setBackground(new java.awt.Color(228, 92, 16));
+        jBtnBeliSkrg.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jBtnBeliSkrg.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnBeliSkrg.setText("Beli Sekarang");
+        jBtnBeliSkrg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(228, 92, 16), 1, true));
+        jBtnBeliSkrg.addActionListener(this::jBtnBeliSkrgActionPerformed);
+
+        jBtnShare.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jBtnShare.setForeground(new java.awt.Color(228, 92, 16));
+        jBtnShare.setText("Share");
+        jBtnShare.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(228, 92, 16), 1, true));
+        jBtnShare.addActionListener(this::jBtnShareActionPerformed);
+
+        jBtnChat.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jBtnChat.setForeground(new java.awt.Color(228, 92, 16));
+        jBtnChat.setText("Chat");
+        jBtnChat.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(228, 92, 16), 1, true));
+        jBtnChat.addActionListener(this::jBtnChatActionPerformed);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -266,11 +434,15 @@ public class DetailProduk extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addComponent(jBtnShare, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtnChat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBtnKeranjang, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBtnBeliSkrg, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,8 +454,10 @@ public class DetailProduk extends javax.swing.JFrame {
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
+                    .addComponent(jBtnKeranjang, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(jBtnBeliSkrg, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(jBtnShare, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addComponent(jBtnChat, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
                 .addGap(12, 12, 12))
         );
 
@@ -354,9 +528,9 @@ public class DetailProduk extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLabel2.setText("Saldo:");
 
-        jLabel3.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(228, 92, 16));
-        jLabel3.setText("Rp150.000");
+        jLblSaldoAktif.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblSaldoAktif.setForeground(new java.awt.Color(228, 92, 16));
+        jLblSaldoAktif.setText("Rp150.000");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -366,7 +540,7 @@ public class DetailProduk extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                .addComponent(jLblSaldoAktif, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnTopUpSaldoPembeli, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -378,17 +552,17 @@ public class DetailProduk extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnTopUpSaldoPembeli, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(jLblSaldoAktif))
                 .addContainerGap())
         );
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(649, 6, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(228, 92, 16));
-        jLabel4.setText("Halo, User!");
-        jLabel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(236, 13, 267, -1));
+        jLblNamaUser.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        jLblNamaUser.setForeground(new java.awt.Color(228, 92, 16));
+        jLblNamaUser.setText("Halo, User!");
+        jLblNamaUser.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
+        jPanel1.add(jLblNamaUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(236, 13, 267, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -434,18 +608,26 @@ public class DetailProduk extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jBtnProfilPembeliActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jBtnKeranjangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeranjangActionPerformed
+        actionTambahKeranjang();
+    }//GEN-LAST:event_jBtnKeranjangActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void jBtnBeliSkrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBeliSkrgActionPerformed
+        actionBeliSekarang();
+    }//GEN-LAST:event_jBtnBeliSkrgActionPerformed
 
     private void jBtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeluarActionPerformed
         new GUIUmum.Beranda().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnKeluarActionPerformed
+
+    private void jBtnShareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnShareActionPerformed
+        actionShareProduk();
+    }//GEN-LAST:event_jBtnShareActionPerformed
+
+    private void jBtnChatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnChatActionPerformed
+        actionChatPenjual();
+    }//GEN-LAST:event_jBtnChatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -473,25 +655,27 @@ public class DetailProduk extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnBeliSkrg;
     private javax.swing.JButton jBtnBerandaPembeli;
+    private javax.swing.JButton jBtnChat;
     private javax.swing.JButton jBtnChatPenjual;
     private javax.swing.JButton jBtnKeluar;
+    private javax.swing.JButton jBtnKeranjang;
     private javax.swing.JButton jBtnKeranjangPembeli;
     private javax.swing.JButton jBtnPesananPembeli;
     private javax.swing.JButton jBtnProfilPembeli;
+    private javax.swing.JButton jBtnShare;
     private javax.swing.JButton jBtnTopUpSaldoPembeli;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLblNamaUser;
+    private javax.swing.JLabel jLblSaldoAktif;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;

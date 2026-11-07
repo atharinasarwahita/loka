@@ -24,7 +24,7 @@ public class CardProdukItem extends javax.swing.JPanel {
         jLblHargaProduk.setText("Rp " + String.format("%,.0f", harga).replace(',', '.'));
 
         try {
-            URL imageUrl = getClass().getResource("/gambar/" + namaFileGambar);
+            URL imageUrl = getClass().getResource("/gambarproduk/" + namaFileGambar);
             if (imageUrl != null) {
                 ImageIcon iconOriginal = new ImageIcon(imageUrl);
                 Image imgSkala = iconOriginal.getImage().getScaledInstance(441, 185, Image.SCALE_SMOOTH);
@@ -38,17 +38,58 @@ public class CardProdukItem extends javax.swing.JPanel {
             jLblGambarProduk.setIcon(null);
             jLblGambarProduk.setText("Error");
         }
+
+        java.awt.event.MouseAdapter listenerKlik = new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+
+                java.awt.Window windowInduk = javax.swing.SwingUtilities.getWindowAncestor(CardProdukItem.this);
+                if (windowInduk instanceof BerandaPembeli) {
+                    int idAktif = ((BerandaPembeli) windowInduk).getIdPembeli();
+                    new DetailProduk(idAktif, idProduk).setVisible(true);
+                    windowInduk.dispose();
+                }
+            }
+        };
+
+        this.addMouseListener(listenerKlik);
+        jPanel1.addMouseListener(listenerKlik);
+        jLblNamaProduk.addMouseListener(listenerKlik);
+        jLblGambarProduk.addMouseListener(listenerKlik);
+        jLblHargaProduk.addMouseListener(listenerKlik);
+
+        this.setCursor(java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR));
     }
 
     public int getIdProduk() {
         return idProduk;
     }
+    
+    public void setRating(double rataRata, int jumlahUlasan) {
+        if (jumlahUlasan == 0) {
+            jLabel35.setVisible(false);
+            jLabel36.setText("Belum ada ulasan");
+        } else {
+            jLabel35.setVisible(true);
+            jLabel36.setText(String.format(java.util.Locale.US, "%.1f/5.0", rataRata)
+                    + " (" + jumlahUlasan + ")");
+        }
+    }
+
+    public void setNamaToko(String namaToko) {
+        jLblNamaToko.setText(namaToko);
+    }
+    
+   
+
     /**
      * Creates new form CardProdukItem
      */
     public CardProdukItem() {
         initComponents();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,8 +117,8 @@ public class CardProdukItem extends javax.swing.JPanel {
         jLblKategori.setBackground(new java.awt.Color(219, 223, 208));
         jLblKategori.setFont(new java.awt.Font("Inter", 1, 10)); // NOI18N
         jLblKategori.setForeground(new java.awt.Color(75, 93, 22));
+        jLblKategori.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLblKategori.setText("Fashion");
-        jLblKategori.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
         jLblKategori.setOpaque(true);
 
         jLblNamaProduk.setBackground(new java.awt.Color(255, 255, 255));
@@ -114,33 +155,34 @@ public class CardProdukItem extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 10, Short.MAX_VALUE)
-                        .addComponent(jLblGambarProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLblHargaProduk, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLblKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLblNamaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLblNamaToko, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(72, 72, 72)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel36)))
+                        .addComponent(jLabel36))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 10, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLblKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLblGambarProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLblGambarProduk, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLblGambarProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLblKategori)
+                .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLblKategori)
-                        .addGap(7, 7, 7)
                         .addComponent(jLblNamaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLblNamaToko, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)

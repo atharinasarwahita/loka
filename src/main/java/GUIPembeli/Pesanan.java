@@ -102,6 +102,14 @@ public class Pesanan extends javax.swing.JFrame {
                         }
 
                         PesananRows row = new PesananRows(namaToko, namaProduk, jumlah, subtotal, statusPesananStr, gambar);
+                        final int noPesananAktif = p.getNoPesanan();
+                        row.addMouseListener(new java.awt.event.MouseAdapter() {
+                            @Override
+                            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                new GUIPembeli.DetailPesanan(idPembeli, noPesananAktif).setVisible(true);
+                                dispose();
+                            }
+                        });
                         row.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, row.getPreferredSize().height));
                         row.setAlignmentX(javax.swing.JComponent.LEFT_ALIGNMENT);
 
@@ -162,6 +170,8 @@ public class Pesanan extends javax.swing.JFrame {
         jLblSaldoAktif = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(246, 244, 241));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(224, 693));
@@ -503,7 +513,8 @@ public class Pesanan extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnChatPenjualActionPerformed
 
     private void jBtnProfilPembeliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnProfilPembeliActionPerformed
-        // TODO add your handling code here:
+        new GUIPembeli.ProfilPembeli(this.idPembeli).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnProfilPembeliActionPerformed
 
     private void jBtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeluarActionPerformed

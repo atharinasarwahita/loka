@@ -51,7 +51,8 @@ public class KelolaProdukPenjual extends javax.swing.JFrame {
                         p.getHarga(),
                         p.getStok(),
                         p.getStatus(),
-                        p.getIzinJual()
+                        p.getIzinJual(),
+                        p.getJumlahShare()
                     });
                 }
             }
@@ -207,13 +208,13 @@ public class KelolaProdukPenjual extends javax.swing.JFrame {
 
         jTblDaftarProduk.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID Produk", "Nama Produk", "Kategori", "Harga", "Stok", "Status Stok", "Izin Jual"
+                "ID Produk", "Nama Produk", "Kategori", "Harga", "Stok", "Status Stok", "Izin Jual", "Share"
             }
         ));
         jScrollPane1.setViewportView(jTblDaftarProduk);

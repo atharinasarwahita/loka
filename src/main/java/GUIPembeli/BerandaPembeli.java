@@ -16,21 +16,37 @@ public class BerandaPembeli extends javax.swing.JFrame {
     private int idPembeli;
     private LokaControl control = new LokaControl();
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BerandaPembeli.class.getName());
+    private static final java.util.logging.Logger logger =
+            java.util.logging.Logger.getLogger(BerandaPembeli.class.getName());
 
     public BerandaPembeli() {
         initComponents();
         this.idPembeli = 7;
+        siapkanTampilan();
+        siapkanFilter();
         muatDataProduk("Semua", "");
     }
 
-    public BerandaPembeli(int idPembeli) {  
+    public BerandaPembeli(int idPembeli) {
         initComponents();
         this.idPembeli = idPembeli;
-        muatNamaDanSaldoUser();   
+        siapkanTampilan();
+        siapkanFilter();
+        muatNamaDanSaldoUser();
         muatDataProduk("Semua", "");
     }
-    
+
+    private void siapkanTampilan() {
+        java.awt.Rectangle layar = java.awt.GraphicsEnvironment
+            .getLocalGraphicsEnvironment().getMaximumWindowBounds();
+        setSize(getWidth(), Math.min(getHeight(), layar.height));
+
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(20);
+        jScrollPane1.setBorder(null);
+    }
+
     public void muatNamaDanSaldoUser() {
         for (model.Pembeli p : control.ambilSemuaPembeli()) {
             if (p.getIdPengguna() == this.idPembeli) {
@@ -40,35 +56,60 @@ public class BerandaPembeli extends javax.swing.JFrame {
             }
         }
     }
-    
+
     public void muatDataProduk(String kategoriFilter, String keyword) {
         panelPenampungProduk.removeAll();
         panelPenampungProduk.setLayout(new javax.swing.BoxLayout(panelPenampungProduk, javax.swing.BoxLayout.Y_AXIS));
 
         List<model.Produk> listProduk = control.ambilSemuaProduk();
         int jumlahDitemukan = 0;
+        
+        java.util.Map<Integer, double[]> ratingMap = new java.util.HashMap<>();
+        List<model.Ulasan> listUlasan = control.ambilSemuaUlasan();
+        if (listUlasan != null) {
+            for (model.Ulasan u : listUlasan) {
+                double[] d = ratingMap.computeIfAbsent(u.getProdukIdProduk(), k -> new double[2]);
+                d[0] += u.getRating();
+                d[1] += 1;
+            }
+        }
+
+        java.util.Map<Integer, String> tokoMap = new java.util.HashMap<>();
+        List<model.Penjual> listPenjual = control.ambilSemuaPenjual();
+        if (listPenjual != null) {
+            for (model.Penjual pj : listPenjual) {
+                tokoMap.put(pj.getIdPengguna(), pj.getNamaToko());
+            }
+        }
 
         if (listProduk != null) {
             for (model.Produk p : listProduk) {
                 String namaProd = p.getNamaProduk() != null ? p.getNamaProduk().toLowerCase() : "";
                 String kategoriProd = p.getKategori() != null ? p.getKategori().trim() : "";
 
-                boolean cocokKategori = kategoriFilter.equalsIgnoreCase("Semua") || 
-                                        kategoriProd.equalsIgnoreCase(kategoriFilter);
+                boolean cocokKategori = kategoriFilter.equalsIgnoreCase("Semua")
+                        || kategoriProd.equalsIgnoreCase(kategoriFilter);
                 boolean cocokKeyword = namaProd.contains(keyword.toLowerCase());
 
                 if (cocokKategori && cocokKeyword) {
                     jumlahDitemukan++;
 
                     CardProdukItem card = new CardProdukItem(
-                        p.getIdProduk(), 
-                        p.getNamaProduk(), 
-                        p.getKategori(),
-                        p.getHarga(), 
-                        p.getGambarProduk()
+                            p.getIdProduk(),
+                            p.getNamaProduk(),
+                            p.getKategori(),
+                            p.getHarga(),
+                            p.getGambarProduk()
                     );
+                    
+                    double[] d = ratingMap.get(p.getIdProduk());
+                    if (d == null) {
+                        card.setRating(0, 0);
+                    } else {
+                        card.setRating(d[0] / d[1], (int) d[1]);
+                    }
+                    card.setNamaToko(tokoMap.getOrDefault(p.getPenjualIdPengguna(), "-"));
 
-                    // Ikuti pola KeranjangPembeli: gunakan preferred height asli card
                     card.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, card.getPreferredSize().height));
                     card.setAlignmentX(javax.swing.JComponent.LEFT_ALIGNMENT);
 
@@ -88,6 +129,90 @@ public class BerandaPembeli extends javax.swing.JFrame {
 
         panelPenampungProduk.revalidate();
         panelPenampungProduk.repaint();
+
+        javax.swing.SwingUtilities.invokeLater(() ->
+                jScrollPane1.getVerticalScrollBar().setValue(0));
+    }
+    
+    private static final String PLACEHOLDER = "Cari produk khas Samarinda....";
+    private String kategoriAktif = "Semua";
+
+    private void siapkanFilter() {
+
+        pasangKategori(jPnlKategoriMakanan,    "Makanan");
+        pasangKategori(jPnlKategoriKerajinan,  "Kerajinan");
+        pasangKategori(jPnlKategoriPakaian,    "Pakaian");
+        pasangKategori(jPnlKategoriKopiMinuman,"Minuman");
+        pasangKategori(jPnlKategoriPerlengkapan,"Perlengkapan");
+
+        // placeholder: hilang saat diklik, balik kalau kosong
+        jTxtCariProduk.setForeground(java.awt.Color.GRAY);
+        jTxtCariProduk.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override public void focusGained(java.awt.event.FocusEvent e) {
+                if (jTxtCariProduk.getText().equals(PLACEHOLDER)) {
+                    jTxtCariProduk.setText("");
+                    jTxtCariProduk.setForeground(java.awt.Color.BLACK);
+                }
+            }
+            @Override public void focusLost(java.awt.event.FocusEvent e) {
+                if (jTxtCariProduk.getText().trim().isEmpty()) {
+                    jTxtCariProduk.setText(PLACEHOLDER);
+                    jTxtCariProduk.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+
+        jTxtCariProduk.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void insertUpdate(javax.swing.event.DocumentEvent e)  { refresh(); }
+            public void removeUpdate(javax.swing.event.DocumentEvent e)  { refresh(); }
+            public void changedUpdate(javax.swing.event.DocumentEvent e) { refresh(); }
+        });
+    }
+
+    private void pasangKategori(javax.swing.JPanel panel, String kategori) {
+        java.awt.event.MouseAdapter klik = new java.awt.event.MouseAdapter() {
+            @Override public void mouseClicked(java.awt.event.MouseEvent e) {
+                pilihKategori(kategori);
+            }
+        };
+        java.awt.Cursor tangan = java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR);
+        panel.setCursor(tangan);
+        panel.addMouseListener(klik);
+
+        for (java.awt.Component c : panel.getComponents()) {
+            c.setCursor(tangan);
+            c.addMouseListener(klik);
+        }
+    }
+
+    private void pilihKategori(String kategori) {
+
+        kategoriAktif = kategoriAktif.equalsIgnoreCase(kategori) ? "Semua" : kategori;
+        tandaiKategoriAktif();
+        refresh();
+    }
+
+    private void tandaiKategoriAktif() {
+        javax.swing.JPanel[] semua = { jPnlKategoriMakanan, jPnlKategoriKerajinan,
+                jPnlKategoriPakaian, jPnlKategoriKopiMinuman, jPnlKategoriPerlengkapan };
+        String[] nama = { "Makanan", "Kerajinan", "Pakaian", "Minuman", "Perlengkapan" };
+
+        for (int i = 0; i < semua.length; i++) {
+            boolean aktif = nama[i].equalsIgnoreCase(kategoriAktif);
+            semua[i].setBackground(aktif ? new java.awt.Color(253, 239, 232) : java.awt.Color.WHITE);
+            semua[i].setBorder(javax.swing.BorderFactory.createLineBorder(
+                    aktif ? new java.awt.Color(228, 92, 16) : new java.awt.Color(204, 204, 204)));
+        }
+    }
+
+    private void refresh() {
+        String keyword = jTxtCariProduk.getText().trim();
+        if (keyword.equals(PLACEHOLDER)) keyword = "";
+        muatDataProduk(kategoriAktif, keyword);
+    }
+    
+    public int getIdPembeli() {
+        return this.idPembeli;
     }
     
 
@@ -145,6 +270,7 @@ public class BerandaPembeli extends javax.swing.JFrame {
         jLblNamaUser = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(246, 244, 241));
 
@@ -239,8 +365,8 @@ public class BerandaPembeli extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jBtnProfilPembeli, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jBtnKeluar)
-                .addContainerGap(305, Short.MAX_VALUE))
+                .addComponent(jBtnKeluar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
@@ -262,7 +388,7 @@ public class BerandaPembeli extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel16.setText("Makanan");
+        jLabel16.setText("Olahan khas Samarinda");
 
         javax.swing.GroupLayout jPnlKategoriMakananLayout = new javax.swing.GroupLayout(jPnlKategoriMakanan);
         jPnlKategoriMakanan.setLayout(jPnlKategoriMakananLayout);
@@ -482,6 +608,10 @@ public class BerandaPembeli extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(300, 200));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(500, 560));
+        jScrollPane1.setRequestFocusEnabled(false);
+
         panelPenampungProduk.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout panelPenampungProdukLayout = new javax.swing.GroupLayout(panelPenampungProduk);
@@ -496,6 +626,9 @@ public class BerandaPembeli extends javax.swing.JFrame {
         );
 
         jScrollPane1.setViewportView(panelPenampungProduk);
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setForeground(new java.awt.Color(255, 255, 255));
 
         jTxtCariProduk.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         jTxtCariProduk.setText("Cari produk khas Samarinda....");
@@ -515,7 +648,7 @@ public class BerandaPembeli extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTxtCariProduk)
+                .addComponent(jTxtCariProduk, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -544,7 +677,7 @@ public class BerandaPembeli extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -563,7 +696,7 @@ public class BerandaPembeli extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));

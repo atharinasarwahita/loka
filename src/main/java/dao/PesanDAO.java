@@ -14,7 +14,6 @@ import java.util.List;
 public class PesanDAO {
 
     public void insertPesan(Pesan pesan) {
-        // Query tetap seperti semula
         String query = "INSERT INTO pesan (Penjual_id_pengguna, Pembeli_id_pengguna, isi_pesan, waktu_kirim, dibaca) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = Koneksi.getConnection();
@@ -50,11 +49,84 @@ public class PesanDAO {
                 p.setPembeliIdPengguna(rs.getInt("Pembeli_id_pengguna"));
                 p.setIsiPesan(rs.getString("isi_pesan"));
                 p.setWaktuKirim(rs.getTimestamp("waktu_kirim"));
-                p.setDibaca(StatusDibacaPesan.valueOf(rs.getString("dibaca")));
+                String statusDb = rs.getString("dibaca");
+                if ("Sudah Dibaca".equals(statusDb)) {
+                    p.setDibaca(StatusDibacaPesan.SudahDibaca);
+                } else {
+                    p.setDibaca(StatusDibacaPesan.BelumDibaca);
+                }
                 list.add(p);
             }
         } catch (SQLException e) {
             System.out.println("Gagal mengambil data pesan: " + e.getMessage());
+        }
+        return list;
+    }
+    
+    public List<Pesan> getInboxByPenjual(int idPenjual) {
+        List<Pesan> list = new ArrayList<>();
+        String query = "SELECT p.id_pesan, p.Penjual_id_pengguna, p.Pembeli_id_pengguna, " +
+                        "       p.isi_pesan, p.waktu_kirim, p.dibaca, " +
+                        "       pg.nama_lengkap AS nama_pembeli " +
+                        "FROM pesan p " +
+                        "JOIN pengguna pg ON pg.id_pengguna = p.Pembeli_id_pengguna " +
+                        "WHERE p.Penjual_id_pengguna = ? " +
+                        "  AND p.id_pesan = ( " +
+                        "        SELECT MAX(p2.id_pesan) FROM pesan p2 " +
+                        "        WHERE p2.Penjual_id_pengguna = p.Penjual_id_pengguna " +
+                        "          AND p2.Pembeli_id_pengguna = p.Pembeli_id_pengguna ) " +
+                        "ORDER BY p.id_pesan DESC";
+
+        try (Connection conn = Koneksi.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, idPenjual);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pesan p = new Pesan();
+                p.setIdPesan(rs.getInt("id_pesan"));
+                p.setPenjualIdPengguna(rs.getInt("Penjual_id_pengguna"));
+                p.setPembeliIdPengguna(rs.getInt("Pembeli_id_pengguna"));
+                p.setNamaPembeli(rs.getString("nama_pembeli"));
+                p.setIsiPesan(rs.getString("isi_pesan"));
+                p.setWaktuKirim(rs.getTimestamp("waktu_kirim"));
+                
+                String statusDb = rs.getString("dibaca");
+                if ("Sudah Dibaca".equals(statusDb)) {
+                    p.setDibaca(StatusDibacaPesan.SudahDibaca);
+                } else {
+                    p.setDibaca(StatusDibacaPesan.BelumDibaca);
+                }
+                
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println("Gagal ambil inbox: " + e.getMessage());
+        }
+        return list;
+    }
+
+    public List<Pesan> getChatHistory(int idPenjual, int idPembeli) {
+        List<Pesan> list = new ArrayList<>();
+        String query = "SELECT * FROM pesan WHERE Penjual_id_pengguna = ? AND Pembeli_id_pengguna = ? ORDER BY waktu_kirim ASC, id_pesan ASC";
+
+        try (Connection conn = Koneksi.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, idPenjual);
+            ps.setInt(2, idPembeli);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pesan p = new Pesan();
+                p.setIdPesan(rs.getInt("id_pesan"));
+                p.setPenjualIdPengguna(rs.getInt("Penjual_id_pengguna"));
+                p.setPembeliIdPengguna(rs.getInt("Pembeli_id_pengguna"));
+                p.setIsiPesan(rs.getString("isi_pesan"));
+                p.setWaktuKirim(rs.getTimestamp("waktu_kirim"));
+                p.setDariPenjual(false); // Sesuaikan arah pengirim
+                
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println("Gagal ambil detail chat: " + e.getMessage());
         }
         return list;
     }

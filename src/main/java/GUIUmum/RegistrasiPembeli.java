@@ -13,7 +13,7 @@ public class RegistrasiPembeli extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RegistrasiPembeli.class.getName());
 
     /**
-     * Creates new form Login
+     * Creates new form RegistrasiPenjual
      */
     public RegistrasiPembeli() {
         initComponents();
@@ -29,6 +29,23 @@ public class RegistrasiPembeli extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jJudulRegis = new javax.swing.JLabel();
+        jJudulRegis1 = new javax.swing.JLabel();
+        jLblNamaLengkap = new javax.swing.JLabel();
+        jTxtNamaLengkap = new javax.swing.JTextField();
+        jLblNamaEmail = new javax.swing.JLabel();
+        jTxtNamaEmail = new javax.swing.JTextField();
+        jTxtNomorHp = new javax.swing.JTextField();
+        jLblNomorHp = new javax.swing.JLabel();
+        jLblPassword = new javax.swing.JLabel();
+        jTxtPassword = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabelPunyaAkun = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jLblNamaEmail1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jBtnBeranda1 = new javax.swing.JButton();
@@ -39,16 +56,153 @@ public class RegistrasiPembeli extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(237, 226, 206));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1012, Short.MAX_VALUE)
+        jPanel2.setBackground(new java.awt.Color(237, 226, 206));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setPreferredSize(new java.awt.Dimension(448, 600));
+
+        jJudulRegis.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
+        jJudulRegis.setForeground(new java.awt.Color(34, 51, 0));
+        jJudulRegis.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jJudulRegis.setText("Daftar Akun LOKA");
+
+        jJudulRegis1.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jJudulRegis1.setForeground(new java.awt.Color(34, 51, 0));
+        jJudulRegis1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jJudulRegis1.setText("Bergabunglah dan dukung UMKM Samarinda");
+
+        jLblNamaLengkap.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblNamaLengkap.setText("Nama Lengkap");
+
+        jTxtNamaLengkap.setForeground(new java.awt.Color(51, 51, 51));
+        jTxtNamaLengkap.setText("Masukkan Nama Lengkap");
+        jTxtNamaLengkap.addActionListener(this::jTxtNamaLengkapActionPerformed);
+
+        jLblNamaEmail.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblNamaEmail.setText("Email");
+
+        jTxtNamaEmail.setForeground(new java.awt.Color(51, 51, 51));
+        jTxtNamaEmail.setText("Nama@email.com");
+        jTxtNamaEmail.addActionListener(this::jTxtNamaEmailActionPerformed);
+
+        jTxtNomorHp.setForeground(new java.awt.Color(51, 51, 51));
+        jTxtNomorHp.setText("08xxxxxxxxxx");
+        jTxtNomorHp.addActionListener(this::jTxtNomorHpActionPerformed);
+
+        jLblNomorHp.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblNomorHp.setText("Nomor HP");
+
+        jLblPassword.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblPassword.setText("Masukkan Password");
+
+        jTxtPassword.setForeground(new java.awt.Color(51, 51, 51));
+        jTxtPassword.setText("Minimal 8 karakter");
+        jTxtPassword.addActionListener(this::jTxtPasswordActionPerformed);
+
+        jButton1.setBackground(new java.awt.Color(228, 92, 16));
+        jButton1.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Selanjutnya");
+        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(228, 92, 16), 1, true));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
+        jLabelPunyaAkun.setFont(new java.awt.Font("Inter", 0, 10)); // NOI18N
+        jLabelPunyaAkun.setText("Sudah punya akun?");
+
+        jButton2.setFont(new java.awt.Font("Inter", 0, 10)); // NOI18N
+        jButton2.setText("Masuk di Sini");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+
+        jLblNamaEmail1.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblNamaEmail1.setText("Jenis Kelamin");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jJudulRegis, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jJudulRegis1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jTxtNamaLengkap, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
+                .addGap(24, 24, 24))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTxtNomorHp)
+                    .addComponent(jTxtPassword)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLblPassword, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLblNomorHp, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTxtNamaEmail)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLblNamaEmail1)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(24, 24, 24))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(97, 97, 97)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabelPunyaAkun)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton2))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(11, 11, 11))))
+                            .addComponent(jLblNamaLengkap)
+                            .addComponent(jLblNamaEmail))
+                        .addContainerGap())))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 704, Short.MAX_VALUE)
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jJudulRegis)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jJudulRegis1)
+                .addGap(27, 27, 27)
+                .addComponent(jLblNamaLengkap)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTxtNamaLengkap, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLblNamaEmail)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTxtNamaEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLblNamaEmail1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLblNomorHp)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTxtNomorHp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLblPassword)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTxtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelPunyaAkun)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
+
+        jPanel2.add(jPanel3, new java.awt.GridBagConstraints());
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -76,7 +230,7 @@ public class RegistrasiPembeli extends javax.swing.JFrame {
                 .addComponent(jBtnBeranda1)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnTentangKami1)
-                .addContainerGap(393, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -88,26 +242,51 @@ public class RegistrasiPembeli extends javax.swing.JFrame {
                     .addComponent(jBtnTentangKami1)))
         );
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTxtNamaLengkapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtNamaLengkapActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtNamaLengkapActionPerformed
+
+    private void jTxtNamaEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtNamaEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtNamaEmailActionPerformed
+
+    private void jTxtNomorHpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtNomorHpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtNomorHpActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jBtnBeranda1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBeranda1ActionPerformed
         new GUIUmum.Beranda().setVisible(true);
@@ -118,6 +297,15 @@ public class RegistrasiPembeli extends javax.swing.JFrame {
         new GUIUmum.TentangKami().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnTentangKami1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new GUIUmum.RegistrasiPenjualKedua().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTxtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,8 +335,25 @@ public class RegistrasiPembeli extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnBeranda1;
     private javax.swing.JButton jBtnTentangKami1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jJudulRegis;
+    private javax.swing.JLabel jJudulRegis1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelPunyaAkun;
+    private javax.swing.JLabel jLblNamaEmail;
+    private javax.swing.JLabel jLblNamaEmail1;
+    private javax.swing.JLabel jLblNamaLengkap;
+    private javax.swing.JLabel jLblNomorHp;
+    private javax.swing.JLabel jLblPassword;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JTextField jTxtNamaEmail;
+    private javax.swing.JTextField jTxtNamaLengkap;
+    private javax.swing.JTextField jTxtNomorHp;
+    private javax.swing.JTextField jTxtPassword;
     // End of variables declaration//GEN-END:variables
 }

@@ -45,6 +45,10 @@ public class Penjual extends Pengguna {
     public void tampilkanInfoRole() {
         System.out.println("Role: Penjual | Nama Toko: " + namaToko + " | Status Verifikasi: " + statusVerifikasi);
     }
+    
+    public String getNamaPemilik() {
+        return getNamaLengkap();
+    }
 
     public String getNamaToko() { 
         return namaToko; 
@@ -174,4 +178,7 @@ public class Penjual extends Pengguna {
             return false;
         }
     }
+    
+    public String getTanggalDaftarString() { return getTanggalDaftar() != null ? getTanggalDaftar().toString() : "-"; }
+    public String getStatusVerifikasiString() { return getStatusVerifikasi() != null ? getStatusVerifikasi().toString() : "-"; }
 }

@@ -10,7 +10,7 @@ public class Koneksi {
     public static Connection getKoneksi() {
         try {
             if (conn == null || conn.isClosed()) {
-                String url = "jdbc:mysql://localhost:3306/loka";
+                String url = "jdbc:mysql://localhost:3306/lokanew";
                 String user = "root";
                 String pass = "";
                 DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());

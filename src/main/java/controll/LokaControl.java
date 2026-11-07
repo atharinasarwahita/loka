@@ -3,6 +3,7 @@ package controll;
 import dao.*;
 import model.*;
 import enums.*;
+import java.util.ArrayList;
 
 import java.util.Date;
 import java.util.List;
@@ -317,6 +318,24 @@ public class LokaControl {
 
     public void updateStatusPesanan(int noPesanan, StatusPesanan statusBaru, Date tglKirim, Date tglTerima) {
         pesananDAO.updateStatusPesanan(noPesanan, statusBaru, tglKirim, tglTerima);
+        
+        if (statusBaru == StatusPesanan.Dikembalikan) {
+            Pesanan pesananTarget = cariPesanan(noPesanan);
+            if (pesananTarget != null) {
+                int idPembeli = pesananTarget.getPembeliIdPengguna();
+                double nominalRefund = pesananTarget.getTotalBayar();
+
+                for (Pembeli pb : pembeliDAO.getAllPembeli()) {
+                    if (pb.getIdPengguna() == idPembeli) {
+                        double saldoBaru = pb.getSaldo() + nominalRefund;
+                        pembeliDAO.updateSaldo(idPembeli, saldoBaru);
+                        break;
+                    }
+                }
+            }
+        } 
+        else if (statusBaru == StatusPesanan.Selesai) {
+        }
     }
 
     public void verifikasiPenjual(int idPengguna, StatusVerifikasi statusVerifikasi, Date tglVerifikasi) {
@@ -573,5 +592,154 @@ public class LokaControl {
             }
         }
         return kecamatanTop + " (" + maxTransaksi + " transaksi)";
+    }
+    
+    public List<Pesan> getInboxPenjual(int idPenjual) {
+        List<Pesan> list = new ArrayList<>();
+        list = pesanDAO.getInboxByPenjual(idPenjual);
+        // Contoh: list = pesanDao.getInboxByPenjual(idPenjual);
+        return list;
+    }
+
+    public List<Pesan> getDetailChat(int idPenjual, int idPembeli) {
+        List<Pesan> list = new ArrayList<>();
+        list = pesanDAO.getChatHistory(idPenjual, idPembeli);
+        return list;
+    }
+
+    public void kirimPesan(int idPenjual, int idPembeli, String isiPesan) {
+        Pesan pesanBaru = new Pesan();
+        pesanBaru.setPenjualIdPengguna(idPenjual);
+        pesanBaru.setPembeliIdPengguna(idPembeli);
+        pesanBaru.setIsiPesan(isiPesan);
+        pesanBaru.setWaktuKirim(new Date());
+        pesanBaru.setDibaca(StatusDibacaPesan.BelumDibaca);
+        pesanBaru.setDariPenjual(true); 
+        
+        pesanDAO.insertPesan(pesanBaru);
+    }
+    
+    public List<Penjual> getListPenjualBelumVerifikasi() {
+    List<Penjual> list = new ArrayList<>();
+    List<Penjual> all = penjualDAO.getAllPenjual();
+    if (all != null) {
+        for (Penjual p : all) {
+
+            if (p.getStatusVerifikasi() == StatusVerifikasi.BelumDiverifikasi ) {
+                list.add(p);
+            }
+        }
+    }
+    return list;
+}
+
+    public Penjual getDetailPenjualById(int idPenjual) {
+        List<Penjual> all = penjualDAO.getAllPenjual();
+        if (all != null) {
+            for (Penjual p : all) {
+                if (p.getIdPengguna() == idPenjual) {
+                    return p;
+                }
+            }
+        }
+        return null;
+    }
+    
+    public void kirimPesanDariPembeli(int idPenjual, int idPembeli, String isiPesan) {
+        Pesan pesanBaru = new Pesan();
+        pesanBaru.setPenjualIdPengguna(idPenjual);
+        pesanBaru.setPembeliIdPengguna(idPembeli);
+        pesanBaru.setIsiPesan(isiPesan);
+        pesanBaru.setWaktuKirim(new Date());
+        pesanBaru.setDibaca(StatusDibacaPesan.BelumDibaca);
+        pesanBaru.setDariPenjual(false);
+        
+        pesanDAO.insertPesan(pesanBaru);
+    }
+    
+    public void tambahJumlahShare(int idProduk) {
+        Produk p = cariProduk(idProduk);
+        if (p != null) {
+            int shareBaru = p.getJumlahShare() + 1;
+
+            ubahProduk(p.getIdProduk(), p.getPenjualIdPengguna(), p.getNamaProduk(), 
+                       p.getDeskripsi(), p.getKategori(), p.getGambarProduk(), 
+                       p.getHarga(), p.getBeratGram(), p.getStok(), p.getStatus(), 
+                       p.getIzinJual(), shareBaru);
+        }
+    }
+    
+    public Pesanan cariPesanan(int noPesanan) {
+        List<Pesanan> allPesanan = pesananDAO.getAllPesanan();
+        if (allPesanan != null) {
+            for (Pesanan p : allPesanan) {
+                if (p.getNoPesanan() == noPesanan) {
+                    return p;
+                }
+            }
+        }
+        return null;
+    }
+    
+    // ==========================================
+    // TAMBAHAN METHOD VERIFIKASI PENGELOLA
+    // ==========================================
+
+    // Hitung total produk yang sudah diizinkan (aktif)
+    public int hitungTotalProdukAktif() {
+        int total = 0;
+        List<Produk> all = produkDAO.getAllProduk();
+        if (all != null) {
+            for (Produk p : all) {
+                if (p.getIzinJual() == IzinJual.Diizinkan) {
+                    total++;
+                }
+            }
+        }
+        return total;
+    }
+
+    // Hitung total UMKM/Penjual yang akunnya aktif
+    public int hitungTotalUMKMAktif() {
+        int total = 0;
+        List<Penjual> all = penjualDAO.getAllPenjual();
+        if (all != null) {
+            for (Penjual p : all) {
+                if (p.getStatusAkun() == StatusAkun.Aktif) {
+                    total++;
+                }
+            }
+        }
+        return total;
+    }
+
+    // List Produk yang Menunggu Verifikasi (BelumDiizinkan)
+    public List<Produk> getListProdukMenunggu() {
+        List<Produk> list = new ArrayList<>();
+        List<Produk> all = produkDAO.getAllProduk();
+        if (all != null) {
+            for (Produk p : all) {
+                if (p.getIzinJual() == IzinJual.Menunggu || p.getIzinJual() == null) {
+                    list.add(p);
+                }
+            }
+        }
+        return list;
+    }
+
+    // Update Status Verifikasi Penjual
+    public void updateStatusVerifikasiPenjual(int idPenjual, StatusVerifikasi status) {
+        penjualDAO.updateStatusVerifikasi(idPenjual, status, new Date());
+    }
+
+    // Update Izin Jual Produk
+    public void updateIzinJualProduk(int idProduk, IzinJual izin) {
+        Produk p = cariProduk(idProduk);
+        if (p != null) {
+            ubahProduk(p.getIdProduk(), p.getPenjualIdPengguna(), p.getNamaProduk(), 
+                       p.getDeskripsi(), p.getKategori(), p.getGambarProduk(), 
+                       p.getHarga(), p.getBeratGram(), p.getStok(), p.getStatus(), 
+                       izin, p.getJumlahShare());
+        }
     }
 }

@@ -34,6 +34,11 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f1" green="f4" red="f6" type="rgb"/>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -47,7 +52,7 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jPanel3" max="32767" attributes="0"/>
+                      <Component id="jPanel3" pref="790" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -66,9 +71,9 @@
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel3" pref="675" max="32767" attributes="0"/>
+                  <Component id="jPanel3" pref="674" max="32767" attributes="0"/>
               </Group>
-              <Component id="jPanel2" alignment="0" pref="731" max="32767" attributes="0"/>
+              <Component id="jPanel2" alignment="0" pref="730" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

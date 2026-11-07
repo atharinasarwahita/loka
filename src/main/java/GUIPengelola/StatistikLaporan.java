@@ -8,14 +8,14 @@ package GUIPengelola;
  *
  * @author LENOVO
  */
-public class MonitoringTransaksi extends javax.swing.JFrame {
+public class StatistikLaporan extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MonitoringTransaksi.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(StatistikLaporan.class.getName());
 
     /**
      * Creates new form MonitoringTransaksi
      */
-    public MonitoringTransaksi() {
+    public StatistikLaporan() {
         initComponents();
     }
 
@@ -55,7 +55,7 @@ public class MonitoringTransaksi extends javax.swing.JFrame {
         jBtnMonitoringTransaksi.setBackground(new java.awt.Color(253, 239, 232));
         jBtnMonitoringTransaksi.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jBtnMonitoringTransaksi.setForeground(new java.awt.Color(228, 92, 16));
-        jBtnMonitoringTransaksi.setText("Monitoring Transaksi");
+        jBtnMonitoringTransaksi.setText("Statistik & Laporan");
         jBtnMonitoringTransaksi.setAlignmentX(0.5F);
         jBtnMonitoringTransaksi.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
         jBtnMonitoringTransaksi.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -176,7 +176,7 @@ public class MonitoringTransaksi extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new MonitoringTransaksi().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new StatistikLaporan().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

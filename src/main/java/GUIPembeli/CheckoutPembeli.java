@@ -43,12 +43,13 @@ public class CheckoutPembeli extends javax.swing.JFrame {
                 break;
             }
         }
+        
         for (Pembeli p : control.ambilSemuaPembeli()) {
             if (p.getIdPengguna() == idPembeli) {
                 saldo = p.getSaldo();
                 jLblNamaUser.setText("Halo, " + p.getNamaLengkap() + "!");
                 jLblSaldoAktif.setText(rupiah(saldo));
-                jLblSaldoAktif.setText(rupiah(saldo));
+                jLblSaldoLoka.setText(rupiah(saldo));
                 break;
             }
         }
@@ -57,25 +58,12 @@ public class CheckoutPembeli extends javax.swing.JFrame {
         hitungUlang();
         setLocationRelativeTo(null);
     }
-    /**
-     * Creates new form CheckoutPembeli
-     */
+
+    // Konstruktor Kosong (Safety Net)
     public CheckoutPembeli() {
         initComponents();
-        muatNamaDanSaldoUser();
+        setLocationRelativeTo(null);
     }
-    
-    public void muatNamaDanSaldoUser() {
-        for (model.Pembeli p : control.ambilSemuaPembeli()) {
-            if (p.getIdPengguna() == this.idPembeli) {
-                jLblNamaUser.setText("Halo, " + p.getNamaLengkap() + "!");
-                jLblSaldoAktif.setText("Rp " + String.format("%,.0f", p.getSaldo()).replace(',', '.'));
-                jLblSaldoLoka.setText("Rp " + String.format("%,.0f", p.getSaldo()).replace(',', '.'));
-                break;
-            }
-        }
-    }
-    
 
     private void hitungUlang() {
         ongkir = control.hitungOngkir(jarak);
@@ -91,7 +79,7 @@ public class CheckoutPembeli extends javax.swing.JFrame {
     private String rupiah(double v) {
         return "Rp " + String.format("%,.0f", v).replace(',', '.');
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -146,6 +134,8 @@ public class CheckoutPembeli extends javax.swing.JFrame {
         jLblSaldoAktif = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(246, 244, 241));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(224, 693));
@@ -696,7 +686,8 @@ public class CheckoutPembeli extends javax.swing.JFrame {
         javax.swing.JOptionPane.showMessageDialog(this, "Pesanan berhasil dibuat!",
                 "Sukses", javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
-        new KeranjangPembeli(idPembeli).setVisible(true);
+        // Setelah bayar sukses, arahkan ke halaman Pesanan
+        new GUIPembeli.Pesanan(idPembeli).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnKonfirmasiBayarActionPerformed
 

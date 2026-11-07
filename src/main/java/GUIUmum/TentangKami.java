@@ -102,7 +102,7 @@ public class TentangKami extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(237, 226, 206));
 
         jLabel3.setBackground(new java.awt.Color(237, 226, 206));
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/TentangKelompok10Gacor.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/TentangKelompok10Gacor (1).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);

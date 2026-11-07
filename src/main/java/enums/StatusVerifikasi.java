@@ -10,5 +10,6 @@ package enums;
  */
 public enum StatusVerifikasi {
     Terverifikasi,
-    BelumDiverifikasi
+    BelumDiverifikasi,
+    Ditolak
 }

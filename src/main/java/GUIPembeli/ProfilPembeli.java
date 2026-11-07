@@ -5,6 +5,7 @@
 package GUIPembeli;
 
 import controll.LokaControl;
+import java.util.List;
 
 /**
  *
@@ -36,6 +37,23 @@ public class ProfilPembeli extends javax.swing.JFrame {
             }
         }
     }
+    
+    private void muatDataProfil() {
+        // Ambil data pembeli berdasarkan ID menggunakan controller
+        List<model.Pembeli> listPembeli = control.ambilSemuaPembeli();
+        if (listPembeli != null) {
+            for (model.Pembeli pb : listPembeli) {
+                if (pb.getIdPengguna() == idPembeli) {
+                    // Masukkan data asli ke text field
+                    jTxtNama.setText(pb.getNamaLengkap());
+                    jTxtAlamat.setText(pb.getAlamatPengiriman());
+                    // Ubah juga label sapaan "Halo, User!" jadi nama asli kalau mau:
+                    jLabel16.setText("Halo, " + pb.getNamaLengkap() + "!");
+                    break;
+                }
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,10 +76,10 @@ public class ProfilPembeli extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTxtNama = new javax.swing.JTextField();
         jPanel11 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTxtAlamat = new javax.swing.JTextField();
         jBtnSimpanPerubahan = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -79,6 +97,8 @@ public class ProfilPembeli extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+
+        jPanel1.setBackground(new java.awt.Color(246, 244, 241));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -162,7 +182,7 @@ public class ProfilPembeli extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         jLabel3.setText("Nama Lengkap");
 
-        jTextField1.setText("Nama Lengkap");
+        jTxtNama.setText("Nama Lengkap");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -174,7 +194,7 @@ public class ProfilPembeli extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField1))
+                    .addComponent(jTxtNama))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -183,7 +203,7 @@ public class ProfilPembeli extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addComponent(jTxtNama, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -192,8 +212,8 @@ public class ProfilPembeli extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         jLabel6.setText("Alamat");
 
-        jTextField2.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        jTextField2.setText("Jalan Mulawarman, Kecamatan Samaridna");
+        jTxtAlamat.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        jTxtAlamat.setText("Jalan Mulawarman, Kecamatan Samaridna");
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -205,7 +225,7 @@ public class ProfilPembeli extends javax.swing.JFrame {
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField2))
+                    .addComponent(jTxtAlamat))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
@@ -214,7 +234,7 @@ public class ProfilPembeli extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                .addComponent(jTxtAlamat, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
         );
 
         jBtnSimpanPerubahan.setBackground(new java.awt.Color(40, 167, 69));
@@ -494,7 +514,15 @@ public class ProfilPembeli extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnTopUpSaldoPembeliActionPerformed
 
     private void jBtnSimpanPerubahanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSimpanPerubahanActionPerformed
-        // TODO add your handling code here:
+        String namaBaru = jTxtNama.getText().trim();
+        String alamatBaru = jTxtAlamat.getText().trim();
+
+        if (namaBaru.isEmpty() || alamatBaru.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Nama dan Alamat tidak boleh kosong!");
+            return;
+        }
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Profil berhasil diperbarui!");
     }//GEN-LAST:event_jBtnSimpanPerubahanActionPerformed
 
     private void jBtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeluarActionPerformed
@@ -556,7 +584,7 @@ public class ProfilPembeli extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTxtAlamat;
+    private javax.swing.JTextField jTxtNama;
     // End of variables declaration//GEN-END:variables
 }

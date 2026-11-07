@@ -4,10 +4,6 @@
  */
 package GUIPembeli;
 
-import javax.swing.ImageIcon;
-import java.awt.Image;
-import java.net.URL;
-
 /**
  *
  * @author LENOVO
