@@ -166,6 +166,7 @@ public class DashboardPenjual extends javax.swing.JFrame {
         jBtnKeluar.setAlignmentX(0.5F);
         jBtnKeluar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
         jBtnKeluar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jBtnKeluar.addActionListener(this::jBtnKeluarActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -448,6 +449,11 @@ public class DashboardPenjual extends javax.swing.JFrame {
         new GUIPenjual.ChatPelanggan(idPengguna).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnChatPelangganActionPerformed
+
+    private void jBtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeluarActionPerformed
+        new GUIUmum.Beranda().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jBtnKeluarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -473,31 +473,35 @@ public class TopUpSaldoPembeli extends javax.swing.JFrame {
         String nominalStr = jTxtNominal.getText().trim();
         String pinStr = jTxtPin.getText().trim();
 
-        if (nominalStr.isEmpty() || pinStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nominal dan PIN wajib diisi!", "Error", JOptionPane.ERROR_MESSAGE);
+        if (nominalStr.isEmpty() || nominalStr.equals("Masukkan Nominal Top Up") || pinStr.isEmpty() || pinStr.equals("******")) {
+            JOptionPane.showMessageDialog(this, "Nominal dan PIN wajib diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         try {
             double nominal = Double.parseDouble(nominalStr);
-            if (nominal <= 0) {
-                JOptionPane.showMessageDialog(this, "Nominal harus lebih dari 0!", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
 
+            // Validasi PIN akun pembeli
             if (pembeliAktif != null && !pembeliAktif.getPin().equals(pinStr)) {
-                JOptionPane.showMessageDialog(this, "PIN salah!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "PIN salah!", "Gagal", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            control.prosesTopUp(0, this.idPembeli, nominal);
-            JOptionPane.showMessageDialog(this, "Top Up Berhasil!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-            muatDataPembeli();
-            jTxtNominal.setText("");
-            jTxtPin.setText("");
+            String hasilError = control.prosesTopUp(0, this.idPembeli, nominal);
+
+            if (hasilError != null) {
+
+                JOptionPane.showMessageDialog(this, hasilError, "Top Up Gagal", JOptionPane.ERROR_MESSAGE);
+            } else {
+                
+                JOptionPane.showMessageDialog(this, "Top Up Saldo Berhasil Sebesar Rp " + String.format("%,.0f", nominal).replace(',', '.'), "Sukses", JOptionPane.INFORMATION_MESSAGE);
+                muatDataPembeli(); 
+                jTxtNominal.setText("");
+                jTxtPin.setText("");
+            }
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Format nominal tidak valid!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Format nominal tidak valid! Harap masukkan angka saja.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 

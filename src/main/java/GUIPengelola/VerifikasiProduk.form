@@ -73,7 +73,7 @@
                           <Component id="jLabel1" alignment="0" min="-2" pref="175" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                               <Component id="jBtnDashboard" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jBtnBerandaPembeli1" alignment="0" pref="175" max="32767" attributes="0"/>
+                              <Component id="jBtnVerifikasiPenjual" alignment="0" pref="175" max="32767" attributes="0"/>
                               <Component id="jBtnVerifikasiProduk" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -89,7 +89,7 @@
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Component id="jBtnDashboard" min="-2" pref="25" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jBtnBerandaPembeli1" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="jBtnVerifikasiPenjual" min="-2" pref="25" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jBtnVerifikasiProduk" min="-2" pref="25" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -103,7 +103,7 @@
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/gambar/Logo Loka Pengelola.png"/>
+                  <Image iconType="3" name="/gambar/LogoLokaVerifikator.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="jLabel1"/>
               </Properties>
@@ -129,7 +129,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnDashboardActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jBtnBerandaPembeli1">
+            <Component class="javax.swing.JButton" name="jBtnVerifikasiPenjual">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Inter" size="14" style="1"/>
@@ -148,7 +148,7 @@
                 <Property name="opaque" type="boolean" value="true"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnBerandaPembeli1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnVerifikasiPenjualActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBtnVerifikasiProduk">
@@ -182,7 +182,7 @@
                   <Font name="Inter" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="69" green="55" red="47" type="rgb"/>
+                  <Color blue="44" green="44" red="ef" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Keluar"/>
                 <Property name="alignmentX" type="float" value="0.5"/>
@@ -678,7 +678,7 @@
                       <Color blue="10" green="5c" red="e4" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="4"/>
-                    <Property name="text" type="java.lang.String" value="Terverifikasi"/>
+                    <Property name="text" type="java.lang.String" value="Klik Data Produk"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                         <EmptyBorder bottom="1" left="1" right="5" top="1"/>

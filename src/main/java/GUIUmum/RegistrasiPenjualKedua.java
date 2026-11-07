@@ -147,7 +147,7 @@ public class RegistrasiPenjualKedua extends javax.swing.JFrame {
         jBtnLogin.setText("Masuk di Sini");
         jBtnLogin.addActionListener(this::jBtnLoginActionPerformed);
 
-        jButton3.setBackground(new java.awt.Color(204, 204, 204));
+        jButton3.setBackground(new java.awt.Color(102, 102, 102));
         jButton3.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Sebelumnya");
@@ -336,7 +336,8 @@ public class RegistrasiPenjualKedua extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextNoHPActionPerformed
 
     private void jBtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLoginActionPerformed
-        // TODO add your handling code here:
+        new GUIUmum.LoginUser().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnLoginActionPerformed
 
     private void jTextDeskripsiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextDeskripsiActionPerformed

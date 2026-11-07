@@ -65,7 +65,7 @@ public class Beranda extends javax.swing.JFrame {
         jbtnLogin.setText("Login");
         jbtnLogin.addActionListener(this::jbtnLoginActionPerformed);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/Beranda (1).png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/Beranda (2).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

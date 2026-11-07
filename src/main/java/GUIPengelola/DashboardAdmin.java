@@ -55,11 +55,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
 
         NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
 
-        jLblTotalPendapatan.setText(formatRupiah.format(totalOmzetLoka)); 
-
-        jLblTotalUmkm.setText(totalUmkm + " UMKM (" + totalPesanan + " Pesanan)"); 
-
-        jLblTotalPembeli.setText(String.valueOf(totalPembeli));
+        jLblTotalPembeli.setText(totalPembeli + " Pembeli"); 
+        jLblTotalUmkm.setText(totalUmkm + " UMKM"); 
+        jLblTotalPendapatan.setText(formatRupiah.format(totalOmzetLoka));
     }
 
     /**
@@ -89,14 +87,13 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLblTotalPendapatan = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(224, 693));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/Logo Loka Pengelola.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/LogoLokaAdmin.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
         jBtnDashboardAdmin.setBackground(new java.awt.Color(253, 239, 232));
@@ -117,7 +114,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jBtnMonitoringTransaksi.addActionListener(this::jBtnMonitoringTransaksiActionPerformed);
 
         jBtnKeluar.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        jBtnKeluar.setForeground(new java.awt.Color(71, 85, 105));
+        jBtnKeluar.setForeground(new java.awt.Color(239, 68, 68));
         jBtnKeluar.setText("Keluar");
         jBtnKeluar.setAlignmentX(0.5F);
         jBtnKeluar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
@@ -177,15 +174,18 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel6.setBackground(new java.awt.Color(254, 243, 199));
+
+        jLabel4.setBackground(new java.awt.Color(51, 51, 51));
         jLabel4.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(2, 44, 34));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel4.setText("Total Pendapatan LOKA");
+        jLabel4.setText("Total Pembeli LOKA");
 
         jLblTotalPembeli.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
         jLblTotalPembeli.setForeground(new java.awt.Color(228, 92, 16));
         jLblTotalPembeli.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLblTotalPembeli.setText("Rp3.450.000");
+        jLblTotalPembeli.setText("1");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -208,6 +208,9 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
+        jPanel7.setBackground(new java.awt.Color(254, 243, 199));
+
+        jLabel6.setBackground(new java.awt.Color(51, 51, 51));
         jLabel6.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(2, 44, 34));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -216,7 +219,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         jLblTotalUmkm.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
         jLblTotalUmkm.setForeground(new java.awt.Color(228, 92, 16));
         jLblTotalUmkm.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLblTotalUmkm.setText("Rp3.450.000");
+        jLblTotalUmkm.setText("1");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -239,13 +242,15 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
+        jPanel10.setBackground(new java.awt.Color(228, 92, 16));
+
         jLabel5.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(2, 44, 34));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Total Pendapatan LOKA");
 
         jLblTotalPendapatan.setFont(new java.awt.Font("Inter", 1, 24)); // NOI18N
-        jLblTotalPendapatan.setForeground(new java.awt.Color(228, 92, 16));
+        jLblTotalPendapatan.setForeground(new java.awt.Color(255, 255, 255));
         jLblTotalPendapatan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLblTotalPendapatan.setText("Rp3.450.000");
 
@@ -270,17 +275,6 @@ public class DashboardAdmin extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 331, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -293,8 +287,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(53, 53, 53)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(58, 58, 58))
         );
         jPanel3Layout.setVerticalGroup(
@@ -302,14 +295,12 @@ public class DashboardAdmin extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(75, 75, 75)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addGap(70, 70, 70)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -391,19 +382,15 @@ public class DashboardAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLblTotalPembeli;
     private javax.swing.JLabel jLblTotalPendapatan;
-    private javax.swing.JLabel jLblTotalPendapatan3;
     private javax.swing.JLabel jLblTotalUmkm;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     // End of variables declaration//GEN-END:variables
 }

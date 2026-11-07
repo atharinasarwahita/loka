@@ -21,6 +21,7 @@ public class VerifikasiProduk extends javax.swing.JFrame {
     
     public VerifikasiProduk() {
         initComponents();
+        muatDataProdukMenunggu();
     }
 
     public VerifikasiProduk(int idVerifikator) {
@@ -87,7 +88,7 @@ public class VerifikasiProduk extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jBtnDashboard = new javax.swing.JButton();
-        jBtnBerandaPembeli1 = new javax.swing.JButton();
+        jBtnVerifikasiPenjual = new javax.swing.JButton();
         jBtnVerifikasiProduk = new javax.swing.JButton();
         jBtnKeluar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -123,7 +124,7 @@ public class VerifikasiProduk extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(224, 693));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/Logo Loka Pengelola.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/LogoLokaVerifikator.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
         jBtnDashboard.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -134,14 +135,14 @@ public class VerifikasiProduk extends javax.swing.JFrame {
         jBtnDashboard.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jBtnDashboard.addActionListener(this::jBtnDashboardActionPerformed);
 
-        jBtnBerandaPembeli1.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        jBtnBerandaPembeli1.setForeground(new java.awt.Color(71, 85, 105));
-        jBtnBerandaPembeli1.setText("Verifikasi Penjual");
-        jBtnBerandaPembeli1.setAlignmentX(0.5F);
-        jBtnBerandaPembeli1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
-        jBtnBerandaPembeli1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jBtnBerandaPembeli1.setOpaque(true);
-        jBtnBerandaPembeli1.addActionListener(this::jBtnBerandaPembeli1ActionPerformed);
+        jBtnVerifikasiPenjual.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        jBtnVerifikasiPenjual.setForeground(new java.awt.Color(71, 85, 105));
+        jBtnVerifikasiPenjual.setText("Verifikasi Penjual");
+        jBtnVerifikasiPenjual.setAlignmentX(0.5F);
+        jBtnVerifikasiPenjual.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
+        jBtnVerifikasiPenjual.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jBtnVerifikasiPenjual.setOpaque(true);
+        jBtnVerifikasiPenjual.addActionListener(this::jBtnVerifikasiPenjualActionPerformed);
 
         jBtnVerifikasiProduk.setBackground(new java.awt.Color(253, 239, 232));
         jBtnVerifikasiProduk.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -154,7 +155,7 @@ public class VerifikasiProduk extends javax.swing.JFrame {
         jBtnVerifikasiProduk.addActionListener(this::jBtnVerifikasiProdukActionPerformed);
 
         jBtnKeluar.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        jBtnKeluar.setForeground(new java.awt.Color(71, 85, 105));
+        jBtnKeluar.setForeground(new java.awt.Color(239, 68, 68));
         jBtnKeluar.setText("Keluar");
         jBtnKeluar.setAlignmentX(0.5F);
         jBtnKeluar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
@@ -172,7 +173,7 @@ public class VerifikasiProduk extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jBtnDashboard, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBtnBerandaPembeli1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                        .addComponent(jBtnVerifikasiPenjual, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                         .addComponent(jBtnVerifikasiProduk, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(17, 17, 17))
         );
@@ -184,7 +185,7 @@ public class VerifikasiProduk extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(jBtnDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jBtnBerandaPembeli1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnVerifikasiPenjual, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jBtnVerifikasiProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -346,7 +347,7 @@ public class VerifikasiProduk extends javax.swing.JFrame {
         jLblStatusBadge.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jLblStatusBadge.setForeground(new java.awt.Color(228, 92, 16));
         jLblStatusBadge.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLblStatusBadge.setText("Terverifikasi");
+        jLblStatusBadge.setText("Klik Data Produk");
         jLblStatusBadge.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 5));
         jLblStatusBadge.setOpaque(true);
 
@@ -485,17 +486,19 @@ public class VerifikasiProduk extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jBtnDashboardActionPerformed
 
-    private void jBtnBerandaPembeli1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBerandaPembeli1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnBerandaPembeli1ActionPerformed
+    private void jBtnVerifikasiPenjualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnVerifikasiPenjualActionPerformed
+        new GUIPengelola.VerifikasiPenjual().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jBtnVerifikasiPenjualActionPerformed
 
     private void jBtnVerifikasiProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnVerifikasiProdukActionPerformed
-        new GUIPengelola.VerifikasiPenjual().setVisible(true);
+        new GUIPengelola.VerifikasiProduk().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnVerifikasiProdukActionPerformed
 
     private void jBtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeluarActionPerformed
-        // TODO add your handling code here:
+        new GUIUmum.Beranda().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnKeluarActionPerformed
 
     /**
@@ -524,9 +527,9 @@ public class VerifikasiProduk extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBtnBerandaPembeli1;
     private javax.swing.JButton jBtnDashboard;
     private javax.swing.JButton jBtnKeluar;
+    private javax.swing.JButton jBtnVerifikasiPenjual;
     private javax.swing.JButton jBtnVerifikasiProduk;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

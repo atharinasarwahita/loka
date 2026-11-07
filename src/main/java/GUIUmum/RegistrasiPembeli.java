@@ -4,6 +4,9 @@
  */
 package GUIUmum;
 
+import controll.LokaControl;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author LENOVO
@@ -11,9 +14,10 @@ package GUIUmum;
 public class RegistrasiPembeli extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RegistrasiPembeli.class.getName());
+    private LokaControl control = new LokaControl();
 
     /**
-     * Creates new form RegistrasiPenjual
+     * Creates new form RegistrasiPembeli
      */
     public RegistrasiPembeli() {
         initComponents();
@@ -117,7 +121,7 @@ public class RegistrasiPembeli extends javax.swing.JFrame {
         jLblNamaEmail1.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLblNamaEmail1.setText("Jenis Kelamin");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki-laki", "Perempuan" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -135,21 +139,11 @@ public class RegistrasiPembeli extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTxtNomorHp)
-                    .addComponent(jTxtPassword)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLblPassword, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLblNomorHp, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTxtNamaEmail)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLblNamaEmail1)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(24, 24, 24))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -164,7 +158,17 @@ public class RegistrasiPembeli extends javax.swing.JFrame {
                                         .addGap(11, 11, 11))))
                             .addComponent(jLblNamaLengkap)
                             .addComponent(jLblNamaEmail))
-                        .addContainerGap())))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTxtPassword, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTxtNomorHp, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTxtNamaEmail)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLblNamaEmail1)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(24, 24, 24))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,8 +258,7 @@ public class RegistrasiPembeli extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -285,7 +288,8 @@ public class RegistrasiPembeli extends javax.swing.JFrame {
     }//GEN-LAST:event_jTxtNomorHpActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        new GUIUmum.LoginUser().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jBtnBeranda1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBeranda1ActionPerformed
@@ -299,7 +303,20 @@ public class RegistrasiPembeli extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnTentangKami1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new GUIUmum.RegistrasiPenjualKedua().setVisible(true);
+        String nama = jTxtNamaLengkap.getText().trim();
+        String email = jTxtNamaEmail.getText().trim();
+        String selectedJK = (String) jComboBox1.getSelectedItem();
+        String noHp = jTxtNomorHp.getText().trim();
+        String password = jTxtPassword.getText().trim();
+
+        if (nama.isEmpty() || email.isEmpty() || noHp.isEmpty() || password.isEmpty() || selectedJK.equals("-- Pilih Jenis Kelamin --")) {
+            JOptionPane.showMessageDialog(this, "Semua field harus diisi dan jenis kelamin harus dipilih!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String jenisKelamin = selectedJK.equals("Laki-laki") ? "L" : "P";
+
+        new RegistrasiPembeliKedua(nama, email, jenisKelamin, noHp, password).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

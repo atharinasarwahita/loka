@@ -122,6 +122,7 @@ public class Pembeli extends Pengguna {
     public void setTanggalDaftar(Date tanggalDaftar) { 
         this.tanggalDaftar = tanggalDaftar; 
     }
+    
 
    
     public boolean validasiSaldoPembeli(double saldo) {

@@ -200,7 +200,7 @@ public class ChatPelanggan extends javax.swing.JFrame {
         jBtnChatPelanggan.addActionListener(this::jBtnChatPelangganActionPerformed);
 
         jBtnKeluar.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        jBtnKeluar.setForeground(new java.awt.Color(71, 85, 105));
+        jBtnKeluar.setForeground(new java.awt.Color(239, 68, 68));
         jBtnKeluar.setText("Keluar");
         jBtnKeluar.setAlignmentX(0.5F);
         jBtnKeluar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
@@ -367,15 +367,11 @@ public class ChatPelanggan extends javax.swing.JFrame {
                         .addComponent(jScrollPaneChat, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
-                        .addContainerGap())))
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -428,7 +424,8 @@ public class ChatPelanggan extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnChatPelangganActionPerformed
 
     private void jBtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeluarActionPerformed
-        // TODO add your handling code here:
+        new GUIUmum.Beranda().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnKeluarActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

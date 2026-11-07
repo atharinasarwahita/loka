@@ -156,7 +156,6 @@ public class Pesanan extends javax.swing.JFrame {
         jPanel12 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jBtnSortSemua = new javax.swing.JButton();
-        jBtnSortBelumBayar = new javax.swing.JButton();
         jBtnSortDiproses = new javax.swing.JButton();
         jBtnSortDikirim = new javax.swing.JButton();
         jBtnSortSelesai = new javax.swing.JButton();
@@ -305,12 +304,6 @@ public class Pesanan extends javax.swing.JFrame {
         jBtnSortSemua.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(228, 92, 16), 1, true));
         jBtnSortSemua.addActionListener(this::jBtnSortSemuaActionPerformed);
 
-        jBtnSortBelumBayar.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        jBtnSortBelumBayar.setForeground(new java.awt.Color(71, 85, 105));
-        jBtnSortBelumBayar.setText("Belum Bayar");
-        jBtnSortBelumBayar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        jBtnSortBelumBayar.addActionListener(this::jBtnSortBelumBayarActionPerformed);
-
         jBtnSortDiproses.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         jBtnSortDiproses.setForeground(new java.awt.Color(71, 85, 105));
         jBtnSortDiproses.setText("Diproses");
@@ -363,8 +356,6 @@ public class Pesanan extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(jBtnSortSemua, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jBtnSortBelumBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(jBtnSortDiproses, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jBtnSortDikirim, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -388,7 +379,6 @@ public class Pesanan extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnSortSemua, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnSortBelumBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnSortDiproses, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnSortDikirim, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnSortSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -531,10 +521,6 @@ public class Pesanan extends javax.swing.JFrame {
         muatDataPesanan("Semua");
     }//GEN-LAST:event_jBtnSortSemuaActionPerformed
 
-    private void jBtnSortBelumBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSortBelumBayarActionPerformed
-        muatDataPesanan("Belum Bayar");
-    }//GEN-LAST:event_jBtnSortBelumBayarActionPerformed
-
     private void jBtnSortDiprosesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSortDiprosesActionPerformed
         muatDataPesanan("Diproses");
     }//GEN-LAST:event_jBtnSortDiprosesActionPerformed
@@ -583,7 +569,6 @@ public class Pesanan extends javax.swing.JFrame {
     private javax.swing.JButton jBtnKeranjangPembeli;
     private javax.swing.JButton jBtnPesanan;
     private javax.swing.JButton jBtnProfilPembeli;
-    private javax.swing.JButton jBtnSortBelumBayar;
     private javax.swing.JButton jBtnSortDikirim;
     private javax.swing.JButton jBtnSortDiproses;
     private javax.swing.JButton jBtnSortPengembalian;

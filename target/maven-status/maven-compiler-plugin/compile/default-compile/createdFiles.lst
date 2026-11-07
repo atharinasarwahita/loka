@@ -9,6 +9,7 @@ enums\StatusAkun.class
 dao\PengembalianDAO.class
 model\Ulasan.class
 GUIPenjual\DialogTambahProduk.class
+GUIPenjual\DaftarPesanan$1.class
 GUIPengelola\StatistikLaporan.class
 enums\PosisiPengelola.class
 GUIPenjual\BubbleChatPenjual.class
@@ -30,6 +31,7 @@ controll\LokaControl.class
 GUIPengelola\VerifikasiProduk.class
 model\Produk.class
 enums\StatusPesanan.class
+GUIPenjual\DaftarPesanan$3.class
 GUIPembeli\DetailPesanan.class
 GUIPembeli\ChatPenjual.class
 GUIUmum\RegistrasiPembeli.class
@@ -41,6 +43,7 @@ GUIPengelola\VerifikasiPenjual.class
 GUIPenjual\PenjualPesanMasukk.class
 GUIUmum\TentangKami.class
 dao\PesananDAO.class
+GUIPenjual\DaftarPesanan$2.class
 GUIPembeli\ProfilPembeli.class
 GUIPengelola\VerifikasiPenjualRows.class
 dao\TopUpDAO.class
@@ -52,6 +55,7 @@ GUIUmum\LoginUser.class
 GUIPembeli\BubbleChatPembeli.class
 dao\PenjualDAO.class
 GUIPembeli\PembeliPesanMasuk$1.class
+GUIUmum\RegistrasiPembeliKedua.class
 model\Pembeli.class
 GUIPengelola\DashboardVerifikator.class
 GUIPenjual\DialogTambahProduk$1.class

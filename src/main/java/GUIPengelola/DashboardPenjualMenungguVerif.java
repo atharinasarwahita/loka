@@ -16,6 +16,13 @@ public class DashboardPenjualMenungguVerif extends javax.swing.JPanel {
     public DashboardPenjualMenungguVerif() {
         initComponents();
     }
+    
+    public void setData(String namaPemilik, String namaToko, String alamat, String status) {
+        jLblNamaPemilik.setText(namaPemilik);
+        jLblNamaToko.setText(namaToko);
+        jLblAlamat.setText(alamat);
+        jLblStatus.setText(status);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

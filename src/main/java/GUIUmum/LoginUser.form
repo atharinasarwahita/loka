@@ -99,7 +99,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLblUsername" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jTextUsername" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="jTextEmail" alignment="1" max="32767" attributes="0"/>
                                       <Component id="jLblPassword" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jTextPassword" alignment="1" min="-2" pref="395" max="-2" attributes="0"/>
                                   </Group>
@@ -136,7 +136,7 @@
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="jLblUsername" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextUsername" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="jTextEmail" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLblPassword" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -186,15 +186,15 @@
                 <Property name="text" type="java.lang.String" value="Email"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextUsername">
+            <Component class="javax.swing.JTextField" name="jTextEmail">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Masukkan Username/Email"/>
+                <Property name="text" type="java.lang.String" value="Masukkan Email"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextUsernameActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextEmailActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLblPassword">

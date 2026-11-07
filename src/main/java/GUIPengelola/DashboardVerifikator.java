@@ -24,6 +24,12 @@ public class DashboardVerifikator extends javax.swing.JFrame {
         muatStatistikDanListDashboard();
     }
 
+    public DashboardVerifikator() {
+        initComponents();
+        this.idVerifikator = 1;
+        muatStatistikDanListDashboard();
+    }
+
     public void muatStatistikDanListDashboard() {
         jLblTotalProdukAktif.setText(String.valueOf(control.hitungTotalProdukAktif()));
         jLblTotalUmkm.setText(String.valueOf(control.hitungTotalUMKMAktif()));
@@ -33,11 +39,19 @@ public class DashboardVerifikator extends javax.swing.JFrame {
         List<model.Produk> listProd = control.getListProdukMenunggu();
         if (listProd != null) {
             for (model.Produk p : listProd) {
-                VerifikasiProdukRows row = new VerifikasiProdukRows();
+                DashboardProdukMenungguVerif row = new DashboardProdukMenungguVerif();
                 String namaToko = "Toko";
                 model.Penjual penjual = control.getDetailPenjualById(p.getPenjualIdPengguna());
                 if (penjual != null) namaToko = penjual.getNamaToko();
-                row.setData(String.valueOf(p.getIdProduk()), namaToko, p.getNamaProduk(), p.getKategori(), String.valueOf(p.getIzinJual()));
+                
+                row.setData(
+                    String.valueOf(p.getIdProduk()), 
+                    namaToko, 
+                    p.getNamaProduk(), 
+                    p.getKategori(), 
+                    String.valueOf(p.getIzinJual())
+                );
+                
                 row.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, row.getPreferredSize().height));
                 panelProdukMenunggu.add(row);
                 panelProdukMenunggu.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 3)));
@@ -51,8 +65,15 @@ public class DashboardVerifikator extends javax.swing.JFrame {
         List<model.Penjual> listPenjual = control.getListPenjualBelumVerifikasi();
         if (listPenjual != null) {
             for (model.Penjual pj : listPenjual) {
-                VerifikasiPenjualRows rowJual = new VerifikasiPenjualRows();
-
+                DashboardPenjualMenungguVerif rowJual = new DashboardPenjualMenungguVerif();
+                
+                rowJual.setData(
+                    pj.getNamaLengkap(), 
+                    pj.getNamaToko(), 
+                    pj.getAlamatToko(), 
+                    String.valueOf(pj.getStatusVerifikasi())
+                );
+                
                 rowJual.setMaximumSize(new java.awt.Dimension(Integer.MAX_VALUE, rowJual.getPreferredSize().height));
                 panelPenjualMenunggu.add(rowJual);
                 panelPenjualMenunggu.add(javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 3)));
@@ -60,12 +81,6 @@ public class DashboardVerifikator extends javax.swing.JFrame {
         }
         panelPenjualMenunggu.revalidate();
         panelPenjualMenunggu.repaint();
-    }
-    /**
-     * Creates new form DashboardAdmin
-     */
-    public DashboardVerifikator() {
-        initComponents();
     }
 
     /**
@@ -107,7 +122,7 @@ public class DashboardVerifikator extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(224, 693));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/Logo Loka Pengelola.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/LogoLokaVerifikator.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
         jBtnDashboard.setBackground(new java.awt.Color(253, 239, 232));
@@ -138,7 +153,7 @@ public class DashboardVerifikator extends javax.swing.JFrame {
         jBtnVerifikasiProduk.addActionListener(this::jBtnVerifikasiProdukActionPerformed);
 
         jBtnKeluar.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        jBtnKeluar.setForeground(new java.awt.Color(71, 85, 105));
+        jBtnKeluar.setForeground(new java.awt.Color(239, 68, 68));
         jBtnKeluar.setText("Keluar");
         jBtnKeluar.setAlignmentX(0.5F);
         jBtnKeluar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));

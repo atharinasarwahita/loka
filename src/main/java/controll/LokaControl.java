@@ -86,6 +86,36 @@ public class LokaControl {
                                     tglLahir, jk, kota, kec, pos, alamat, saldo, pin, status, tglDaftar);
         pembeliDAO.insertPembeli(pembeli);
     }
+    
+    public boolean registerPembeli(String nama, String email, String jenisKelamin, String noHp, String password, 
+                                  String alamat, String kota, String kecamatan, String kodePos, String pin) {
+        try {
+            int idPengguna = (int) (System.currentTimeMillis() % 100000);
+            JenisKelamin jk = (jenisKelamin != null && jenisKelamin.equalsIgnoreCase("L")) ? JenisKelamin.L : JenisKelamin.P;
+            
+            registerPembeli(
+                idPengguna, 
+                nama, 
+                email, 
+                password, 
+                noHp, 
+                new Date(), 
+                jk, 
+                kota, 
+                kecamatan, 
+                kodePos, 
+                alamat, 
+                0.0, 
+                pin, 
+                StatusAkun.Aktif, 
+                new Date()
+            );
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public List<Pembeli> ambilSemuaPembeli() {
         return pembeliDAO.getAllPembeli();
@@ -597,7 +627,6 @@ public class LokaControl {
     public List<Pesan> getInboxPenjual(int idPenjual) {
         List<Pesan> list = new ArrayList<>();
         list = pesanDAO.getInboxByPenjual(idPenjual);
-        // Contoh: list = pesanDao.getInboxByPenjual(idPenjual);
         return list;
     }
 
@@ -741,5 +770,25 @@ public class LokaControl {
                        p.getHarga(), p.getBeratGram(), p.getStok(), p.getStatus(), 
                        izin, p.getJumlahShare());
         }
+    }
+    
+    public java.util.Map<String, Integer> getStatistikKecamatan() {
+        java.util.Map<String, Integer> mapKecamatan = new java.util.LinkedHashMap<>();
+        List<Pesanan> listPesanan = pesananDAO.getAllPesanan();
+        List<Pembeli> listPembeli = pembeliDAO.getAllPembeli();
+
+        if (listPesanan != null && listPembeli != null) {
+            for (Pesanan p : listPesanan) {
+                for (Pembeli pb : listPembeli) {
+                    if (pb.getIdPengguna() == p.getPembeliIdPengguna()) {
+                        String kec = pb.getKecamatan();
+                        if (kec != null && !kec.trim().isEmpty()) {
+                            mapKecamatan.put(kec, mapKecamatan.getOrDefault(kec, 0) + 1);
+                        }
+                    }
+                }
+            }
+        }
+        return mapKecamatan;
     }
 }

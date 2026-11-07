@@ -384,7 +384,8 @@ public class KelolaProdukPenjual extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnHapusProdukActionPerformed
 
     private void jBtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeluarActionPerformed
-        // TODO add your handling code here:
+        new GUIUmum.Beranda().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnKeluarActionPerformed
 
     /**

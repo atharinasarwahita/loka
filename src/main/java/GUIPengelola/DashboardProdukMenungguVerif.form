@@ -45,9 +45,9 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLblNamaToko" min="-2" pref="140" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLblKategori" min="-2" pref="158" max="-2" attributes="0"/>
+                  <Component id="jLblNamaProduk" min="-2" pref="158" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jLblAlamat" min="-2" pref="125" max="-2" attributes="0"/>
+                  <Component id="jLblKategori" min="-2" pref="125" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLblStatus" min="-2" pref="98" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
@@ -61,8 +61,8 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLblNamaPemilik" alignment="3" pref="29" max="32767" attributes="0"/>
                       <Component id="jLblNamaToko" alignment="3" max="32767" attributes="0"/>
+                      <Component id="jLblNamaProduk" alignment="3" max="32767" attributes="0"/>
                       <Component id="jLblKategori" alignment="3" max="32767" attributes="0"/>
-                      <Component id="jLblAlamat" alignment="3" max="32767" attributes="0"/>
                       <Component id="jLblStatus" alignment="3" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -99,7 +99,7 @@
             <Property name="text" type="java.lang.String" value="Nama Toko"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLblKategori">
+        <Component class="javax.swing.JLabel" name="jLblNamaProduk">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -113,7 +113,7 @@
             <Property name="text" type="java.lang.String" value="Nama Produk"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLblAlamat">
+        <Component class="javax.swing.JLabel" name="jLblKategori">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>

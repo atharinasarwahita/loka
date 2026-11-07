@@ -25,13 +25,13 @@ public class ProfilPembeli extends javax.swing.JFrame {
     public ProfilPembeli(int idPembeli) {
         this.idPembeli = idPembeli;
         initComponents();
-        muatSaldoUser();
+        muatNamaDanSaldoUser();
     }
     
-    public void muatSaldoUser() {
+    public void muatNamaDanSaldoUser() {
         for (model.Pembeli p : control.ambilSemuaPembeli()) {
             if (p.getIdPengguna() == this.idPembeli) {
-                // Ubah jLblSaldo dengan nama label saldo yang ada di form kamu
+                jLabel16.setText("Halo, " + p.getNamaLengkap() + "!");
                 jLblSaldoAktif.setText("Rp " + String.format("%,.0f", p.getSaldo()).replace(',', '.'));
                 break;
             }
@@ -138,7 +138,7 @@ public class ProfilPembeli extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
         jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jPanel8.setPreferredSize(new java.awt.Dimension(528, 315));
+        jPanel8.setPreferredSize(new java.awt.Dimension(528, 450));
 
         jPanel10.setBackground(new java.awt.Color(228, 92, 16));
 
@@ -271,9 +271,9 @@ public class ProfilPembeli extends javax.swing.JFrame {
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
                 .addComponent(jBtnSimpanPerubahan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         jPanel7.add(jPanel8, new java.awt.GridBagConstraints());
@@ -295,8 +295,8 @@ public class ProfilPembeli extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));

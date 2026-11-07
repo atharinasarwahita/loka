@@ -397,7 +397,7 @@ public class VerifikasiPenjual extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(224, 693));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/Logo Loka Pengelola.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/LogoLokaVerifikator.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
         jBtnDashboard.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -428,7 +428,7 @@ public class VerifikasiPenjual extends javax.swing.JFrame {
         jBtnVerifikasiProduk.addActionListener(this::jBtnVerifikasiProdukActionPerformed);
 
         jBtnKeluar.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        jBtnKeluar.setForeground(new java.awt.Color(71, 85, 105));
+        jBtnKeluar.setForeground(new java.awt.Color(239, 68, 68));
         jBtnKeluar.setText("Keluar");
         jBtnKeluar.setAlignmentX(0.5F);
         jBtnKeluar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
@@ -501,12 +501,13 @@ public class VerifikasiPenjual extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnDashboardActionPerformed
 
     private void jBtnVerifikasiPenjualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnVerifikasiPenjualActionPerformed
-        new GUIPengelola.VerifikasiProduk().setVisible(true);
+        new GUIPengelola.VerifikasiPenjual().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnVerifikasiPenjualActionPerformed
 
     private void jBtnVerifikasiProdukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnVerifikasiProdukActionPerformed
-        // TODO add your handling code here:
+        new GUIPengelola.VerifikasiProduk().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jBtnVerifikasiProdukActionPerformed
 
     private void jBtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeluarActionPerformed

@@ -16,6 +16,14 @@ public class DashboardProdukMenungguVerif extends javax.swing.JPanel {
     public DashboardProdukMenungguVerif() {
         initComponents();
     }
+    
+    public void setData(String idProduk, String namaToko, String namaProduk, String kategori, String status) {
+        jLblNamaPemilik.setText(idProduk); 
+        jLblNamaToko.setText(namaToko);  
+        jLblNamaProduk.setText(namaProduk); 
+        jLblKategori.setText(kategori);    
+        jLblStatus.setText(status);        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,8 +37,8 @@ public class DashboardProdukMenungguVerif extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jLblNamaPemilik = new javax.swing.JLabel();
         jLblNamaToko = new javax.swing.JLabel();
+        jLblNamaProduk = new javax.swing.JLabel();
         jLblKategori = new javax.swing.JLabel();
-        jLblAlamat = new javax.swing.JLabel();
         jLblStatus = new javax.swing.JLabel();
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -45,15 +53,15 @@ public class DashboardProdukMenungguVerif extends javax.swing.JPanel {
         jLblNamaToko.setForeground(new java.awt.Color(228, 92, 16));
         jLblNamaToko.setText("Nama Toko");
 
+        jLblNamaProduk.setBackground(new java.awt.Color(255, 255, 255));
+        jLblNamaProduk.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        jLblNamaProduk.setForeground(new java.awt.Color(228, 92, 16));
+        jLblNamaProduk.setText("Nama Produk");
+
         jLblKategori.setBackground(new java.awt.Color(255, 255, 255));
         jLblKategori.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         jLblKategori.setForeground(new java.awt.Color(228, 92, 16));
-        jLblKategori.setText("Nama Produk");
-
-        jLblAlamat.setBackground(new java.awt.Color(255, 255, 255));
-        jLblAlamat.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
-        jLblAlamat.setForeground(new java.awt.Color(228, 92, 16));
-        jLblAlamat.setText("Kategori");
+        jLblKategori.setText("Kategori");
 
         jLblStatus.setBackground(new java.awt.Color(255, 255, 255));
         jLblStatus.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
@@ -70,9 +78,9 @@ public class DashboardProdukMenungguVerif extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLblNamaToko, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLblKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLblNamaProduk, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLblAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLblKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -84,8 +92,8 @@ public class DashboardProdukMenungguVerif extends javax.swing.JPanel {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLblNamaPemilik, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                     .addComponent(jLblNamaToko, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLblNamaProduk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLblKategori, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLblAlamat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -106,9 +114,9 @@ public class DashboardProdukMenungguVerif extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLblAlamat;
     private javax.swing.JLabel jLblKategori;
     private javax.swing.JLabel jLblNamaPemilik;
+    private javax.swing.JLabel jLblNamaProduk;
     private javax.swing.JLabel jLblNamaToko;
     private javax.swing.JLabel jLblStatus;
     private javax.swing.JPanel jPanel4;

@@ -8,8 +8,8 @@ import controll.LokaControl;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 import model.Pesanan;
+import model.Pengembalian;
 import java.util.List;
-import java.util.Date;
 /**
  *
  * @author LENOVO
@@ -28,34 +28,131 @@ public class DaftarPesanan extends javax.swing.JFrame {
     // Constructor default
     public DaftarPesanan() {
         initComponents();
-        loadDataTabel();
+        loadTabelPesanan();
+        jTblDaftarPesanan.setSelectionBackground(new java.awt.Color(228, 92, 16)); // Warna oren khas Loka
+        jTblDaftarPesanan.setSelectionForeground(java.awt.Color.WHITE); // Teks berubah jadi putih terang pas diklik
+
+        // 2. Tambahkan aksi double-click untuk melihat detail lengkap (termasuk alasan pengembalian penuh)
+        jTblDaftarPesanan.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) { // Cek jika double click
+                    int selectedRow = jTblDaftarPesanan.getSelectedRow();
+                    if (selectedRow != -1) {
+                        Object noPesanan = jTblDaftarPesanan.getValueAt(selectedRow, 0);
+                        Object pembeli = jTblDaftarPesanan.getValueAt(selectedRow, 1);
+                        Object tanggal = jTblDaftarPesanan.getValueAt(selectedRow, 2);
+                        Object total = jTblDaftarPesanan.getValueAt(selectedRow, 3);
+                        Object status = jTblDaftarPesanan.getValueAt(selectedRow, 4);
+                        Object alasan = jTblDaftarPesanan.getValueAt(selectedRow, 5);
+
+                        String pesanDetail = "<html><b>Detail Pesanan #" + noPesanan + "</b><br>" +
+                                             "ID Pembeli: " + pembeli + "<br>" +
+                                             "Tanggal: " + tanggal + "<br>" +
+                                             "Total Bayar: " + total + "<br>" +
+                                             "Status: " + status + "<br><br>" +
+                                             "<b>Alasan Pengembalian/Retur:</b><br>" +
+                                             "<p style='width: 250px;'>" + alasan + "</p></html>";
+
+                        javax.swing.JOptionPane.showMessageDialog(
+                            DaftarPesanan.this, 
+                            pesanDetail, 
+                            "Informasi Lengkap Pesanan", 
+                            javax.swing.JOptionPane.INFORMATION_MESSAGE
+                        );
+                    }
+                }
+            }
+        });
     }
 
     public DaftarPesanan(int idPenjual) {
         this.idPenjual = idPenjual;
         initComponents();
-        loadDataTabel();
+        loadTabelPesanan();
+        
+        jTblDaftarPesanan.setSelectionBackground(new java.awt.Color(228, 92, 16)); // Warna oren khas Loka
+        jTblDaftarPesanan.setSelectionForeground(java.awt.Color.WHITE); // Teks berubah jadi putih terang pas diklik
+
+        // 2. Tambahkan aksi double-click untuk melihat detail lengkap (termasuk alasan pengembalian penuh)
+        jTblDaftarPesanan.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) { // Cek jika double click
+                    int selectedRow = jTblDaftarPesanan.getSelectedRow();
+                    if (selectedRow != -1) {
+                        Object noPesanan = jTblDaftarPesanan.getValueAt(selectedRow, 0);
+                        Object pembeli = jTblDaftarPesanan.getValueAt(selectedRow, 1);
+                        Object tanggal = jTblDaftarPesanan.getValueAt(selectedRow, 2);
+                        Object total = jTblDaftarPesanan.getValueAt(selectedRow, 3);
+                        Object status = jTblDaftarPesanan.getValueAt(selectedRow, 4);
+                        Object alasan = jTblDaftarPesanan.getValueAt(selectedRow, 5);
+
+                        String pesanDetail = "<html><b>Detail Pesanan #" + noPesanan + "</b><br>" +
+                                             "ID Pembeli: " + pembeli + "<br>" +
+                                             "Tanggal: " + tanggal + "<br>" +
+                                             "Total Bayar: " + total + "<br>" +
+                                             "Status: " + status + "<br><br>" +
+                                             "<b>Alasan Pengembalian/Retur:</b><br>" +
+                                             "<p style='width: 250px;'>" + alasan + "</p></html>";
+
+                        javax.swing.JOptionPane.showMessageDialog(
+                            DaftarPesanan.this, 
+                            pesanDetail, 
+                            "Informasi Lengkap Pesanan", 
+                            javax.swing.JOptionPane.INFORMATION_MESSAGE
+                        );
+                    }
+                }
+            }
+        });
     }
     
-    public void loadDataTabel() {
-    DefaultTableModel model = (DefaultTableModel) jTblDaftarPesanan.getModel();
-    model.setRowCount(0);
+    private void loadTabelPesanan() {
+        DefaultTableModel model = new DefaultTableModel(
+            new Object [][] {},
+            new String [] {
+                "No. Pesanan", "Pembeli", "Tanggal Pesan", "Total Bayar", "Status Pesanan", "Alasan Pengembalian"
+            }
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; 
+            }
+        };
+        
+        jTblDaftarPesanan.setModel(model); 
+        
+        List<Pesanan> listPesanan = control.ambilSemuaPesanan();
+        List<Pengembalian> listPengembalian = control.ambilSemuaPengembalian(); 
 
-    List<Pesanan> listPesanan = control.ambilSemuaPesanan();
-    if (listPesanan != null) {
-        for (Pesanan p : listPesanan) {
-            if (this.idPenjual == 0 || p.getPenjualIdPengguna() == this.idPenjual) {
-                model.addRow(new Object[]{
+        if (listPesanan != null) {
+            for (Pesanan p : listPesanan) {
+                String alasan = "-";
+                
+                if (p.getStatusPesanan() != null && String.valueOf(p.getStatusPesanan()).equalsIgnoreCase("Dikembalikan")) {
+                    if (listPengembalian != null) {
+                        for (Pengembalian pg : listPengembalian) {
+                            alasan = (pg.getAlasan() != null && !pg.getAlasan().isEmpty()) ? pg.getAlasan() : "Tidak ada alasan";
+                            break;
+                        }
+                    } else {
+                        alasan = "Pengajuan Retur";
+                    }
+                }
+
+                Object[] row = {
                     p.getNoPesanan(),
-                    p.getPembeliIdPengguna(),
+                    p.getPembeliIdPengguna(), 
                     p.getTanggalPesanan(),
-                    p.getTotalBayar(),
-                    p.getStatusPesanan()
-                });
+                    "Rp " + String.format("%,.0f", p.getTotalBayar()),
+                    p.getStatusPesanan(),
+                    alasan 
+                };
+                model.addRow(row);
             }
         }
     }
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -125,7 +222,7 @@ public class DaftarPesanan extends javax.swing.JFrame {
         jBtnChatPelanggan.addActionListener(this::jBtnChatPelangganActionPerformed);
 
         jBtnKeluar.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        jBtnKeluar.setForeground(new java.awt.Color(71, 85, 105));
+        jBtnKeluar.setForeground(new java.awt.Color(239, 68, 68));
         jBtnKeluar.setText("Keluar");
         jBtnKeluar.setAlignmentX(0.5F);
         jBtnKeluar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 12, 1, 1));
@@ -207,13 +304,13 @@ public class DaftarPesanan extends javax.swing.JFrame {
         jTblDaftarPesanan.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         jTblDaftarPesanan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "No. Pesanan", "Pembeli", "Tanggal Pesan", "Total Bayar", "Status Pesanan"
+                "No. Pesanan", "Pembeli", "Tanggal Pesan", "Total Bayar", "Status Pesanan", "Alasan Pengembalian"
             }
         ));
         jTblDaftarPesanan.setSelectionBackground(new java.awt.Color(255, 224, 178));
@@ -353,7 +450,7 @@ public class DaftarPesanan extends javax.swing.JFrame {
                 control.updateStatusPesanan(noPesanan, statusBaru, new java.util.Date(), null);
 
                 JOptionPane.showMessageDialog(this, "Status pesanan berhasil diperbarui!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-                loadDataTabel(); 
+                loadTabelPesanan(); 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Gagal mengupdate status: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -361,7 +458,7 @@ public class DaftarPesanan extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnUpdateStatusActionPerformed
 
     private void jBtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnKeluarActionPerformed
-        new GUIUmum.LoginUser().setVisible(true);
+        new GUIUmum.Beranda().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jBtnKeluarActionPerformed
 
